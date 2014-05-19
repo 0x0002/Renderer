@@ -18,21 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Renderer\Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.vcxproj">
-      <Project>{675de6a9-0c5f-405c-9514-93009f65101d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Math\Math.vcxproj">
-      <Project>{83cb6d69-18e6-463a-bd66-44b6ecd8962b}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A33C112D-C119-4B5A-8F68-941C57BC20F7}</ProjectGuid>
     <RootNamespace>Project3</RootNamespace>
-    <ProjectName>Renderer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -97,7 +85,6 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -107,7 +94,6 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -119,7 +105,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -133,7 +118,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -141,6 +125,29 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Align.h" />
+    <ClInclude Include="Atomic.h" />
+    <ClInclude Include="Bool.h" />
+    <ClInclude Include="Mat44.h" />
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="Scalar.h" />
+    <ClInclude Include="SSE.h" />
+    <ClInclude Include="StdTypes.h" />
+    <ClInclude Include="Union.h" />
+    <ClInclude Include="Vec4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Math.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bool.inl" />
+    <None Include="Mat44.inl" />
+    <None Include="Scalar.inl" />
+    <None Include="Vec4.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

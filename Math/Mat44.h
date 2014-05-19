@@ -1,12 +1,13 @@
 #ifndef MAT44_H
 #define MAT44_H
 
-#include "StdTypes.h"
-#include "SSE.h"
-#include "Align.h"
-#include "Scalar.h"
-#include "Vec4.h"
-#include "Bool.h"
+#include "Core/StdTypes.h"
+#include "Core/Align.h"
+
+#include "Math/SSE.h"
+#include "Math/Scalar.h"
+#include "Math/Vec4.h"
+#include "Math/Bool.h"
 
 class Mat44 {
 public:

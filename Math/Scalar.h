@@ -1,10 +1,11 @@
 #ifndef SCALAR_H
 #define SCALAR_H
 
-#include "SSE.h"
-#include "Align.h"
-#include "Bool.h"
-#include "Union.h"
+#include "Core/Align.h"
+#include "Core/Union.h"
+
+#include "Math/SSE.h"
+#include "Math/Bool.h"
 
 class Scalar {
 public:

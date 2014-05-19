@@ -1,5 +1,5 @@
 
-#include "Math.h"
+#include "Math/Math.h"
 
 int main() {
 #if 0

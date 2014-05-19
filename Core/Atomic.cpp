@@ -1,4 +1,4 @@
-#include "Atomic.h"
+#include "Core/Atomic.h"
 #include <Windows.h>
 
 // variables must be aligned on a 32-bit boundary

@@ -1,12 +1,13 @@
 #ifndef VEC4_H
 #define VEC4_H
 
-#include "StdTypes.h"
-#include "SSE.h"
-#include "Align.h"
-#include "Mat44.h"
-#include "Scalar.h"
-#include "Bool.h"
+#include "Core/StdTypes.h"
+#include "Core/Align.h"
+
+#include "Math/SSE.h"
+#include "Math/Mat44.h"
+#include "Math/Scalar.h"
+#include "Math/Bool.h"
 
 class Vec4 {
 public:

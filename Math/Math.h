@@ -1,11 +1,12 @@
 #ifndef MATH_H
 #define MATH_H
 
-#include "StdTypes.h"
-#include "Vec4.h"
-#include "Mat44.h"
-#include "Scalar.h"
-#include "Bool.h"
+#include "Core/StdTypes.h"
+
+#include "Math/Vec4.h"
+#include "Math/Mat44.h"
+#include "Math/Scalar.h"
+#include "Math/Bool.h"
 
 namespace Math {
 

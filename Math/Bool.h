@@ -1,9 +1,10 @@
 #ifndef BOOL_H
 #define BOOL_H
 
-#include "SSE.h"
-#include "StdTypes.h"
-#include "Align.h"
+#include "Core/StdTypes.h"
+#include "Core/Align.h"
+
+#include "Math/SSE.h"
 
 class Bool {
 public:
