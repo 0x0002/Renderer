@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="..\Renderer\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Transform.h" />
+  </ItemGroup>
 </Project>

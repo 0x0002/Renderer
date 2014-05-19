@@ -16,6 +16,8 @@ ForceInline Vec4::Vec4( Scalar const &x, Scalar const &y, Scalar const &z, Scala
     m_value = _mm_shuffle_ps( xxyy, zzww, SHUFFLE( 0, 2, 0, 2 ) );
 }
 
+ForceInline Vec4::Vec4( Normal const &n ) : m_value( n.m_value ) {}
+
 ForceInline Vec4 Vec4::Zero() {
     return _mm_setzero_ps();
 }

@@ -8,6 +8,7 @@
 #include "Math/Mat44.h"
 #include "Math/Scalar.h"
 #include "Math/Bool.h"
+#include "Math/Normal.h"
 
 class Vec4 {
 public:
@@ -15,6 +16,7 @@ public:
     Vec4();
     Vec4( float x, float y, float z, float w );
     Vec4( Scalar const &x, Scalar const &y, Scalar const &z, Scalar const &w );
+    Vec4( Normal const &n );
     
     static Vec4 Zero();
     static Vec4 ZeroPoint();
@@ -74,6 +76,7 @@ private:
 
     // friends
     friend class Mat44;
+    friend class Normal;
     friend Scalar Dot( Vec4 const &a, Vec4 const &b );
     friend Scalar Dot3( Vec4 const &a, Vec4 const &b );
     friend Vec4 Cross( Vec4 const &a, Vec4 const &b );

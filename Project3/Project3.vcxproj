@@ -29,6 +29,9 @@
       <Project>{83cb6d69-18e6-463a-bd66-44b6ecd8962b}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Transform.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A33C112D-C119-4B5A-8F68-941C57BC20F7}</ProjectGuid>
     <RootNamespace>Project3</RootNamespace>

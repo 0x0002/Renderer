@@ -569,7 +569,7 @@ ForceInline Mat44 RotationX( Scalar const &angle ) {
               0,  0,  0,  1 ); */
 
     Scalar s, c;
-    Math::SinCos( angle, &s, &c );
+    SinCos( angle, &s, &c );
     
     Vec4 row1 = Vec4::Zero();
     row1.SetY( c );
@@ -592,7 +592,7 @@ ForceInline Mat44 RotationY( Scalar const &angle ) {
               0,  0,  0,  1 ) }; */
 
     Scalar s, c;
-    Math::SinCos( angle, &s, &c );
+    SinCos( angle, &s, &c );
 
     Vec4 row0 = Vec4::Zero();
     row0.SetX( c );
@@ -615,7 +615,7 @@ ForceInline Mat44 RotationZ( Scalar const &angle ) {
                0,  0,  0,  1 ); */
 
     Scalar s, c;
-    Math::SinCos( angle, &s, &c );
+    SinCos( angle, &s, &c );
 
     Vec4 row0 = Vec4::Zero();
     row0.SetX( c );
@@ -642,7 +642,7 @@ ForceInline Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
               0,                 0,                 0,                 1 ); */
 
     Scalar s, c;
-    Math::SinCos( angle, &s, &c );
+    SinCos( angle, &s, &c );
     Scalar t = 1.0f - c;
 
     Vec4 normalizedAxis = Normalize( axis );
@@ -731,7 +731,7 @@ ForceInline Mat44 PerspectiveFovRH( Scalar const &fov, Scalar const &aspectRatio
               0,      0,      zFar / ( zNear - zFar ),         -1,
               0,      0,      zNear * zFar / ( zNear - zFar ),  0); */
     
-    float yScale = 1.0f / Math::Tan( fov * Scalar( 0.5f ) );
+    float yScale = 1.0f / Tan( fov * Scalar( 0.5f ) );
     float xScale = yScale / aspectRatio;
 
     return Mat44( xScale, 0.0f,   0.0f,                             0.0f,
