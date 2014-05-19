@@ -9,7 +9,7 @@ class Normal {
 public:
     // constructors
     Normal();
-    explicit Normal( Vec4 const &v );
+    Normal( Vec4 const &v );
 
 private:
     __m128 m_value;

@@ -138,6 +138,7 @@
     <ClInclude Include="Mat44.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Normal.h" />
+    <ClInclude Include="Quat.h" />
     <ClInclude Include="Scalar.h" />
     <ClInclude Include="SSE.h" />
     <ClInclude Include="Vec4.h" />
@@ -146,6 +147,7 @@
     <None Include="Bool.inl" />
     <None Include="Mat44.inl" />
     <None Include="Normal.inl" />
+    <None Include="Quat.inl" />
     <None Include="Scalar.inl" />
     <None Include="Vec4.inl" />
   </ItemGroup>

@@ -8,6 +8,7 @@
     <ClInclude Include="SSE.h" />
     <ClInclude Include="Vec4.h" />
     <ClInclude Include="Normal.h" />
+    <ClInclude Include="Quat.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bool.inl" />
@@ -15,6 +16,7 @@
     <None Include="Scalar.inl" />
     <None Include="Vec4.inl" />
     <None Include="Normal.inl" />
+    <None Include="Quat.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp" />

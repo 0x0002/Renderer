@@ -6,6 +6,7 @@
 #include "Math/Scalar.h"
 #include "Math/Bool.h"
 #include "Math/Normal.h"
+#include "Math/Quat.h"
 
 // IEEE754 float
 bool IsNaN( float f );
@@ -85,5 +86,6 @@ ForceInline float Atan2F( float y, float x ) {
 #include "Math/Scalar.inl"
 #include "Math/Bool.inl"
 #include "Math/Normal.inl"
+#include "Math/Quat.inl"
 
 #endif // MATH_H
