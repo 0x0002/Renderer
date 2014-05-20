@@ -30,7 +30,6 @@ public:
     Scalar operator-( Scalar const &s ) const;
     Scalar operator*( Scalar const &s ) const;
     Scalar operator/( Scalar const &s ) const;
-    //Scalar operator*( Mat44 m ) const;
 
     // comparison operators
     Bool operator==( Scalar const &s ) const;
@@ -39,6 +38,12 @@ public:
     Bool operator>( Scalar const &s ) const;
     Bool operator<=( Scalar const &s ) const;
     Bool operator>=( Scalar const &s ) const;
+    Bool operator==( float const &s ) const;
+    Bool operator!=( float const &s ) const;
+    Bool operator<( float const &s ) const;
+    Bool operator>( float const &s ) const;
+    Bool operator<=( float const &s ) const;
+    Bool operator>=( float const &s ) const;
 
     // accessors
     operator float() const;
@@ -52,6 +57,7 @@ private:
     // friends
     friend class Vec4;
     friend class Mat44;
+    friend class Quat;
     friend Vec4 operator*( Scalar const &s, Vec4 const &v );
     friend Vec4 operator/( Scalar const &s, Vec4 const &v );
     friend Vec4 Normalize( Vec4 const &v );
@@ -62,6 +68,15 @@ private:
     friend Mat44 operator*( Scalar const &s, Mat44 const &m );
     friend Mat44 Inverse( Mat44 const &m, Scalar *determinant );
     friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Quat operator*( Scalar const &s, Quat const &q );
+    friend Quat operator/( Scalar const &s, Quat const &q );
+    friend Scalar Length( Quat const &q );
+    friend Scalar RcpLength( Quat const &q );
+    friend Scalar Dot( Quat const &a, Quat const &b );
+    friend Scalar Select( Bool const &condition, Scalar const &true_, Scalar const &false_ );
 };
+
+Scalar Abs( Scalar const &s );
+//Min
 
 #endif // SCALAR_H

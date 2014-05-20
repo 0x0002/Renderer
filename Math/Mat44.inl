@@ -10,30 +10,20 @@ ForceInline Mat44::Mat44( __m128 const &r0, __m128 const &r1, __m128 const &r2, 
 }
 
 ForceInline Mat44::Mat44( float const f[16] ) {
-    Align( 16 ) float const r0[4] = { f[0],  f[1],  f[2],  f[3] };
-    Align( 16 ) float const r1[4] = { f[4],  f[5],  f[6],  f[7] };
-    Align( 16 ) float const r2[4] = { f[8],  f[9],  f[10], f[11] };
-    Align( 16 ) float const r3[4] = { f[12], f[13], f[14], f[15] };
-
-    m_r[0] = _mm_load_ps( r0 );
-    m_r[1] = _mm_load_ps( r1 );
-    m_r[2] = _mm_load_ps( r2 );
-    m_r[3] = _mm_load_ps( r3 );
+    m_r[0] = _mm_setr_ps( f[0],  f[1],  f[2],  f[3] );
+    m_r[1] = _mm_setr_ps( f[4],  f[5],  f[6],  f[7] );
+    m_r[2] = _mm_setr_ps( f[8],  f[9],  f[10], f[11] );
+    m_r[3] = _mm_setr_ps( f[12], f[13], f[14], f[15] );
 }
 
 ForceInline Mat44::Mat44( float _00, float _01, float _02, float _03,
                           float _10, float _11, float _12, float _13,
                           float _20, float _21, float _22, float _23,
                           float _30, float _31, float _32, float _33 ) {
-    Align( 16 ) float const r0[4] = { _00, _01, _02, _03 };
-    Align( 16 ) float const r1[4] = { _10, _11, _12, _13 };
-    Align( 16 ) float const r2[4] = { _20, _21, _22, _23 };
-    Align( 16 ) float const r3[4] = { _30, _31, _32, _33 };
-
-    m_r[0] = _mm_load_ps( r0 );
-    m_r[1] = _mm_load_ps( r1 );
-    m_r[2] = _mm_load_ps( r2 );
-    m_r[3] = _mm_load_ps( r3 );
+    m_r[0] = _mm_setr_ps( _00, _01, _02, _03 );
+    m_r[1] = _mm_setr_ps( _10, _11, _12, _13 );
+    m_r[2] = _mm_setr_ps( _20, _21, _22, _23 );
+    m_r[3] = _mm_setr_ps( _30, _31, _32, _33 );
 }
 
 ForceInline Mat44::Mat44( Vec4 const &r0, Vec4 const &r1, Vec4 const &r2, Vec4 const &r3 ) {
@@ -44,14 +34,10 @@ ForceInline Mat44::Mat44( Vec4 const &r0, Vec4 const &r1, Vec4 const &r2, Vec4 c
 }
 
 ForceInline Mat44 Mat44::Identity() {
-    Align( 16 ) float const r0[4] = { 1.0f, 0.0f, 0.0f, 0.0f };
-    Align( 16 ) float const r1[4] = { 0.0f, 1.0f, 0.0f, 0.0f };
-    Align( 16 ) float const r2[4] = { 0.0f, 0.0f, 1.0f, 0.0f };
-    Align( 16 ) float const r3[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-    return Mat44( _mm_load_ps( r0 ),
-                  _mm_load_ps( r1 ),
-                  _mm_load_ps( r2 ),
-                  _mm_load_ps( r3 ) );
+    return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
+                  0.0f, 1.0f, 0.0f, 0.0f,
+                  0.0f, 0.0f, 1.0f, 0.0f,
+                  0.0f, 0.0f, 0.0f, 1.0f );
 }
 
 ForceInline Mat44 Mat44::Zero() {
@@ -147,10 +133,11 @@ ForceInline Mat44 Mat44::operator+() const {
 }
 
 ForceInline Mat44 Mat44::operator-() const {
-    return Mat44( _mm_sub_ps( _mm_xor_ps( m_r[0], m_r[0] ), m_r[0] ),
-                  _mm_sub_ps( _mm_xor_ps( m_r[1], m_r[1] ), m_r[1] ),
-                  _mm_sub_ps( _mm_xor_ps( m_r[2], m_r[2] ), m_r[2] ),
-                  _mm_sub_ps( _mm_xor_ps( m_r[3], m_r[3] ), m_r[3] ) );
+    __m128 mask = _mm_set_ps1( union_cast<float>( 0x80000000 ) );
+    return Mat44( _mm_xor_ps( mask, m_r[0] ),
+                  _mm_xor_ps( mask, m_r[1] ),
+                  _mm_xor_ps( mask, m_r[2] ),
+                  _mm_xor_ps( mask, m_r[3] ) );
 }
 
 // binary operators
@@ -332,7 +319,7 @@ ForceInline Mat44 Transpose( Mat44 const &m ) {
 }
 
 ForceInline Mat44 Abs( Mat44 const &m ) {
-    __m128 mask = _mm_castsi128_ps( _mm_set1_epi32( 0x7fffffff ) );
+    __m128 mask = _mm_set_ps1( union_cast<float>( 0x7fffffff ) );
     return Mat44( _mm_and_ps( m.m_r[0], mask ),
                   _mm_and_ps( m.m_r[1], mask ),
                   _mm_and_ps( m.m_r[2], mask ),

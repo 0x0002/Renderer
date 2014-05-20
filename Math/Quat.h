@@ -5,6 +5,7 @@
 #include "Math/Vec4.h"
 #include "Math/Scalar.h"
 #include "Math/Bool.h"
+#include "Math/Trig.h"
 
 class Quat {
 public:
@@ -34,6 +35,9 @@ public:
     Quat operator*( Scalar const &s ) const;
     Quat operator/( Scalar const &s ) const;
 
+    friend Quat operator*( Scalar const &s, Quat const &q );
+    friend Quat operator/( Scalar const &s, Quat const &q );
+
     // comparison operators
     Bool operator==( Quat const &q ) const;
     Bool operator!=( Quat const &q ) const;
@@ -53,10 +57,16 @@ public:
     void SetElem( int32_t i, Scalar const &s );
 
 private:
-    Quat( __m128 const &v );
+    Quat( __m128 const &q );
 
 private:
     __m128 m_value;
+
+    // friends
+    friend Scalar Length( Quat const &q );
+    friend Scalar Dot( Quat const &a, Quat const &b );
+    friend Quat Conjugate( Quat const &q );
+    friend Quat Select( Bool const &condition, Quat const &true_, Quat const &false_ );
 };
 
 Quat Normalize( Quat const &q );
@@ -64,13 +74,15 @@ Scalar Length( Quat const &q );
 Scalar RcpLength( Quat const &q );
 Scalar LengthSquared( Quat const &q );
 
+Scalar Dot( Quat const &a, Quat const &b );
+
 Quat Conjugate( Quat const &q );
 Quat Inverse( Quat const &q );
 
 Quat Slerp( Quat const &a, Quat const &b, Scalar t );
 
 // transformation quaternions
-Quat QuaternionRotationAxisAngle( Vec4 const &axis, Scalar angle );
-Quat QuaternionRotationYawPitchRoll( Scalar yaw, Scalar pitch, Scalar roll );
+Quat QuaternionRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
+Quat QuaternionRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
 
 #endif // QUAT_H

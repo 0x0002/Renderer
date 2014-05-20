@@ -4,9 +4,7 @@ ForceInline Scalar::Scalar() {}
 
 ForceInline Scalar::Scalar( __m128 const &s ) :m_value( s ) {}
 
-ForceInline Scalar::Scalar( float s ) {
-    m_value = _mm_set_ps1( s );
-}
+ForceInline Scalar::Scalar( float s ) : m_value( _mm_set_ps1( s ) ) {}
 
 ForceInline Scalar Scalar::Zero() {
     return _mm_setzero_ps();
@@ -29,8 +27,7 @@ ForceInline Scalar& Scalar::operator*=( Scalar const &s ) {
 }
 
 ForceInline Scalar& Scalar::operator/=( Scalar const &s ) {
-    __m128 rcp = _mm_rcp_ps( s.m_value );
-    m_value = _mm_mul_ps( m_value, rcp );
+    m_value = _mm_mul_ps( m_value, _mm_rcp_ps( s.m_value ) );
     return *this;
 }
 
@@ -40,7 +37,7 @@ ForceInline Scalar Scalar::operator+() const {
 }
 
 ForceInline Scalar Scalar::operator-() const {
-    return _mm_sub_ps( _mm_xor_ps( m_value, m_value ), m_value );
+    return _mm_xor_ps( _mm_set_ps1( union_cast<float>( 0x80000000 ) ), m_value );
 }
 
 // binary operators
@@ -57,13 +54,8 @@ ForceInline Scalar Scalar::operator*( Scalar const &s ) const {
 }
 
 ForceInline Scalar Scalar::operator/( Scalar const &s ) const {
-    __m128 rcp = _mm_rcp_ps( s.m_value );
-    return _mm_mul_ps( m_value, rcp );
+    return _mm_mul_ps( m_value, _mm_rcp_ps( s.m_value ) );
 }
-
-//ForceInline Scalar operator*( Mat44 m ) const {
-// &&&
-//}
 
 // comparison operators
 ForceInline Bool Scalar::operator==( Scalar const &s ) const {
@@ -88,6 +80,30 @@ ForceInline Bool Scalar::operator<=( Scalar const &s ) const {
 
 ForceInline Bool Scalar::operator>=( Scalar const &s ) const {
     return _mm_cmpge_ps( m_value, s.m_value );
+}
+
+ForceInline Bool Scalar::operator==( float const &f ) const {
+    return *this == Scalar( f );
+}
+
+ForceInline Bool Scalar::operator!=( float const &f ) const {
+    return *this != Scalar( f );
+}
+
+ForceInline Bool Scalar::operator<( float const &f ) const {
+    return *this < Scalar( f );
+}
+
+ForceInline Bool Scalar::operator>( float const &f ) const {
+    return *this > Scalar( f );
+}
+
+ForceInline Bool Scalar::operator<=( float const &f ) const {
+    return *this <= Scalar( f );
+}
+
+ForceInline Bool Scalar::operator>=( float const &f ) const {
+    return *this >= Scalar( f );
 }
 
 // accessors

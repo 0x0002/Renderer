@@ -5,8 +5,10 @@
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="StdTypes.h" />
     <ClInclude Include="Union.h" />
+    <ClInclude Include="IEEE754.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="IEEE754.cpp" />
   </ItemGroup>
 </Project>

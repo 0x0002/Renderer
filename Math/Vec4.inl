@@ -4,16 +4,13 @@ ForceInline Vec4::Vec4() {}
 
 ForceInline Vec4::Vec4( __m128 const &v ) : m_value( v ) {}
 
-ForceInline Vec4::Vec4( float x, float y, float z, float w ) {
-    // float data must be 16 byte aligned to load into __m128
-    Align( 16 ) float const f[4] = { x, y, z, w };
-    m_value = _mm_load_ps( f );
+ForceInline Vec4::Vec4( float x, float y, float z, float w ) :
+    m_value( _mm_setr_ps( x, y, z, w ) ) {
 }
 
-ForceInline Vec4::Vec4( Scalar const &x, Scalar const &y, Scalar const &z, Scalar const &w ) {
-    __m128 xxyy = _mm_shuffle_ps( x.m_value, y.m_value, SHUFFLE( 0, 0, 0, 0 ) );
-    __m128 zzww = _mm_shuffle_ps( z.m_value, w.m_value, SHUFFLE( 0, 0, 0, 0 ) );
-    m_value = _mm_shuffle_ps( xxyy, zzww, SHUFFLE( 0, 2, 0, 2 ) );
+ForceInline Vec4::Vec4( Scalar const &x, Scalar const &y, Scalar const &z, Scalar const &w ) :
+    m_value( _mm_shuffle_ps( _mm_shuffle_ps( x.m_value, y.m_value, SHUFFLE( 0, 0, 0, 0 ) ),
+                             _mm_shuffle_ps( z.m_value, w.m_value, SHUFFLE( 0, 0, 0, 0 ) ), SHUFFLE( 0, 2, 0, 2 ) ) ) {
 }
 
 ForceInline Vec4::Vec4( Normal const &n ) : m_value( n.m_value ) {}
@@ -23,30 +20,24 @@ ForceInline Vec4 Vec4::Zero() {
 }
 
 ForceInline Vec4 Vec4::ZeroPoint() {
-    Align( 16 ) float const f[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-    return _mm_load_ps( f );
+    return _mm_setr_ps( 0.0f, 0.0f, 0.0f, 1.0f );
 }
 
 ForceInline Vec4 Vec4::XAxis() {
-    Align( 16 ) float const f[4] = { 1.0f, 0.0f, 0.0f, 0.0f };
-    return _mm_load_ps( f );
+    return _mm_setr_ps( 1.0f, 0.0f, 0.0f, 0.0f );
 }
 
 ForceInline Vec4 Vec4::YAxis() {
-    Align( 16 ) float const f[4] = { 0.0f, 1.0f, 0.0f, 0.0f };
-    return _mm_load_ps( f );
+    return _mm_setr_ps( 0.0f, 1.0f, 0.0f, 0.0f );
 }
 
 ForceInline Vec4 Vec4::ZAxis() {
-    Align( 16 ) float const f[4] = { 0.0f, 0.0f, 1.0f, 0.0f };
-    return _mm_load_ps( f );
+    return _mm_setr_ps( 0.0f, 0.0f, 1.0f, 0.0f );
 }
 
 ForceInline Vec4 Vec4::WAxis() {
-    Align( 16 ) float const f[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-    return _mm_load_ps( f );
+    return _mm_setr_ps( 0.0f, 0.0f, 0.0f, 1.0f );
 }
-
 
 // assignment operators
 ForceInline Vec4& Vec4::operator+=( Vec4 const &v ) {
@@ -82,8 +73,7 @@ ForceInline Vec4& Vec4::operator*=( Scalar const &s ) {
 }
 
 ForceInline Vec4& Vec4::operator/=( Scalar const &s ) {
-    Scalar rcp = _mm_rcp_ps( s.m_value );
-    m_value = _mm_mul_ps( m_value, rcp.m_value );
+    m_value = _mm_mul_ps( m_value, _mm_rcp_ps( s.m_value ) );
     return *this;
 }
 
@@ -93,7 +83,7 @@ ForceInline Vec4 Vec4::operator+() const {
 }
 
 ForceInline Vec4 Vec4::operator-() const {
-    return _mm_sub_ps( _mm_xor_ps( m_value, m_value ), m_value );
+    return _mm_xor_ps( _mm_set_ps1( union_cast<float>( 0x80000000 ) ), m_value );
 }
 
 // binary operators
@@ -125,8 +115,7 @@ ForceInline Vec4 Vec4::operator*( Scalar const &s ) const {
 }
 
 ForceInline Vec4 Vec4::operator/( Scalar const &s ) const {
-    Scalar rcp = _mm_rcp_ps( s.m_value );
-    return _mm_mul_ps( m_value, rcp.m_value );
+    return _mm_mul_ps( m_value, _mm_rcp_ps( s.m_value ) );
 }
 
 ForceInline Vec4 operator*( Scalar const &s, Vec4 const &v ) {
@@ -177,7 +166,7 @@ ForceInline void Vec4::XYZW( float xyzw[4] ) const {
 }
 
 ForceInline Scalar Vec4::GetElem( int32_t i ) const {
-    return Select( m_value, i );
+    return SelectElem( m_value, i );
 }
 
 ForceInline void Vec4::SetX( Scalar const &x ) {
@@ -207,7 +196,7 @@ ForceInline void Vec4::SetXYZ( Vec4 const &xyz ) {
 }
 
 ForceInline void Vec4::SetElem( int32_t i, Scalar const &s ) {
-    m_value = Select( m_value, s.m_value, i );
+    m_value = Select( Bool( i ), s.m_value, m_value );
 }
 
 // misc
@@ -235,7 +224,7 @@ ForceInline Scalar Dot( Vec4 const &a, Vec4 const &b ) {
     __m128 wzyx = _mm_shuffle_ps( product, product, SHUFFLE( 3, 2, 1, 0 ) );
     __m128 xw_yz_zy_wx = _mm_add_ps( product, wzyx ); // (xx+ww), (yy+zz), (zz+yy), (ww+xx)
     __m128 zy_wx_xw_yz = _mm_shuffle_ps( xw_yz_zy_wx, xw_yz_zy_wx, SHUFFLE( 2, 3, 0, 1 ) );
-    return _mm_add_ps( xw_yz_zy_wx, zy_wx_xw_yz ); // (xx+ww+yy+zz), (yy+zz+ww+xx), (zz+yy+xx+ww), (ww+xx+yy+zz)
+    return _mm_add_ps( xw_yz_zy_wx, zy_wx_xw_yz );    // (xx+ww+yy+zz), (yy+zz+ww+xx), (zz+yy+xx+ww), (ww+xx+yy+zz)
 }
 
 ForceInline Scalar Dot3( Vec4 const &a, Vec4 const &b ) {

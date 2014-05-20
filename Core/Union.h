@@ -2,14 +2,13 @@
 #define UNION_H
 
 template<typename Out, typename In>
-inline Out union_cast( In i ) {
+__forceinline Out union_cast( In i ) {
     union Union {
         In i;
         Out o;
     };
 
-    Union u;
-    u.i = i;
+    Union u = { i };
     return u.o;
 }
 

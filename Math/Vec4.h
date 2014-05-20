@@ -82,6 +82,7 @@ private:
     friend Vec4 Cross( Vec4 const &a, Vec4 const &b );
     friend Mat44 operator*( Scalar const &s, Mat44 const &m );
     friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Vec4 Select( Bool const &condition, Vec4 const &true_, Vec4 const &false_ );
 };
 
 Vec4 Normalize( Vec4 const &v );
