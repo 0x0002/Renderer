@@ -110,3 +110,16 @@ ForceInline Bool Scalar::operator>=( float const &f ) const {
 ForceInline Scalar::operator float() const {
     return union_cast<float>( _mm_extract_ps( m_value, 0 ) );
 }
+
+// misc
+ForceInline Scalar Abs( Scalar const &s ) {
+    return _mm_and_ps( _mm_set_ps1( union_cast<float>( 0x7fffffff ) ), s.m_value );
+}
+
+ForceInline Scalar Min( Scalar const &a, Scalar const &b ) {
+    return _mm_min_ps( a.m_value, b.m_value );
+}
+
+ForceInline Scalar Max( Scalar const &a, Scalar const &b ) {
+    return _mm_max_ps( a.m_value, b.m_value );
+}

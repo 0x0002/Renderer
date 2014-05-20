@@ -74,9 +74,13 @@ private:
     friend Scalar RcpLength( Quat const &q );
     friend Scalar Dot( Quat const &a, Quat const &b );
     friend Scalar Select( Bool const &condition, Scalar const &true_, Scalar const &false_ );
+    friend Scalar Abs( Scalar const &s );
+    friend Scalar Min( Scalar const &a, Scalar const &b );
+    friend Scalar Max( Scalar const &a, Scalar const &b );
 };
 
 Scalar Abs( Scalar const &s );
-//Min
+Scalar Min( Scalar const &a, Scalar const &b );
+Scalar Max( Scalar const &a, Scalar const &b );
 
 #endif // SCALAR_H

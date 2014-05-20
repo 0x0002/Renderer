@@ -327,102 +327,8 @@ ForceInline Mat44 Abs( Mat44 const &m ) {
 }
 
 ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
-    Align( 16 ) float original[16];
-    _mm_store_ps( original,      m.m_r[0] );
-    _mm_store_ps( original + 4,  m.m_r[1] );
-    _mm_store_ps( original + 8,  m.m_r[2] );
-    _mm_store_ps( original + 12, m.m_r[3] );
-
-    float temp[ 12 ];				// used for intermediate calculations
-    float src[ 16 ];				// transpose of original matrix inverse
-    float inverse[ 16 ];			// matrix inverse
-
-    // transpose the original matrix
-    for( int i =  0; i < 4; i++ ) {
-        src[ i      ] = original[ i * 4    ];
-        src[ i + 4  ] = original[ i * 4 + 1];
-        src[ i + 8  ] = original[ i * 4 + 2];
-        src[ i + 12 ] = original[ i * 4 + 3];
-    }
-
-    // calculate pairs for the first 8 elements (cofactors)
-    temp[  0 ] = src[ 10 ] * src[ 15 ];
-    temp[  1 ] = src[ 11 ] * src[ 14 ];
-    temp[  2 ] = src[  9 ] * src[ 15 ];
-    temp[  3 ] = src[ 11 ] * src[ 13 ];
-    temp[  4 ] = src[  9 ] * src[ 14 ];
-    temp[  5 ] = src[ 10 ] * src[ 13 ];
-    temp[  6 ] = src[  8 ] * src[ 15 ];
-    temp[  7 ] = src[ 11 ] * src[ 12 ];
-    temp[  8 ] = src[  8 ] * src[ 14 ];
-    temp[  9 ] = src[ 10 ] * src[ 12 ];
-    temp[ 10 ] = src[  8 ] * src[ 13 ];
-    temp[ 11 ] = src[  9 ] * src[ 12 ];
-
-    // calculate first 8 elements (cofactors)
-    inverse[ 0 ]  = temp[ 0 ] * src[ 5 ] + temp[ 3 ] * src[ 6 ] + temp[  4 ] * src[ 7 ];
-    inverse[ 0 ] -= temp[ 1 ] * src[ 5 ] + temp[ 2 ] * src[ 6 ] + temp[  5 ] * src[ 7 ];
-    inverse[ 1 ]  = temp[ 1 ] * src[ 4 ] + temp[ 6 ] * src[ 6 ] + temp[  9 ] * src[ 7 ];
-    inverse[ 1 ] -= temp[ 0 ] * src[ 4 ] + temp[ 7 ] * src[ 6 ] + temp[  8 ] * src[ 7 ];
-    inverse[ 2 ]  = temp[ 2 ] * src[ 4 ] + temp[ 7 ] * src[ 5 ] + temp[ 10 ] * src[ 7 ];
-    inverse[ 2 ] -= temp[ 3 ] * src[ 4 ] + temp[ 6 ] * src[ 5 ] + temp[ 11 ] * src[ 7 ];
-    inverse[ 3 ]  = temp[ 5 ] * src[ 4 ] + temp[ 8 ] * src[ 5 ] + temp[ 11 ] * src[ 6 ];
-    inverse[ 3 ] -= temp[ 4 ] * src[ 4 ] + temp[ 9 ] * src[ 5 ] + temp[ 10 ] * src[ 6 ];
-    inverse[ 4 ]  = temp[ 1 ] * src[ 1 ] + temp[ 2 ] * src[ 2 ] + temp[  5 ] * src[ 3 ];
-    inverse[ 4 ] -= temp[ 0 ] * src[ 1 ] + temp[ 3 ] * src[ 2 ] + temp[  4 ] * src[ 3 ];
-    inverse[ 5 ]  = temp[ 0 ] * src[ 0 ] + temp[ 7 ] * src[ 2 ] + temp[  8 ] * src[ 3 ];
-    inverse[ 5 ] -= temp[ 1 ] * src[ 0 ] + temp[ 6 ] * src[ 2 ] + temp[  9 ] * src[ 3 ];
-    inverse[ 6 ]  = temp[ 3 ] * src[ 0 ] + temp[ 6 ] * src[ 1 ] + temp[ 11 ] * src[ 3 ];
-    inverse[ 6 ] -= temp[ 2 ] * src[ 0 ] + temp[ 7 ] * src[ 1 ] + temp[ 10 ] * src[ 3 ];
-    inverse[ 7 ]  = temp[ 4 ] * src[ 0 ] + temp[ 9 ] * src[ 1 ] + temp[ 10 ] * src[ 2 ];
-    inverse[ 7 ] -= temp[ 5 ] * src[ 0 ] + temp[ 8 ] * src[ 1 ] + temp[ 11 ] * src[ 2 ];
-
-    // calculate pairs for second 8 elements (cofactors)
-    temp[  0 ] = src[ 2 ] * src[ 7 ];
-    temp[  1 ] = src[ 3 ] * src[ 6 ];
-    temp[  2 ] = src[ 1 ] * src[ 7 ];
-    temp[  3 ] = src[ 3 ] * src[ 5 ];
-    temp[  4 ] = src[ 1 ] * src[ 6 ];
-    temp[  5 ] = src[ 2 ] * src[ 5 ];
-    temp[  6 ] = src[ 0 ] * src[ 7 ];
-    temp[  7 ] = src[ 3 ] * src[ 4 ];
-    temp[  8 ] = src[ 0 ] * src[ 6 ];
-    temp[  9 ] = src[ 2 ] * src[ 4 ];
-    temp[ 10 ] = src[ 0 ] * src[ 5 ];
-    temp[ 11 ] = src[ 1 ] * src[ 4 ];
-
-    // calculate second 8 elements (cofactors)
-    inverse[  8 ]  = temp[  0 ] * src[ 13 ] + temp[  3 ] * src[ 14 ] + temp[  4 ] * src[ 15 ];
-    inverse[  8 ] -= temp[  1 ] * src[ 13 ] + temp[  2 ] * src[ 14 ] + temp[  5 ] * src[ 15 ];
-    inverse[  9 ]  = temp[  1 ] * src[ 12 ] + temp[  6 ] * src[ 14 ] + temp[  9 ] * src[ 15 ];
-    inverse[  9 ] -= temp[  0 ] * src[ 12 ] + temp[  7 ] * src[ 14 ] + temp[  8 ] * src[ 15 ];
-    inverse[ 10 ]  = temp[  2 ] * src[ 12 ] + temp[  7 ] * src[ 13 ] + temp[ 10 ] * src[ 15 ];
-    inverse[ 10 ] -= temp[  3 ] * src[ 12 ] + temp[  6 ] * src[ 13 ] + temp[ 11 ] * src[ 15 ];
-    inverse[ 11 ]  = temp[  5 ] * src[ 12 ] + temp[  8 ] * src[ 13 ] + temp[ 11 ] * src[ 14 ];
-    inverse[ 11 ] -= temp[  4 ] * src[ 12 ] + temp[  9 ] * src[ 13 ] + temp[ 10 ] * src[ 14 ];
-    inverse[ 12 ]  = temp[  2 ] * src[ 10 ] + temp[  5 ] * src[ 11 ] + temp[  1 ] * src[  9 ];
-    inverse[ 12 ] -= temp[  4 ] * src[ 11 ] + temp[  0 ] * src[  9 ] + temp[  3 ] * src[ 10 ];
-    inverse[ 13 ]  = temp[  8 ] * src[ 11 ] + temp[  0 ] * src[  8 ] + temp[  7 ] * src[ 10 ];
-    inverse[ 13 ] -= temp[  6 ] * src[ 10 ] + temp[  9 ] * src[ 11 ] + temp[  1 ] * src[  8 ];
-    inverse[ 14 ]  = temp[  6 ] * src[  9 ] + temp[ 11 ] * src[ 11 ] + temp[  3 ] * src[  8 ];
-    inverse[ 14 ] -= temp[ 10 ] * src[ 11 ] + temp[  2 ] * src[  8 ] + temp[  7 ] * src[  9 ];
-    inverse[ 15 ]  = temp[ 10 ] * src[ 10 ] + temp[  4 ] * src[  8 ] + temp[  9 ] * src[  9 ];
-    inverse[ 15 ] -= temp[  8 ] * src[  9 ] + temp[ 11 ] * src[ 10 ] + temp[  5 ] * src[  8 ];
-
-    // calculate determinant
-    float det = src[ 0 ] * inverse[ 0 ] + src[ 1 ] * inverse[ 1 ] + src[ 2 ] * inverse[ 2 ] + src[ 3 ] * inverse[ 3 ];
-
-    if( determinant ) {
-        // if det == 0, matrix is uninvertable
-        *determinant = det;
-    }
-
-    // calculate matrix inverse
-    det =  1.0f / det;
-    return Mat44( inverse ) * det;
-
-#if 0
-    // something is wrong with the SSE code
+    // warning: Inverse( Mat44::Identity() ) does NOT return exactly an identity matrix
+    // returns determinant of 0 if the matrix is uninvertable. the matrix returned will probably have non-numeric values (INF)
 
     // based on Cramer's rule and code from an Intel paper called
     // "Streaming SIMD Extensions - Inverse of 4x4 Matrix"
@@ -431,18 +337,26 @@ ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
     __m128 row0, row1, row2, row3;
     __m128 det, tmp1;
 
-    // transpose the original matrix
-    row0 = m.m_r[0];
-    row1 = m.m_r[1];
-    row2 = m.m_r[2];
-    row3 = m.m_r[3];
-    _MM_TRANSPOSE4_PS( row0, row1, row2, row3 );
+    // reorder the original matrix to
+    // ( 00, 10, 20, 30,
+    //   21, 31, 01, 11, 
+    //   02, 12, 22, 32,
+    //   23, 33, 03, 13 )
+    // which is not transpose like it says in the paper
+    tmp1 = _mm_shuffle_ps( m.m_r[0], m.m_r[1], SHUFFLE( 0, 1, 0, 1 ) );
+    row1 = _mm_shuffle_ps( m.m_r[2], m.m_r[3], SHUFFLE( 0, 1, 0, 1 ) );
+    row0 = _mm_shuffle_ps( tmp1, row1, SHUFFLE( 0, 2, 0, 2 ) );
+    row1 = _mm_shuffle_ps( row1, tmp1, SHUFFLE( 1, 3, 1, 3 ) );
+    tmp1 = _mm_shuffle_ps( m.m_r[0], m.m_r[1], SHUFFLE( 2, 3, 2, 3 ) );
+    row3 = _mm_shuffle_ps( m.m_r[2], m.m_r[3], SHUFFLE( 2, 3, 2, 3 ) );
+    row2 = _mm_shuffle_ps( tmp1, row3, SHUFFLE( 0, 2, 0, 2 ) );
+    row3 = _mm_shuffle_ps( row3, tmp1, SHUFFLE( 1, 3, 1, 3 ) );
 
     // calculate cofactors
     tmp1   = _mm_mul_ps( row2, row3 );
     tmp1   = _mm_shuffle_ps( tmp1, tmp1, SHUFFLE( 1, 0, 3, 2 ) );
     minor0 = _mm_mul_ps( row1, tmp1);
-    minor1 = _mm_mul_ps( row0, tmp1);
+    minor1 = _mm_mul_ps( row0, tmp1);                             
     tmp1   = _mm_shuffle_ps( tmp1, tmp1, SHUFFLE( 2, 3, 0, 1 ) );
     minor0 = _mm_sub_ps( _mm_mul_ps( row1, tmp1 ), minor0 );
     minor1 = _mm_sub_ps( _mm_mul_ps( row0, tmp1 ), minor1 );
@@ -508,14 +422,14 @@ ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
     if( determinant ) {
         *determinant = det;
         
-        if( Math::IsNonNumber( union_cast<float>( _mm_extract_ps( det, 0 ) ) ) ) {
+        float d = union_cast<float>( _mm_extract_ps( det, 0 ) );
+        if( IsNonNumber( d ) || AlmostEqual( d, 0.0f ) ) {
             // uninvertable matrix
             *determinant = _mm_setzero_ps();
         }
     }
 
     return Mat44( minor0, minor1, minor2, minor3 );
-#endif
 }
 
 // transformation matrices

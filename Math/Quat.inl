@@ -122,7 +122,6 @@ ForceInline Scalar Quat::GetElem( int32_t i ) const {
     return SelectElem( m_value, i );
 }
 
-
 ForceInline void Quat::SetX( Scalar const &x ) {
     m_value = _mm_insert_ps( m_value, x.m_value, _MM_MK_INSERTPS_NDX( 0, 0, 0 ) );
 }
@@ -199,7 +198,6 @@ ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar t ) {
     beta = Select( flip, -beta, beta );
     return alpha * a + beta * b;
 }
-
 
 // transformation quaternions
 ForceInline Quat QuaternionRotationAxisAngle( Vec4 const &axis, Scalar angle ) {
