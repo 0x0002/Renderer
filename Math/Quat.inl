@@ -182,7 +182,7 @@ ForceInline Quat Inverse( Quat const &q ) {
 ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar t ) {
     Scalar cosOmega = Dot( a, b ); 
 
-    Bool flip = cosOmega < 0.0f;
+    Bool flip = cosOmega < Scalar::Zero();
     cosOmega = Select( flip, -cosOmega, cosOmega );
 
     Scalar omega = Acos( cosOmega );

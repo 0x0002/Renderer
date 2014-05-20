@@ -33,6 +33,45 @@ ForceInline Mat44::Mat44( Vec4 const &r0, Vec4 const &r1, Vec4 const &r2, Vec4 c
     m_r[3] = r3.m_value;
 }
 
+ForceInline Mat44::Mat44( Quat const &q ) {
+    /* Mat44( 1 - 2yy - 2zz, 2zw + 2xy      2zx - 2yw,     0,
+              2xy - 2zw,     1 - 2zz - 2xx, 2xw + 2yz,     0,
+              2yw + 2zx,     2yz - 2xw,     1 - 2xx - 2yy, 0,
+              0,                     0,                 0, 1 ); */
+
+    __m128 selectY = _mm_setr_ps( 0.0f, union_cast<float>( 0xffffffff ), 0.0f, 0.0f );
+    __m128 selectZ = _mm_setr_ps( 0.0f, union_cast<float>( 0xffffffff ), 0.0f, 0.0f );
+
+    __m128 xyzw_2 = _mm_add_ps( q.m_value, q.m_value );
+    __m128 yzxw_2 = _mm_shuffle_ps( xyzw_2, xyzw_2, SHUFFLE( 1, 2, 0, 3 ) );
+    __m128 zxyw_2 = _mm_shuffle_ps( xyzw_2, xyzw_2, SHUFFLE( 2, 0, 1, 3 ) );
+
+    __m128 wwww = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 3, 3, 3, 3 ) );
+    __m128 yzxw = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 1, 2, 0, 3 ) );
+    __m128 zxyw = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 2, 0, 1, 3 ) );
+
+    __m128 temp0 = _mm_mul_ps( yzxw_2, wwww );                                    // (2yw), (2zw), (2xw), (2ww)
+    __m128 temp1 = _mm_sub_ps( _mm_set_ps1( 1.0f ), _mm_mul_ps( yzxw_2, yzxw ) ); // (1 - 2yy), (1 - 2zz), (1 - 2xx), (1 - 2ww)
+    __m128 temp2 = _mm_mul_ps( xyzw_2, yzxw );                                    // (2xy), (2yz), (2zx), (2ww)
+
+    temp0 = _mm_add_ps( temp0, _mm_mul_ps( zxyw, xyzw_2 ) );                      // (2yw + 2zx), (2zw + 2xy), (2xw + 2yz), (2ww + 2ww)
+    temp1 = _mm_sub_ps( temp1, _mm_mul_ps( zxyw_2, zxyw ) );                      // (1 - 2yy - 2zz), (1 - 2zz - 2xx), (1 - 2xx - 2yy), (1 - 2ww - 2ww)
+    temp2 = _mm_sub_ps( temp2, _mm_mul_ps( zxyw_2, wwww ) );                      // (2xy - 2zw), (2yz - 2xw), (2zx - 2yw), (2ww - 2ww)
+
+    // Mat44( temp1.x, temp0.y, temp2.z, 0,
+    //        temp2.x, temp1.y, temp0.z, 0,
+    //        temp0.x, temp2.y, temp1.z, 0,
+    //              0,       0,       0, 1);
+
+    m_r[0] = Select( selectZ, temp2, Select( selectY, temp0, temp1 ) );
+    m_r[1] = Select( selectZ, temp0, Select( selectY, temp1, temp2 ) );
+    m_r[2] = Select( selectZ, temp1, Select( selectY, temp2, temp0 ) );
+    m_r[0] = _mm_insert_ps( m_r[0], temp2, _MM_MK_INSERTPS_NDX( 0, 3, 0 ) );
+    m_r[1] = _mm_insert_ps( m_r[1], temp2, _MM_MK_INSERTPS_NDX( 0, 3, 0 ) );
+    m_r[2] = _mm_insert_ps( m_r[2], temp2, _MM_MK_INSERTPS_NDX( 0, 3, 0 ) );
+    m_r[3] = _mm_setr_ps( 0.0f, 0.0f, 0.0f, 1.0f );
+}
+
 ForceInline Mat44 Mat44::Identity() {
     return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f, 0.0f,
@@ -338,10 +377,10 @@ ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
     __m128 det, tmp1;
 
     // reorder the original matrix to
-    // ( 00, 10, 20, 30,
-    //   21, 31, 01, 11, 
-    //   02, 12, 22, 32,
-    //   23, 33, 03, 13 )
+    // Mat44( 00, 10, 20, 30,
+    //        21, 31, 01, 11, 
+    //        02, 12, 22, 32,
+    //        23, 33, 03, 13 );
     // which is not transpose like it says in the paper
     tmp1 = _mm_shuffle_ps( m.m_r[0], m.m_r[1], SHUFFLE( 0, 1, 0, 1 ) );
     row1 = _mm_shuffle_ps( m.m_r[2], m.m_r[3], SHUFFLE( 0, 1, 0, 1 ) );
@@ -423,7 +462,7 @@ ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
         *determinant = det;
         
         float d = union_cast<float>( _mm_extract_ps( det, 0 ) );
-        if( IsNonNumber( d ) || AlmostEqual( d, 0.0f ) ) {
+        if( IsNonNumber( d ) || AlmostEqual( d, Scalar::Zero() ) ) {
             // uninvertable matrix
             *determinant = _mm_setzero_ps();
         }
@@ -567,10 +606,6 @@ ForceInline Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
                   Vec4::WAxis() );
 }
 
-//ForceInline Mat44 RotationQuaternion( Quat const &q ) {
-// &&&
-//}
-
 ForceInline Mat44 Scaling( Scalar const &s ) {
     /* Mat44( s, 0, 0, 0,
               0, s, 0, 0,
@@ -592,10 +627,6 @@ ForceInline Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz 
                   _mm_blend_ps( zero, sz.m_value, BLEND( 0, 0, 1, 0 ) ),
                   Vec4::WAxis().m_value );
 }
-
-//ForceInline Mat44 VQS( Vec4 const &v, Quat const &q, Scalar const &s ) {
-// &&&
-//}
 
 ForceInline Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up ) {
     /* Mat44( xAxis.x,            yAxis.x,            zAxis.x,            0,

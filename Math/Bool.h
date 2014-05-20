@@ -36,6 +36,7 @@ private:
     friend class Mat44;
     friend class Quat;
     friend __m128 Select( Bool const &condition, __m128 const &true_, __m128 const &false_ );
+    friend Mat44 RotationQuaternion( Quat const &q );
 };
 
 __m128 SelectElem( __m128 const &a, int32_t i ); // returns element i

@@ -63,6 +63,7 @@ private:
     __m128 m_value;
 
     // friends
+    friend class Mat44;
     friend Scalar Length( Quat const &q );
     friend Scalar Dot( Quat const &a, Quat const &b );
     friend Quat Conjugate( Quat const &q );
@@ -82,7 +83,7 @@ Quat Inverse( Quat const &q );
 Quat Slerp( Quat const &a, Quat const &b, Scalar t );
 
 // transformation quaternions
-Quat QuaternionRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
-Quat QuaternionRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
+Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
+Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
 
 #endif // QUAT_H

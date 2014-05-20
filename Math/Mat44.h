@@ -8,6 +8,7 @@
 #include "Math/Scalar.h"
 #include "Math/Vec4.h"
 #include "Math/Bool.h"
+#include "Math/Quat.h"
 
 class Mat44 {
 public:
@@ -19,6 +20,7 @@ public:
            float _20, float _21, float _22, float _23,
            float _30, float _31, float _32, float _33 );
     Mat44( Vec4 const &r0, Vec4 const &r1, Vec4 const &r2, Vec4 const &r3 );
+    Mat44( Quat const &q );
 
     static Mat44 Identity();
     static Mat44 Zero();
@@ -74,6 +76,7 @@ private:
     friend Mat44 Abs( Mat44 const &m );
     friend Mat44 Inverse( Mat44 const &m, Scalar *determinant );
     friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Mat44 RotationQuaternion( Quat const &q );
 };
 
 Mat44 Transpose( Mat44 const &m );
@@ -88,10 +91,8 @@ Mat44 RotationY( Scalar const &angle ); // angle is in radians
 Mat44 RotationZ( Scalar const &angle ); // angle is in radians
 Mat44 RotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ); // angle is in radians
 Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ); // angle is in radians
-//Mat44 RotationQuaternion( Quat const &q ); &&&
 Mat44 Scaling( Scalar const &s );
 Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
-//Mat44 VQS( Vec4 const &v, Quat const &q, Scalar const &s );
 Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up );
 
 // projection matrices

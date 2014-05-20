@@ -1,8 +1,6 @@
 #ifndef MATH_H
 #define MATH_H
 
-
-
 #include "Math/Vec4.h"
 #include "Math/Mat44.h"
 #include "Math/Scalar.h"
@@ -29,7 +27,7 @@ see http://realtimecollisiondetection.net/blog/?p=89 for more info
 ------------------------------------------------------------------------------*/
 __forceinline Bool AlmostEqual( Scalar a, Scalar b, Scalar absTol = 0.000001f , Scalar relTol = 0.01f ) {
     // absolute and relative comparisons are combined into a single comparison
-    return Abs( a - b ) <= Max( absTol, relTol * Max( fabs( a ), Abs( b ) ) );
+    return Abs( a - b ) <= Max( absTol, relTol * Max( Abs( a ), Abs( b ) ) );
 }
 
 #include "Math/Vec4.inl"
