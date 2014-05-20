@@ -585,7 +585,7 @@ ForceInline Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
     SinCos( angle, &s, &c );
     Scalar t = 1.0f - c;
 
-    Vec4 normalizedAxis = Normalize( axis );
+    Vec4 normalizedAxis = Normalize3w0( axis );
 
     Vec4 tAxis = t * normalizedAxis;
     Vec4 sAxis = s * normalizedAxis;
@@ -634,13 +634,13 @@ ForceInline Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up ) {
               xAxis.z,            yAxis.z,            zAxis.z,            0,
               -Dot( xAxis, eye ), -Dot( yAxis, eye ), -Dot( zAxis, eye ), 1 ); */
 
-    Vec4 zAxis = Normalize( eye - at );
-    Vec4 xAxis = Normalize( Cross( up, zAxis ) );
+    Vec4 zAxis = Normalize3w0( eye - at );
+    Vec4 xAxis = Normalize3w0( Cross( up, zAxis ) );
     Vec4 yAxis = Cross( zAxis, xAxis );
 
-    xAxis.SetW( -Dot( xAxis, eye ) );
-    yAxis.SetW( -Dot( yAxis, eye ) );
-    zAxis.SetW( -Dot( zAxis, eye ) );
+    xAxis.SetW( -Dot3( xAxis, eye ) );
+    yAxis.SetW( -Dot3( yAxis, eye ) );
+    zAxis.SetW( -Dot3( zAxis, eye ) );
     return Transpose( Mat44( xAxis, yAxis, zAxis, Vec4::WAxis() ) );
 }
  

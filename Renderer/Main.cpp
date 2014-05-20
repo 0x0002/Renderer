@@ -349,6 +349,8 @@ int main() {
         Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
         Quat c = +a;
         Quat d = -b;
+
+        int asdf = 0;
     }
 
     // quat binary operators
@@ -404,6 +406,12 @@ int main() {
     }
 
     // quat misc
+    {
+        Quat a = QuatRotationAxisAngle( Vec4( 1, 0, 0, 4 ), kPiBy2 );
+        Quat b = QuatRotationYawPitchRoll( 1, 2, 3 );
+
+        int asdf = 0;
+    }
 
 #endif
 

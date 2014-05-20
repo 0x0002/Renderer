@@ -69,6 +69,7 @@ private:
     friend Quat Conjugate( Quat const &q );
     friend Quat Select( Bool const &condition, Quat const &true_, Quat const &false_ );
     friend Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
+    friend Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
 };
 
 Quat Normalize( Quat const &q );

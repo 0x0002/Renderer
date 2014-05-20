@@ -225,7 +225,9 @@ ForceInline Quat Conjugate( Quat const &q ) {
 }
 
 ForceInline Quat Inverse( Quat const &q ) {
-    return Conjugate( q ) / LengthSquared( q );
+    // we are assuming that all quaternions are normalized, so we won't renormalize here
+    // otherwise: return Conjugate( q ) / LengthSquared( q );
+    return Conjugate( q );
 }
 
 ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar const &t ) {
@@ -250,7 +252,7 @@ ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar const &t ) {
 
 // transformation quaternions
 ForceInline Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
-    Vec4 a = Normalize( axis );
+    Vec4 a = Normalize3w0( axis );
     Scalar s, c;
     SinCos( angle * 0.5f, &s, &c );
 
@@ -259,5 +261,33 @@ ForceInline Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle ) 
 }
 
 ForceInline Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {
+    /* Quat( cy * sp * cr + sy * cp * sr,
+             sy * cp * cr - cy * sp * sr,
+             cy * cp * sr - sy * sp * cr,
+             cy * cp * cr + sy * sp * sr); */
 
+    Scalar sy, cy;
+    SinCos( yaw * 0.5f, &sy, &cy );
+
+    Scalar sp, cp;
+    SinCos( pitch * 0.5f, &sp, &cp );
+
+    Scalar sr, cr;
+    SinCos( roll * 0.5f, &sr, &cr );
+
+    __m128 cysycycy = _mm_blend_ps( cy.m_value, sy.m_value, BLEND( 0, 1, 0, 0 ) );
+    __m128 spcpcpcp = _mm_blend_ps( sp.m_value, cp.m_value, BLEND( 0, 1, 1, 1 ) );
+    __m128 crcrsrcr = _mm_blend_ps( cr.m_value, sr.m_value, BLEND( 0, 0, 1, 0 ) );
+
+    __m128 sycysysy = _mm_shuffle_ps( cysycycy, cysycycy, SHUFFLE( 1, 0, 1, 1 ) );
+    __m128 cpspspsp = _mm_shuffle_ps( spcpcpcp, spcpcpcp, SHUFFLE( 1, 0, 0, 0 ) );
+    __m128 srsrcrsr = _mm_shuffle_ps( crcrsrcr, crcrsrcr, SHUFFLE( 2, 2, 0, 2 ) );
+
+    __m128 temp0 = _mm_mul_ps( cysycycy, _mm_mul_ps( spcpcpcp, crcrsrcr ) );
+    __m128 temp1 = _mm_mul_ps( sycysysy, _mm_mul_ps( cpspspsp, srsrcrsr ) );
+
+    __m128 temp2 = _mm_add_ps( temp0, temp1 );
+    __m128 temp3 = _mm_sub_ps( temp0, temp1 );
+
+    return Quat( _mm_blend_ps( temp2, temp3, BLEND( 0, 1, 1, 0 ) ) );
 }

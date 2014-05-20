@@ -84,9 +84,11 @@ private:
     friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
     friend Vec4 Select( Bool const &condition, Vec4 const &true_, Vec4 const &false_ );
     friend Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
+    friend Vec4 Normalize3w0( Vec4 const &v );
 };
 
 Vec4 Normalize( Vec4 const &v );
+Vec4 Normalize3w0( Vec4 const &v );
 Scalar Length( Vec4 const &v );
 Scalar RcpLength( Vec4 const &v );
 Scalar LengthSquared( Vec4 const &v );

@@ -82,6 +82,7 @@ private:
     friend Scalar Min( Scalar const &a, Scalar const &b );
     friend Scalar Max( Scalar const &a, Scalar const &b );
     friend Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
+    friend Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
 };
 
 Scalar Abs( Scalar const &s );

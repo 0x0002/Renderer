@@ -204,6 +204,11 @@ ForceInline Vec4 Normalize( Vec4 const &v ) {
     return v * RcpLength( v );
 }
 
+ForceInline Vec4 Normalize3w0( Vec4 const &v ) {
+    __m128 vw0 = _mm_insert_ps( v.m_value, _mm_setzero_ps(), _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
+    return Normalize( Vec4( vw0 ) );
+}
+
 ForceInline Scalar Length( Vec4 const &v ) {
     return _mm_sqrt_ps( LengthSquared( v ).m_value );
 }
