@@ -174,15 +174,15 @@ ForceInline void Vec4::SetX( Scalar const &x ) {
 }
 
 ForceInline void Vec4::SetY( Scalar const &y ) {
-    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 0, 1, 0 ) );
+    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 1, 1, 0 ) );
 }
 
 ForceInline void Vec4::SetZ( Scalar const &z ) {
-    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 0, 2, 0 ) );
+    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 2, 2, 0 ) );
 }
 
 ForceInline void Vec4::SetW( Scalar const &w ) {
-    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 0, 3, 0 ) );
+    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
 }
 
 ForceInline void Vec4::SetXYZ( Scalar const &x, Scalar const &y, Scalar const &z ) {

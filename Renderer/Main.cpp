@@ -316,6 +316,95 @@ int main() {
 
         int asdf = 0;
     }
+
+    // quat constructors
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+        Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
+        Quat c( RotationAxisAngle( Vec4( 1.0f, 2.0f, 3.0f, 0.0f ), 2.0f ) );
+        Quat d( RotationX( kPiBy2 ) );
+
+        int asdf = 0;
+    }
+
+    // quat assignment operators
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+        Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
+
+        Quat c = a += b;
+        Quat d = c -= b;
+        Quat e = a *= b;
+        Quat f = c *= d;
+
+        Scalar s = Scalar( 1.0f ) * 2.0f;
+        Scalar s2 = 2.0f * Scalar( 2.0f );
+
+        int asdf = 0;
+    }
+
+    // quat unary operators
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+        Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
+        Quat c = +a;
+        Quat d = -b;
+    }
+
+    // quat binary operators
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+        Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
+
+        Quat c = a + b;
+        Quat d = c - b;
+        Quat e = a * b;
+        Quat f = c * d;
+
+        Quat g = a * 2.0f;
+        Quat h = b / 2.0f;
+
+        int asdf = 0;
+    }
+
+    // quat comparison operators
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+        Quat b( Scalar( 3.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
+        Bool c = a == a;
+        Bool d = a != b;
+        Bool e = a != a;
+    }
+
+    // quat accessors
+    {
+        Quat a( 1.0f, 2.0f, 3.0f, 4.0f );
+
+        float x = a.X();
+        float y = a.Y();
+        float z = a.Z();
+        float w = a.W();
+        float f[4];
+        a.XYZW( f );
+        x = a.GetElem( 0 );
+        y = a.GetElem( 1 );
+        z = a.GetElem( 2 );
+        w = a.GetElem( 3 );
+
+        a.SetX( -3.0f );
+        a.SetY( -5.0f );
+        a.SetZ( -10.0f );
+        a.SetW( -20.0f );
+        a.SetElem( 0, 50.0f );
+        a.SetElem( 1, 60.0f );
+        a.SetElem( 2, 70.0f );
+        a.SetElem( 3, 90.0f );
+
+        int asdf = 0;
+    }
+
+    // quat misc
+
 #endif
 
     return 0;

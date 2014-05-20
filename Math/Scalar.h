@@ -30,6 +30,10 @@ public:
     Scalar operator-( Scalar const &s ) const;
     Scalar operator*( Scalar const &s ) const;
     Scalar operator/( Scalar const &s ) const;
+    Scalar operator+( float f ) const;
+    Scalar operator-( float f ) const;
+    Scalar operator*( float f ) const;
+    Scalar operator/( float f ) const;
 
     // comparison operators
     Bool operator==( Scalar const &s ) const;
@@ -38,12 +42,12 @@ public:
     Bool operator>( Scalar const &s ) const;
     Bool operator<=( Scalar const &s ) const;
     Bool operator>=( Scalar const &s ) const;
-    Bool operator==( float const &s ) const;
-    Bool operator!=( float const &s ) const;
-    Bool operator<( float const &s ) const;
-    Bool operator>( float const &s ) const;
-    Bool operator<=( float const &s ) const;
-    Bool operator>=( float const &s ) const;
+    Bool operator==( float f ) const;
+    Bool operator!=( float f ) const;
+    Bool operator<( float f ) const;
+    Bool operator>( float f ) const;
+    Bool operator<=( float f ) const;
+    Bool operator>=( float f ) const;
 
     // accessors
     operator float() const;
@@ -77,6 +81,7 @@ private:
     friend Scalar Abs( Scalar const &s );
     friend Scalar Min( Scalar const &a, Scalar const &b );
     friend Scalar Max( Scalar const &a, Scalar const &b );
+    friend Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
 };
 
 Scalar Abs( Scalar const &s );

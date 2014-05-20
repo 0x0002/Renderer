@@ -32,7 +32,33 @@ ForceInline Quat& Quat::operator-=( Quat const &q ) {
 }
 
 ForceInline Quat& Quat::operator*=( Quat const &q ) {
+    /* Quat( q.w * x + q.x * w + q.y * z - q.z * y,
+             q.w * y + q.y * w + q.z * x - q.x * z,
+             q.w * z + q.z * w + q.x * y - q.y * x,
+             q.w * w - q.x * x - q.y * y - q.z * z); */
 
+    __m128 q_wwww = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 3, 3, 3, 3 ) );
+    __m128 q_xyzx = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 0, 1, 2, 0 ) );
+    __m128 q_yzxy = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 1, 2, 0, 1 ) );
+    __m128 q_zxyz = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 2, 0, 1, 2 ) );
+
+    __m128 wwwx = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 3, 3, 3, 0 ) );
+    __m128 zxyy = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 2, 0, 1, 1 ) );
+    __m128 yzxz = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 1, 2, 0, 2 ) );
+
+    __m128 temp0 = _mm_mul_ps( q_wwww, m_value );
+    __m128 temp1 = _mm_mul_ps( q_xyzx, wwwx );
+    __m128 temp2 = _mm_mul_ps( q_yzxy, zxyy );
+    __m128 temp3 = _mm_mul_ps( q_zxyz, yzxz );
+
+    __m128 temp4 = _mm_sub_ps( temp2, temp3 );
+    __m128 xyz_ = _mm_add_ps( temp0, _mm_add_ps( temp1, _mm_sub_ps( temp2, temp3 ) ) );
+    __m128 ___w = _mm_sub_ps( temp0, _mm_add_ps( temp1, _mm_add_ps( temp2, temp3 ) ) );
+
+    // the result should be normalized if both quaternions were normalized (assuming we are only using unit quaternions)
+    // but because of floating point error we will renormalize anyway
+    *this = Normalize( Quat( _mm_insert_ps( xyz_, ___w, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) ) );
+    return *this;
 }
 
 ForceInline Quat& Quat::operator*=( Scalar const &s ) {
@@ -64,7 +90,32 @@ ForceInline Quat Quat::operator-( Quat const &q ) const {
 }
 
 ForceInline Quat Quat::operator*( Quat const &q ) const {
+    /* Quat( q.w * x + q.x * w + q.y * z - q.z * y,
+             q.w * y + q.y * w + q.z * x - q.x * z,
+             q.w * z + q.z * w + q.x * y - q.y * x,
+             q.w * w - q.x * x - q.y * y - q.z * z); */
 
+    __m128 q_wwww = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 3, 3, 3, 3 ) );
+    __m128 q_xyzx = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 0, 1, 2, 0 ) );
+    __m128 q_yzxy = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 1, 2, 0, 1 ) );
+    __m128 q_zxyz = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 2, 0, 1, 2 ) );
+
+    __m128 wwwx = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 3, 3, 3, 0 ) );
+    __m128 zxyy = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 2, 0, 1, 1 ) );
+    __m128 yzxz = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 1, 2, 0, 2 ) );
+
+    __m128 temp0 = _mm_mul_ps( q_wwww, m_value );
+    __m128 temp1 = _mm_mul_ps( q_xyzx, wwwx );
+    __m128 temp2 = _mm_mul_ps( q_yzxy, zxyy );
+    __m128 temp3 = _mm_mul_ps( q_zxyz, yzxz );
+
+    __m128 temp4 = _mm_sub_ps( temp2, temp3 );
+    __m128 xyz_ = _mm_add_ps( temp0, _mm_add_ps( temp1, _mm_sub_ps( temp2, temp3 ) ) );
+    __m128 ___w = _mm_sub_ps( temp0, _mm_add_ps( temp1, _mm_add_ps( temp2, temp3 ) ) );
+
+    // the result should be normalized if both quaternions were normalized (assuming we are only using unit quaternions)
+    // but because of floating point error we will renormalize anyway
+    return Normalize( Quat( _mm_insert_ps( xyz_, ___w, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) ) );
 }
 
 ForceInline Quat Quat::operator*( Scalar const &s ) const {
@@ -127,15 +178,15 @@ ForceInline void Quat::SetX( Scalar const &x ) {
 }
 
 ForceInline void Quat::SetY( Scalar const &y ) {
-    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 0, 1, 0 ) );
+    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 1, 1, 0 ) );
 }
 
 ForceInline void Quat::SetZ( Scalar const &z ) {
-    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 0, 2, 0 ) );
+    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 2, 2, 0 ) );
 }
 
 ForceInline void Quat::SetW( Scalar const &w ) {
-    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 0, 3, 0 ) );
+    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 2, 3, 0 ) );
 }
 
 ForceInline void Quat::SetElem( int32_t i, Scalar const &s ) {
@@ -161,8 +212,6 @@ ForceInline Scalar LengthSquared( Quat const &q ) {
 
 ForceInline Scalar Dot( Quat const &a, Quat const &b ) {
     // use _mm_dp_ps instead?
-
-    // 8 instructions
     __m128 product = _mm_mul_ps( a.m_value, b.m_value );
     __m128 wzyx = _mm_shuffle_ps( product, product, SHUFFLE( 3, 2, 1, 0 ) );
     __m128 xw_yz_zy_wx = _mm_add_ps( product, wzyx ); // (xx+ww), (yy+zz), (zz+yy), (ww+xx)
@@ -179,7 +228,7 @@ ForceInline Quat Inverse( Quat const &q ) {
     return Conjugate( q ) / LengthSquared( q );
 }
 
-ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar t ) {
+ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar const &t ) {
     Scalar cosOmega = Dot( a, b ); 
 
     Bool flip = cosOmega < Scalar::Zero();
@@ -200,10 +249,15 @@ ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar t ) {
 }
 
 // transformation quaternions
-ForceInline Quat QuaternionRotationAxisAngle( Vec4 const &axis, Scalar angle ) {
+ForceInline Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
+    Vec4 a = Normalize( axis );
+    Scalar s, c;
+    SinCos( angle * 0.5f, &s, &c );
 
+    Vec4 xyz_ = a * s;
+    return Quat( _mm_insert_ps( xyz_.m_value, c.m_value, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) );
 }
 
-ForceInline Quat QuaternionRotationYawPitchRoll( Scalar yaw, Scalar pitch, Scalar roll ) {
+ForceInline Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {
 
 }

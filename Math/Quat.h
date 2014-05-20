@@ -68,6 +68,7 @@ private:
     friend Scalar Dot( Quat const &a, Quat const &b );
     friend Quat Conjugate( Quat const &q );
     friend Quat Select( Bool const &condition, Quat const &true_, Quat const &false_ );
+    friend Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
 };
 
 Quat Normalize( Quat const &q );

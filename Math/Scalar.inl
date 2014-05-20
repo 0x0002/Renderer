@@ -57,6 +57,22 @@ ForceInline Scalar Scalar::operator/( Scalar const &s ) const {
     return _mm_mul_ps( m_value, _mm_rcp_ps( s.m_value ) );
 }
 
+ForceInline Scalar Scalar::operator+( float f ) const {
+    return *this + Scalar( f );
+} 
+
+ForceInline Scalar Scalar::operator-( float f ) const {
+    return *this - Scalar( f );
+}
+
+ForceInline Scalar Scalar::operator*( float f ) const {
+    return *this * Scalar( f );
+}
+
+ForceInline Scalar Scalar::operator/( float f ) const {
+    return *this / Scalar( f );
+}
+
 // comparison operators
 ForceInline Bool Scalar::operator==( Scalar const &s ) const {
     return _mm_cmpeq_ps( m_value, s.m_value );
@@ -82,27 +98,27 @@ ForceInline Bool Scalar::operator>=( Scalar const &s ) const {
     return _mm_cmpge_ps( m_value, s.m_value );
 }
 
-ForceInline Bool Scalar::operator==( float const &f ) const {
+ForceInline Bool Scalar::operator==( float f ) const {
     return *this == Scalar( f );
 }
 
-ForceInline Bool Scalar::operator!=( float const &f ) const {
+ForceInline Bool Scalar::operator!=( float f ) const {
     return *this != Scalar( f );
 }
 
-ForceInline Bool Scalar::operator<( float const &f ) const {
+ForceInline Bool Scalar::operator<( float f ) const {
     return *this < Scalar( f );
 }
 
-ForceInline Bool Scalar::operator>( float const &f ) const {
+ForceInline Bool Scalar::operator>( float f ) const {
     return *this > Scalar( f );
 }
 
-ForceInline Bool Scalar::operator<=( float const &f ) const {
+ForceInline Bool Scalar::operator<=( float f ) const {
     return *this <= Scalar( f );
 }
 
-ForceInline Bool Scalar::operator>=( float const &f ) const {
+ForceInline Bool Scalar::operator>=( float f ) const {
     return *this >= Scalar( f );
 }
 
