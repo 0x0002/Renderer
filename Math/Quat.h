@@ -64,6 +64,7 @@ private:
 
     // friends
     friend class Mat44;
+    friend class Vec4;
     friend Scalar Length( Quat const &q );
     friend Scalar Dot( Quat const &a, Quat const &b );
     friend Quat Conjugate( Quat const &q );

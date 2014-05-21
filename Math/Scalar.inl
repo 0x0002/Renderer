@@ -139,3 +139,7 @@ ForceInline Scalar Min( Scalar const &a, Scalar const &b ) {
 ForceInline Scalar Max( Scalar const &a, Scalar const &b ) {
     return _mm_max_ps( a.m_value, b.m_value );
 }
+
+ForceInline Scalar Sqrt( Scalar const &s ) {
+    return sqrtf( s );
+}

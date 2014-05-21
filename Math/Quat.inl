@@ -13,7 +13,34 @@ ForceInline Quat::Quat( Scalar const &x, Scalar const &y, Scalar const &z, Scala
 }
 
 ForceInline Quat::Quat( Mat44 const &m ) {
+    // no attempt to optimize
+    Scalar trace = m.Elem( 0, 0 ) + m.Elem( 1, 1 ) + m.Elem( 2, 2 );
+    if( trace > 0.0f ) {
+        SetX( m.Elem( 1, 2 ) - m.Elem( 2, 1 ) );
+        SetY( m.Elem( 2, 0 ) - m.Elem( 0, 2 ) );
+        SetZ( m.Elem( 0, 1 ) - m.Elem( 1, 0 ) );
+        SetW( trace + 1.0f );
+    }
+    else if ( m.Elem( 0, 0 ) > m.Elem( 1, 1 ) && m.Elem( 0, 0 ) > m.Elem( 2, 2 ) ) {
+        SetX( m.Elem( 0, 0 ) - m.Elem( 1, 1 ) - m.Elem( 2, 2 ) + 1.0f );
+        SetY( m.Elem( 1, 0 ) + m.Elem( 0, 1 ) );
+        SetZ( m.Elem( 2, 0 ) + m.Elem( 0, 2 ) );
+        SetW( m.Elem( 1, 2 ) - m.Elem( 2, 1 ) );
+    }
+    else if ( m.Elem( 1, 1 ) > m.Elem( 2, 2 ) ) {
+        SetX( m.Elem( 1, 1 ) - m.Elem( 0, 0 ) - m.Elem( 2, 2 ) + 1.0f );
+        SetY( m.Elem( 1, 0 ) + m.Elem( 0, 1 ) );
+        SetZ( m.Elem( 2, 1 ) + m.Elem( 1, 2 ) );
+        SetW( m.Elem( 2, 0 ) - m.Elem( 0, 2 ) );
+    }
+    else {
+        SetX( m.Elem( 2, 2 ) - m.Elem( 0, 0 ) - m.Elem( 1, 1 ) + 1.0f );
+        SetY( m.Elem( 2, 0 ) + m.Elem( 0, 2 ) );
+        SetZ( m.Elem( 1, 2 ) + m.Elem( 2, 1 ) );
+        SetW( m.Elem( 0, 1 ) - m.Elem( 1, 0 ) );
+    }
 
+    *this = Normalize( *this );
 }
 
 ForceInline Quat Quat::Identity() {
@@ -57,7 +84,7 @@ ForceInline Quat& Quat::operator*=( Quat const &q ) {
 
     // the result should be normalized if both quaternions were normalized (assuming we are only using unit quaternions)
     // but because of floating point error we will renormalize anyway
-    *this = Normalize( Quat( _mm_insert_ps( xyz_, ___w, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) ) );
+    *this = Normalize( Quat( _mm_insert_ps( xyz_, ___w, INSERT( 3, 3 ) ) ) );
     return *this;
 }
 
@@ -115,7 +142,7 @@ ForceInline Quat Quat::operator*( Quat const &q ) const {
 
     // the result should be normalized if both quaternions were normalized (assuming we are only using unit quaternions)
     // but because of floating point error we will renormalize anyway
-    return Normalize( Quat( _mm_insert_ps( xyz_, ___w, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) ) );
+    return Normalize( Quat( _mm_insert_ps( xyz_, ___w, INSERT( 3, 3 ) ) ) );
 }
 
 ForceInline Quat Quat::operator*( Scalar const &s ) const {
@@ -174,19 +201,19 @@ ForceInline Scalar Quat::GetElem( int32_t i ) const {
 }
 
 ForceInline void Quat::SetX( Scalar const &x ) {
-    m_value = _mm_insert_ps( m_value, x.m_value, _MM_MK_INSERTPS_NDX( 0, 0, 0 ) );
+    m_value = _mm_insert_ps( m_value, x.m_value, INSERT( 0, 0 ) );
 }
 
 ForceInline void Quat::SetY( Scalar const &y ) {
-    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 1, 1, 0 ) );
+    m_value = _mm_insert_ps( m_value, y.m_value, INSERT( 1, 1 ) );
 }
 
 ForceInline void Quat::SetZ( Scalar const &z ) {
-    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 2, 2, 0 ) );
+    m_value = _mm_insert_ps( m_value, z.m_value, INSERT( 2, 2 ) );
 }
 
 ForceInline void Quat::SetW( Scalar const &w ) {
-    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 2, 3, 0 ) );
+    m_value = _mm_insert_ps( m_value, w.m_value, INSERT( 2, 3 ) );
 }
 
 ForceInline void Quat::SetElem( int32_t i, Scalar const &s ) {
@@ -257,7 +284,7 @@ ForceInline Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle ) 
     SinCos( angle * 0.5f, &s, &c );
 
     Vec4 xyz_ = a * s;
-    return Quat( _mm_insert_ps( xyz_.m_value, c.m_value, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) ) );
+    return Normalize( Quat( _mm_insert_ps( xyz_.m_value, c.m_value, INSERT( 3, 3 ) ) ) );
 }
 
 ForceInline Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {

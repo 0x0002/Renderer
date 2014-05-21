@@ -66,9 +66,9 @@ ForceInline Mat44::Mat44( Quat const &q ) {
     m_r[0] = Select( selectZ, temp2, Select( selectY, temp0, temp1 ) );
     m_r[1] = Select( selectZ, temp0, Select( selectY, temp1, temp2 ) );
     m_r[2] = Select( selectZ, temp1, Select( selectY, temp2, temp0 ) );
-    m_r[0] = _mm_insert_ps( m_r[0], temp2, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
-    m_r[1] = _mm_insert_ps( m_r[1], temp2, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
-    m_r[2] = _mm_insert_ps( m_r[2], temp2, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
+    m_r[0] = _mm_insert_ps( m_r[0], temp2, INSERT( 3, 3 ) );
+    m_r[1] = _mm_insert_ps( m_r[1], temp2, INSERT( 3, 3 ) );
+    m_r[2] = _mm_insert_ps( m_r[2], temp2, INSERT( 3, 3 ) );
     m_r[3] = _mm_setr_ps( 0.0f, 0.0f, 0.0f, 1.0f );
 }
 
@@ -321,7 +321,7 @@ ForceInline Vec4 Mat44::Row( int32_t i ) const {
 }
 
 ForceInline Scalar Mat44::Elem( int32_t r, int32_t c ) const {
-    return Row( r ).GetElem( c );
+    return Row( r ).Elem( c );
 }
 
 ForceInline void Mat44::SetRow0( Vec4 const &r0 ) {

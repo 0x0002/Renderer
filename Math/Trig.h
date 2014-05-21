@@ -5,14 +5,14 @@
 
 #define kPi      Scalar( 3.14159265358979323846f )
 #define k2Pi     Scalar( 6.28318530717958647692f )
-#define kPiBy2   Scalar( kPi / 2.0f )
-#define kPiBy4   Scalar( kPi / 4.0f )
-#define kInvPi   Scalar( 1.0f / kPi )
-#define kInv2Pi  Scalar( 1.0f / k2Pi )
+#define kPiBy2   Scalar( 3.14159265358979323846f / 2.0f )
+#define kPiBy4   Scalar( 3.14159265358979323846f / 4.0f )
+#define kInvPi   Scalar( 1.0f / 3.14159265358979323846f )
+#define kInv2Pi  Scalar( 1.0f / 6.28318530717958647692f )
 #define kSqrtTwo Scalar( 1.41421356237309504880f )
 
-#define ToRadian( degree ) ( (degree) * Scalar( kPi / 180.0f ) )
-#define ToDegree( radian ) ( (radian) * Scalar( 180.0f / kPi ) )
+#define ToRadian( degree ) ( (degree) * Scalar( 3.14159265358979323846f / 180.0f ) )
+#define ToDegree( radian ) ( (radian) * Scalar( 180.0f / 3.14159265358979323846f ) )
 
 // &&& lol fix trig functions
 #include <math.h>

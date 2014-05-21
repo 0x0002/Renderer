@@ -323,6 +323,8 @@ int main() {
         Quat b( Scalar( 1.0f ), Scalar( 2.0f ), Scalar( 3.0f ), Scalar( 4.0f ) );
         Quat c( RotationAxisAngle( Vec4( 1.0f, 2.0f, 3.0f, 0.0f ), 2.0f ) );
         Quat d( RotationX( kPiBy2 ) );
+        Quat e = QuatRotationAxisAngle( Vec4::XAxis(), kPiBy2 ); 
+        Quat f = QuatRotationAxisAngle( -Vec4::XAxis(), kPiBy2 );
 
         int asdf = 0;
     }
@@ -409,6 +411,12 @@ int main() {
     {
         Quat a = QuatRotationAxisAngle( Vec4( 1, 0, 0, 4 ), kPiBy2 );
         Quat b = QuatRotationYawPitchRoll( 1, 2, 3 );
+
+        Quat r = QuatRotationAxisAngle( Vec4::XAxis(), -kPiBy2 );
+        Quat r2 = QuatRotationAxisAngle( Vec4::YAxis(), kPiBy2 );
+        Vec4 v = Vec4( 0, 2, 0, 0.0f );
+        v *= r;
+        Vec4 v2 = v * (r * r2);
 
         int asdf = 0;
     }

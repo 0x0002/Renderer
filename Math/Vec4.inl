@@ -67,6 +67,45 @@ ForceInline Vec4& Vec4::operator*=( Mat44 const &m ) {
     return *this;
 }
 
+ForceInline Vec4& Vec4::operator*=( Quat const &q ) {
+    // a = 2*( q.x*v.x + q.y*v.y + q.z*v.z );
+    // b = 2*q.w;
+    // c = b*q.w - 1;
+
+    // return Vec4( c*v.x + a*q.x + b*( y*v.z - q.z*vector.y ),
+    //              c*v.y + a*q.y + b*( z*v.x - q.x*vector.z ),
+    //              c*v.z + a*q.z + b*( x*v.y - q.y*vector.x ) );
+
+    // Dot3( *this, q )
+    __m128 product = _mm_mul_ps( m_value, q.m_value );
+    __m128 y___ = _mm_shuffle_ps( product, product, SHUFFLE( 1, 0, 0, 0 ) );
+    __m128 z___ = _mm_shuffle_ps( product, product, SHUFFLE( 2, 0, 0, 0 ) );
+    __m128 dot = _mm_add_ps( product, _mm_add_ps( y___, z___ ) ); // (xx+yy+zz), (_+_+_), (_+_+_), (_+_+_)
+    dot = _mm_shuffle_ps( dot, dot, SHUFFLE( 0, 0, 0, 0 ) );
+
+    // Cross( q, *this )
+    __m128 yzx_ = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 1, 2, 0, 0 ) );
+    __m128 zxy_ = _mm_shuffle_ps(   m_value,   m_value, SHUFFLE( 2, 0, 1, 0 ) );
+    __m128 product1 = _mm_mul_ps( yzx_, zxy_ ); // (y1*z2), (z1*x2), (x1*y2), (x1*x2)
+    zxy_ = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 2, 0, 1, 0 ) );
+    yzx_ = _mm_shuffle_ps(   m_value,   m_value, SHUFFLE( 1, 2, 0, 0 ) );
+    __m128 product2 = _mm_mul_ps( zxy_, yzx_ ); // (z1*y2), (x1*z2), (y1*x2), (x1*x2)
+    __m128 cross = _mm_sub_ps( product1, product2 ); // w = 0  
+
+    __m128 w = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 3, 3, 3, 3 ) );
+    __m128 a = _mm_add_ps( dot, dot );                                // 2 * dot
+    __m128 b = _mm_add_ps( w, w );                                    // 2 * w
+    __m128 c = _mm_sub_ps( _mm_mul_ps( b, w ), _mm_set_ps1( 1.0f ) ); // 2*w^2 - 1
+
+    __m128 temp0 = _mm_mul_ps( c, m_value );
+    __m128 temp1 = _mm_mul_ps( a, q.m_value );
+    __m128 temp2 = _mm_mul_ps( b, cross );
+
+    __m128 result = _mm_add_ps( temp0, _mm_add_ps( temp1, temp2 ) );
+    m_value = _mm_insert_ps( result, result, INSERT_ZERO( 3 ) );
+    return *this;
+}
+
 ForceInline Vec4& Vec4::operator*=( Scalar const &s ) {
     m_value = _mm_mul_ps( m_value, s.m_value );
     return *this;
@@ -108,6 +147,44 @@ ForceInline Vec4 Vec4::operator*( Mat44 const &m ) const {
     __m128 x_mr0_y_mr1_z_mr2 = _mm_add_ps( x_mr0_y_mr1, _mm_mul_ps( z, m.m_r[2] ) ); // (x*m00 + y*m10 + z*m20),         (x*m01 + y*m11 + z*m21),        (x*m02 + y*m12 + z*m22),        (x*m03 + y*m13 + z*m23)
     __m128 w = _mm_shuffle_ps( m_value, m_value, SHUFFLE( 3, 3, 3, 3 ) );
     return _mm_add_ps( x_mr0_y_mr1_z_mr2, _mm_mul_ps( w, m.m_r[3] ) );               // (x*m00 + y*m10 + z*m20 + w*m30), (x*m01 + y*m11 + z*m21 +w*m31), (x*m02 + y*m12 + z*m22 +w*m32), (x*m03 + y*m13 + z*m23 +w*m33)
+}
+
+ForceInline Vec4 Vec4::operator*( Quat const &q ) const {
+    // a = 2*( q.x*v.x + q.y*v.y + q.z*v.z );
+    // b = 2*q.w;
+    // c = b*q.w - 1;
+
+    // return Vec4( c*v.x + a*q.x + b*( y*v.z - q.z*vector.y ),
+    //              c*v.y + a*q.y + b*( z*v.x - q.x*vector.z ),
+    //              c*v.z + a*q.z + b*( x*v.y - q.y*vector.x ) );
+
+    // Dot3( *this, q )
+    __m128 product = _mm_mul_ps( m_value, q.m_value );
+    __m128 y___ = _mm_shuffle_ps( product, product, SHUFFLE( 1, 0, 0, 0 ) );
+    __m128 z___ = _mm_shuffle_ps( product, product, SHUFFLE( 2, 0, 0, 0 ) );
+    __m128 dot = _mm_add_ps( product, _mm_add_ps( y___, z___ ) ); // (xx+yy+zz), (_+_+_), (_+_+_), (_+_+_)
+    dot = _mm_shuffle_ps( dot, dot, SHUFFLE( 0, 0, 0, 0 ) );
+
+    // Cross( q, *this )
+    __m128 yzx_ = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 1, 2, 0, 0 ) );
+    __m128 zxy_ = _mm_shuffle_ps(   m_value,   m_value, SHUFFLE( 2, 0, 1, 0 ) );
+    __m128 product1 = _mm_mul_ps( yzx_, zxy_ ); // (y1*z2), (z1*x2), (x1*y2), (x1*x2)
+    zxy_ = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 2, 0, 1, 0 ) );
+    yzx_ = _mm_shuffle_ps(   m_value,   m_value, SHUFFLE( 1, 2, 0, 0 ) );
+    __m128 product2 = _mm_mul_ps( zxy_, yzx_ ); // (z1*y2), (x1*z2), (y1*x2), (x1*x2)
+    __m128 cross = _mm_sub_ps( product1, product2 ); // w = 0  
+
+    __m128 w = _mm_shuffle_ps( q.m_value, q.m_value, SHUFFLE( 3, 3, 3, 3 ) );
+    __m128 a = _mm_add_ps( dot, dot );                                // 2 * dot
+    __m128 b = _mm_add_ps( w, w );                                    // 2 * w
+    __m128 c = _mm_sub_ps( _mm_mul_ps( b, w ), _mm_set_ps1( 1.0f ) ); // 2*w^2 - 1
+
+    __m128 temp0 = _mm_mul_ps( c, m_value );
+    __m128 temp1 = _mm_mul_ps( a, q.m_value );
+    __m128 temp2 = _mm_mul_ps( b, cross );
+
+    __m128 result = _mm_add_ps( temp0, _mm_add_ps( temp1, temp2 ) );
+    return _mm_insert_ps( result, result, INSERT_ZERO( 3 ) );
 }
 
 ForceInline Vec4 Vec4::operator*( Scalar const &s ) const {
@@ -165,24 +242,24 @@ ForceInline void Vec4::XYZW( float xyzw[4] ) const {
     xyzw[3] = f[3];
 }
 
-ForceInline Scalar Vec4::GetElem( int32_t i ) const {
+ForceInline Scalar Vec4::Elem( int32_t i ) const {
     return SelectElem( m_value, i );
 }
 
 ForceInline void Vec4::SetX( Scalar const &x ) {
-    m_value = _mm_insert_ps( m_value, x.m_value, _MM_MK_INSERTPS_NDX( 0, 0, 0 ) );
+    m_value = _mm_insert_ps( m_value, x.m_value, INSERT( 0, 0 ) );
 }
 
 ForceInline void Vec4::SetY( Scalar const &y ) {
-    m_value = _mm_insert_ps( m_value, y.m_value, _MM_MK_INSERTPS_NDX( 1, 1, 0 ) );
+    m_value = _mm_insert_ps( m_value, y.m_value, INSERT( 1, 1 ) );
 }
 
 ForceInline void Vec4::SetZ( Scalar const &z ) {
-    m_value = _mm_insert_ps( m_value, z.m_value, _MM_MK_INSERTPS_NDX( 2, 2, 0 ) );
+    m_value = _mm_insert_ps( m_value, z.m_value, INSERT( 2, 2 ) );
 }
 
 ForceInline void Vec4::SetW( Scalar const &w ) {
-    m_value = _mm_insert_ps( m_value, w.m_value, _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
+    m_value = _mm_insert_ps( m_value, w.m_value, INSERT( 3, 3 ) );
 }
 
 ForceInline void Vec4::SetXYZ( Scalar const &x, Scalar const &y, Scalar const &z ) {
@@ -205,7 +282,7 @@ ForceInline Vec4 Normalize( Vec4 const &v ) {
 }
 
 ForceInline Vec4 Normalize3w0( Vec4 const &v ) {
-    __m128 vw0 = _mm_insert_ps( v.m_value, _mm_setzero_ps(), _MM_MK_INSERTPS_NDX( 3, 3, 0 ) );
+    __m128 vw0 = _mm_insert_ps( v.m_value, v.m_value, INSERT_ZERO( 3 ) );
     return Normalize( Vec4( vw0 ) );
 }
 
@@ -244,13 +321,11 @@ ForceInline Scalar Dot3( Vec4 const &a, Vec4 const &b ) {
 }
 
 ForceInline Vec4 Cross( Vec4 const &a, Vec4 const &b ) {
-    uint32_t const yzx_Mask = SHUFFLE( 1, 2, 0, 0 );
-    uint32_t const zxy_Mask = SHUFFLE( 2, 0, 1, 0 );
-    __m128 yzx_ = _mm_shuffle_ps( a.m_value, a.m_value, yzx_Mask );
-    __m128 zxy_ = _mm_shuffle_ps( b.m_value, b.m_value, zxy_Mask );
+    __m128 yzx_ = _mm_shuffle_ps( a.m_value, a.m_value, SHUFFLE( 1, 2, 0, 0 ) );
+    __m128 zxy_ = _mm_shuffle_ps( b.m_value, b.m_value, SHUFFLE( 2, 0, 1, 0 ) );
     __m128 product1 = _mm_mul_ps( yzx_, zxy_ ); // (y1*z2), (z1*x2), (x1*y2), (x1*x2)
-    zxy_ = _mm_shuffle_ps( a.m_value, a.m_value, zxy_Mask );
-    yzx_ = _mm_shuffle_ps( b.m_value, b.m_value, yzx_Mask );
+    zxy_ = _mm_shuffle_ps( a.m_value, a.m_value, SHUFFLE( 2, 0, 1, 0 ) );
+    yzx_ = _mm_shuffle_ps( b.m_value, b.m_value, SHUFFLE( 1, 2, 0, 0 ) );
     __m128 product2 = _mm_mul_ps( zxy_, yzx_ ); // (z1*y2), (x1*z2), (y1*x2), (x1*x2)
     return _mm_sub_ps( product1, product2 ); // w = 0
 }

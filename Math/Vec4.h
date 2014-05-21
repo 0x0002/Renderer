@@ -9,6 +9,7 @@
 #include "Math/Scalar.h"
 #include "Math/Bool.h"
 #include "Math/Normal.h"
+#include "Math/Quat.h"
 
 class Vec4 {
 public:
@@ -30,6 +31,7 @@ public:
     Vec4& operator-=( Vec4 const &v );
     Vec4& operator*=( Vec4 const &v );
     Vec4& operator*=( Mat44 const &m );
+    Vec4& operator*=( Quat const &m );
     Vec4& operator*=( Scalar const &s );
     Vec4& operator/=( Scalar const &s );
 
@@ -42,6 +44,7 @@ public:
     Vec4 operator-( Vec4 const &v ) const;
     Vec4 operator*( Vec4 const &v ) const;
     Vec4 operator*( Mat44 const &m ) const;
+    Vec4 operator*( Quat const &q ) const;
     Vec4 operator*( Scalar const &s ) const;
     Vec4 operator/( Scalar const &s ) const;
 
@@ -58,7 +61,7 @@ public:
     Scalar W() const;
     void XYZ( float xyz[3] ) const;
     void XYZW( float xyzw[4] ) const;
-    Scalar GetElem( int32_t i ) const;
+    Scalar Elem( int32_t i ) const; 
 
     void SetX( Scalar const &x );
     void SetY( Scalar const &y );
@@ -77,6 +80,7 @@ private:
     // friends
     friend class Mat44;
     friend class Normal;
+    friend class Quat;
     friend Scalar Dot( Vec4 const &a, Vec4 const &b );
     friend Scalar Dot3( Vec4 const &a, Vec4 const &b );
     friend Vec4 Cross( Vec4 const &a, Vec4 const &b );

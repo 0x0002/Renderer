@@ -88,5 +88,6 @@ private:
 Scalar Abs( Scalar const &s );
 Scalar Min( Scalar const &a, Scalar const &b );
 Scalar Max( Scalar const &a, Scalar const &b );
+Scalar Sqrt( Scalar const &s );
 
 #endif // SCALAR_H

@@ -14,6 +14,12 @@
 // mask for _mm_blend_ps
 #define BLEND( fp0, fp1, fp2, fp3 ) (((fp3) << 3) | ((fp2) << 2) | ((fp1) << 1) | (fp0))
 
+// mask for _mm_insert_ps
+#define INSERT( src, dst ) (((src) << 6) | ((dst) << 4))
+
+// mask for _mm_insert_ps
+#define INSERT_ZERO( i ) (1 << (i))
+
 #define ForceInline __forceinline
 
 #endif // SSE_H
