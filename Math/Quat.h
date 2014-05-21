@@ -85,7 +85,7 @@ Quat Inverse( Quat const &q );
 
 Quat Slerp( Quat const &a, Quat const &b, Scalar t );
 
-// transformation quaternions
+// rotation quaternions
 Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );
 Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll );
 

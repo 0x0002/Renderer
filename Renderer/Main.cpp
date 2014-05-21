@@ -1,5 +1,11 @@
 
 #include "Math/Math.h"
+#include "Core/String.h"
+
+
+#include <string>
+#include <map>
+#include <algorithm>
 
 int main() {
 #if 0
@@ -173,7 +179,7 @@ int main() {
     }
 #endif
 
-#if 1
+#if 0
     static float const f[16] = {  1.0f,  2.0f,  3.0f,  4.0f, 
         5.0f,  6.0f,  7.0f,  8.0f,
         9.0f, 10.0f, 11.0f, 12.0f,
@@ -422,6 +428,38 @@ int main() {
     }
 
 #endif
+    
+    // string
+    {
+        String a;
+        String b = "string b";
+        String const c = b;
+        String d( a );
+
+        String e = b + c;
+        e += e;
+
+        std::string::iterator it2;
+        
+        std::map<int, int> m;
+        std::map<int, int>::iterator it3;
+        
+
+        String::iterator it = b.begin();
+        for( ; it != b.end(); ++it ) {
+            char temp = *it;
+
+            int asdf = 0;
+        }
+
+        for( char c : b ) {
+            printf( "%c", c );
+        }
+
+        auto result = std::find( b.begin() + 5, b.end(), 'r' );
+
+        int asdf = 0;
+    }
 
     return 0;
 }

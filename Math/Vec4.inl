@@ -76,6 +76,8 @@ ForceInline Vec4& Vec4::operator*=( Quat const &q ) {
     //              c*v.y + a*q.y + b*( z*v.x - q.x*vector.z ),
     //              c*v.z + a*q.z + b*( x*v.y - q.y*vector.x ) );
 
+    // this is performing Inverse( q ) * *this * q
+
     // Dot3( *this, q )
     __m128 product = _mm_mul_ps( m_value, q.m_value );
     __m128 y___ = _mm_shuffle_ps( product, product, SHUFFLE( 1, 0, 0, 0 ) );
@@ -157,6 +159,8 @@ ForceInline Vec4 Vec4::operator*( Quat const &q ) const {
     // return Vec4( c*v.x + a*q.x + b*( y*v.z - q.z*vector.y ),
     //              c*v.y + a*q.y + b*( z*v.x - q.x*vector.z ),
     //              c*v.z + a*q.z + b*( x*v.y - q.y*vector.x ) );
+
+    // this is performing Inverse( q ) * *this * q
 
     // Dot3( *this, q )
     __m128 product = _mm_mul_ps( m_value, q.m_value );

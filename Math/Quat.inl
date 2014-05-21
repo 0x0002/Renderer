@@ -13,7 +13,7 @@ ForceInline Quat::Quat( Scalar const &x, Scalar const &y, Scalar const &z, Scala
 }
 
 ForceInline Quat::Quat( Mat44 const &m ) {
-    // no attempt to optimize
+    // no attempt to optimize this
     Scalar trace = m.Elem( 0, 0 ) + m.Elem( 1, 1 ) + m.Elem( 2, 2 );
     if( trace > 0.0f ) {
         SetX( m.Elem( 1, 2 ) - m.Elem( 2, 1 ) );

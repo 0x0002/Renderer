@@ -132,13 +132,19 @@
   <ItemGroup>
     <ClInclude Include="Align.h" />
     <ClInclude Include="Atomic.h" />
+    <ClInclude Include="Hash.h" />
+    <ClInclude Include="HashTable.h" />
     <ClInclude Include="IEEE754.h" />
+    <ClInclude Include="Iterator.h" />
     <ClInclude Include="StdTypes.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Union.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="IEEE754.cpp" />
+    <ClCompile Include="Iterator.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
