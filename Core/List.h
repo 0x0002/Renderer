@@ -37,6 +37,7 @@ public:
     // capacity
     size_t Size() const;
     size_t MaxSize() const;
+    size_t Capacity() const;
     
     size_t Empty() const;
 
@@ -44,8 +45,10 @@ public:
     void Insert( const_iterator pos, T const &val );
     void PushFront( T const &val );
     void PushBack( T const &val );
+
     void PopFront();
     void PopBack();
+    void Erase( const_iterator pos );
 
     // accessors
     T& Front();
@@ -56,10 +59,13 @@ public:
 
 private:
     enum {
-        kEndIdx = 1;
+        kEndIdx = 0
     };
 
     void Init();
+
+    uint16_t HeadIdx() const;
+    uint16_t TailIdx() const;
 
     template<typename T, typename A>
     friend void Swap( List<T, A> &a, List<T, A> &b );
@@ -69,12 +75,8 @@ private:
 
 private:
     A        &m_allocator;
-
-    size_t    m_size; // number of elements allocated
-
     Node     *m_list;
-    uint16_t  m_headIdx;
-    uint16_t  m_tailIdx;
+    uint16_t  m_size;       // number of elements allocated
     uint16_t  m_freeIdx;
     uint16_t  m_length;
 
