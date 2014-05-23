@@ -10,6 +10,23 @@ String::String( char const *s ) {
     strcpy_s( m_string, s );
 }
 
+// iterators
+String::iterator String::begin() {
+    return m_string;
+}
+
+String::const_iterator String::begin() const {
+    return m_string;
+}
+
+String::iterator String::end() {
+    return m_string + Length();
+}
+
+String::const_iterator String::end() const {
+    return m_string + Length();
+}
+
 // capacity
 size_t String::Length() const {
     return strlen( m_string );
@@ -44,35 +61,22 @@ char const& String::operator[]( size_t i ) const {
     return m_string[i];
 }
 
-char* String::c_str() {
+String::operator char*() {
     return m_string;
 }
 
-char const* String::c_str() const {
+String::operator char const*() const {
     return m_string;
 }
 
-char* String::data() {
+char* String::Data() {
     return m_string;
 }
 
-char const* String::data() const {
+char const* String::Data() const {
     return m_string;
 }
 
-// iterators
-String::iterator String::begin() {
-    return m_string;
-}
-
-String::const_iterator String::begin() const {
-    return m_string;
-}
-
-String::iterator String::end() {
-    return m_string + Length();
-}
-
-String::const_iterator String::end() const {
-    return m_string + Length();
+size_t String::DataSize() const {
+    return kSize;
 }

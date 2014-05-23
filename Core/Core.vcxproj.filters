@@ -9,12 +9,26 @@
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="Hash.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="FilePath.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Allocator.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="ListNode.h" />
+    <ClInclude Include="ListIterator.h" />
+    <ClInclude Include="Memory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="IEEE754.cpp" />
     <ClCompile Include="String.cpp" />
+    <ClCompile Include="FilePath.cpp" />
+    <ClCompile Include="Hash.cpp" />
+    <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="Iterator.cpp" />
+    <ClCompile Include="Memory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="List.inl" />
+    <None Include="ListIterator.inl" />
   </ItemGroup>
 </Project>

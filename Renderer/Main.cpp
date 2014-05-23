@@ -1,11 +1,39 @@
 
 #include "Math/Math.h"
 #include "Core/String.h"
+#include "Core/List.h"
 
 
 #include <string>
+#include <list>
 #include <map>
 #include <algorithm>
+
+class A {
+public:
+    A() {
+        int asdf = 0;
+    }
+
+    ~A() {
+        int asdf = 0;
+    }
+
+    A( A const &a ) {
+        int asdf = 0;
+    }
+
+    A& operator=( A a ) {
+        int asdf = 0;
+        return *this;
+    }
+
+    A( A const &&a ) {
+        int asdf = 0;
+    }
+};
+
+template class List<A>;
 
 int main() {
 #if 0
@@ -460,6 +488,31 @@ int main() {
 
         int asdf = 0;
     }
+
+    // list
+    {
+        std::list<int> l;
+        l.cbegin();
+
+        List<int> a;
+
+        a.PushBack( 1 );
+        a.PushBack( 2 );
+        a.PushBack( 3 );
+
+        List<int>::iterator iter = a.begin();
+        for( int i : a ) {
+
+            int temp = i;
+
+            int asdf = 0;
+        }
+
+        //A asdf;
+        int asdf = 0;
+    }
+
+
 
     return 0;
 }

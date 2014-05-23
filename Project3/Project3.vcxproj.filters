@@ -5,5 +5,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ComponentBase.h" />
+    <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="ComponentType1.h" />
+    <ClInclude Include="ObjectManager.h" />
   </ItemGroup>
 </Project>

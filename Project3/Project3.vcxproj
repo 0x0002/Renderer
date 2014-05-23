@@ -30,6 +30,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ComponentBase.h" />
+    <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="ComponentType1.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

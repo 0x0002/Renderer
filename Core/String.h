@@ -10,6 +10,16 @@ public:
     String();
     String( char const *s );
 
+    // iterators
+    typedef Iterator<char> iterator;
+    typedef Iterator<char const> const_iterator;
+
+    iterator begin();
+    const_iterator begin() const;
+
+    iterator end();
+    const_iterator end() const;
+
     // capacity
     size_t Length() const;
     size_t MaxLength() const;
@@ -24,21 +34,12 @@ public:
     char& operator[]( size_t i );
     char const& operator[]( size_t i ) const;
 
-    char* c_str();
-    char const* c_str() const;
+    operator char*();
+    operator char const*() const;
 
-    char* data();
-    char const* data() const;
-
-    // iterators
-    typedef Iterator<char> iterator;
-    typedef Iterator<char const> const_iterator;
-
-    iterator begin();
-    const_iterator begin() const;
-
-    iterator end();
-    const_iterator end() const;
+    char* Data();
+    char const* Data() const;
+    size_t DataSize() const;
 
 private:
     enum { kSize = 512 };
