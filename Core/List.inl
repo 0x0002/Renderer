@@ -96,7 +96,7 @@ inline size_t List<T, A>::Empty() const {
 
 // modifiers
 template<typename T, typename A>
-inline void List<T, A>::Insert( const_iterator pos, T const &val ) {
+inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
     //Assert( m_length < Capacity() || m_growable ); &&&
 
     if( m_length == Capacity() && m_growable )
@@ -124,129 +124,25 @@ inline void List<T, A>::Insert( const_iterator pos, T const &val ) {
 template<typename T, typename A>
 inline void List<T, A>::PushFront( T const &val ) {
     Insert( begin(), val );
-#if 0
-    //Assert( m_length < Capacity() || m_growable ); &&&
-
-    if( m_length == Capacity() && m_growable )
-        Grow();
-
-    ++m_length;
-
-    // remove node from free list
-    uint16_t nodeIdx = m_freeIdx;
-    Node &node = m_list[nodeIdx];
-    m_freeIdx = node.m_next;
-    
-    // add node to list
-    node.m_next = HeadIdx();
-    node.m_prev = kEndIdx;
-    new ( &node.m_value ) T( val );
-
-    //m_list[TailIdx()]->m_next = nodeIdx;
-    m_list[HeadIdx()]->m_prev = nodeIdx;
-    m_list[kEndIdx]->m_next = nodeIdx;
-#endif
 }
 
 template<typename T, typename A>
 inline void List<T, A>::PushBack( T const &val ) {
     Insert( end(), val );
-#if 0
-    //Assert( m_length < Capacity() || m_growable ); &&&
-
-    if( m_length == Capacity() && m_growable )
-        Grow();
-
-    ++m_length;
-
-    // remove node from free list
-    uint16_t nodeIdx = m_freeIdx;
-    Node &node = m_list[nodeIdx];
-    m_freeIdx = node.m_next;
-
-    // add node to list
-    node.m_next = kEndIdx;
-    node.m_prev = TailIdx();
-    new ( &node.m_value ) T( val );
-
-    m_list[TailIdx()]->m_next = nodeIdx;
-    m_list[kEndIdx]->m_prev = nodeIdx;
-#endif
 }
 
 template<typename T, typename A>
 inline void List<T, A>::PopFront() {
     Erase( begin() );
-#if 0
-    //Assert( m_length != 0 ); &&&
-
-    --m_length;
-
-    // remove node from list
-    uint16_t nodeIdx = m_headIdx;
-    Node &node = m_list[nodeIdx];
-
-    m_list[HeadIdx()].m_prev = kEndIdx;
-    m_list[kEndIdx].m_next = node.m_next;
-
-
-
-    
-
-    m_headIdx = node.m_next;
-
-    if( m_headIdx != Node::kNullIdx )
-        m_list[m_headIdx].m_prev = Node::kNullIdx;
-
-    if( m_tailIdx == nodeIdx )
-        m_tailIdx = Node::kNullIdx;
-
-    // put node back on front free list
-    node.m_next = m_freeIdx;
-    node.m_prev = Node::kNullIdx;
-    node.m_value.~T();
-    
-    if( m_freeIdx != Node::kNullIdx )
-        m_list[m_freeIdx].m_prev = nodeIdx;
-
-    m_freeIdx = nodeIdx;
-#endif
 }
 
 template<typename T, typename A>
 inline void List<T, A>::PopBack() {
     Erase( --end() );
-#if 0
-    //Assert( m_length != 0 ); &&&
-
-    --m_length;
-
-    // remove node from list
-    uint16_t nodeIdx = m_tailIdx;
-    Node &node = m_list[nodeIdx];
-
-    m_tailIdx = node.m_prev;
-
-    if( m_tailIdx != Node::kNullIdx )
-        m_list[m_tailIdx].m_next = Node::kNullIdx;
-
-    if( m_headIdx == nodeIdx )
-        m_headIdx = Node::kNullIdx;
-
-    // put node back on front free list
-    node.m_next = m_freeIdx;
-    node.m_prev = Node::kNullIdx;
-    node.m_value.~T();
-
-    if( m_freeIdx != Node::kNullIdx )
-        m_list[m_freeIdx].m_prev = nodeIdx;
-
-    m_freeIdx = nodeIdx;
-#endif
 }
 
 template<typename T, typename A>
-inline void List<T, A>::Erase( const_iterator pos ) {
+inline void List<T, A>::Erase( const_iterator const &pos ) {
     //Assert( m_length != 0 ); &&&
 
     --m_length;

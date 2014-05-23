@@ -42,13 +42,13 @@ public:
     size_t Empty() const;
 
     // modifiers
-    void Insert( const_iterator pos, T const &val );
+    void Insert( const_iterator const &pos, T const &val );
     void PushFront( T const &val );
     void PushBack( T const &val );
 
     void PopFront();
     void PopBack();
-    void Erase( const_iterator pos );
+    void Erase( const_iterator const &pos );
 
     // accessors
     T& Front();
