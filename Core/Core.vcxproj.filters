@@ -16,6 +16,9 @@
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="ListIterator.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Assert.h" />
+    <ClInclude Include="Print.h" />
+    <ClInclude Include="Console.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
@@ -26,6 +29,9 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Assert.cpp" />
+    <ClCompile Include="Print.cpp" />
+    <ClCompile Include="Console.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="List.inl" />

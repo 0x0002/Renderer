@@ -132,7 +132,9 @@
   <ItemGroup>
     <ClInclude Include="Align.h" />
     <ClInclude Include="Allocator.h" />
+    <ClInclude Include="Assert.h" />
     <ClInclude Include="Atomic.h" />
+    <ClInclude Include="Console.h" />
     <ClInclude Include="FilePath.h" />
     <ClInclude Include="Hash.h" />
     <ClInclude Include="HashTable.h" />
@@ -142,13 +144,16 @@
     <ClInclude Include="ListIterator.h" />
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Print.h" />
     <ClInclude Include="StdTypes.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Union.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
+    <ClCompile Include="Assert.cpp" />
     <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="Hash.cpp" />
     <ClCompile Include="IEEE754.cpp" />
@@ -157,6 +162,7 @@
       <FileType>CppCode</FileType>
     </None>
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Print.cpp" />
     <ClCompile Include="String.cpp" />
     <None Include="ListIterator.inl" />
   </ItemGroup>

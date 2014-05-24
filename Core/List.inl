@@ -1,4 +1,5 @@
 #include "Core/Memory.h"
+#include "Core/Assert.h"
 
 #include <utility>
 
@@ -11,7 +12,7 @@ inline List<T, A>::List( uint16_t size, A &allocator, bool growable ) :
     m_freeIdx( 1 ),
     m_length( 0 ),
     m_growable( growable ) {
-    //Assert( m_size <= MaxSize() ); &&&
+    Assert( m_size <= MaxSize() );
     Init();
 }
 
@@ -29,7 +30,7 @@ List<T, A>::List( List<T, A> const &list ) :
 }
 
 template<typename T, typename A>
-//inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor
+//inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor in VS2013
 inline List<T, A>::List( List<T, A> &&list ) :
     m_allocator( list.m_allocator ),
     m_size( list.m_size + 1 ),
@@ -97,7 +98,7 @@ inline size_t List<T, A>::Empty() const {
 // modifiers
 template<typename T, typename A>
 inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
-    //Assert( m_length < Capacity() || m_growable ); &&&
+    Assert( m_length < Capacity() || m_growable );
 
     if( m_length == Capacity() && m_growable )
         Grow();
@@ -143,7 +144,7 @@ inline void List<T, A>::PopBack() {
 
 template<typename T, typename A>
 inline void List<T, A>::Erase( const_iterator const &pos ) {
-    //Assert( m_length != 0 ); &&&
+    Assert( m_length != 0 );
 
     --m_length;
 
@@ -218,7 +219,7 @@ inline uint16_t List<T, A>:: TailIdx() const {
 
 template<typename T, typename A>
 inline void List<T, A>::Grow( uint16_t n = kGrowSize ) {
-    //Assert( m_size + n <= MaxSize() ); &&&
+    Assert( m_size + n <= MaxSize() );
 
     uint16_t oldSize = m_size;
     uint16_t newSize = oldSize + n;
