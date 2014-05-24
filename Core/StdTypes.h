@@ -4,6 +4,6 @@
 #include "Core/Align.h"
 #include "Core/IEEE754.h"
 
-#include <stdint.h>
+#include <cstdint>
 
 #endif // STD_TYPES_H

@@ -2,6 +2,7 @@
 #include "Math/Math.h"
 #include "Core/String.h"
 #include "Core/List.h"
+#include "Core/Print.h"
 
 
 #include <string>
@@ -481,7 +482,7 @@ int main() {
         }
 
         for( char c : b ) {
-            printf( "%c", c );
+            PrintLine( "%c", c );
         }
 
         auto result = std::find( b.begin() + 5, b.end(), 'r' );
@@ -494,17 +495,52 @@ int main() {
         std::list<int> l;
         l.cbegin();
 
-        List<int> a;
+        List<int> a( 4 );
 
         a.PushBack( 1 );
         a.PushBack( 2 );
         a.PushBack( 3 );
+        a.PushFront( 4 );
+        a.PushFront( 5 );
+
+        auto it = a.begin();
+        ++it;
+        ++it;
+
+        a.Insert( it, 100 );
+
 
         List<int>::iterator iter = a.begin();
         for( int i : a ) {
+            PrintLine( "%i", i );
+            int asdf = 0;
+        }
 
-            int temp = i;
+        a.PopFront();
+        a.PopBack();
+        it = a.begin();
+        ++it;
+        a.Erase( it );
 
+        for( int i : a ) {
+            PrintLine( "%i", i );
+            int asdf = 0;
+        }
+
+        a.PopFront();
+        a.PopFront();
+        a.PopFront();
+        
+        //List<A> asdf2222( 0xffff );
+
+        bool empty = a.Empty();
+
+        for( int i = 0; i < 150; ++i ) {
+            a.PushFront( i );
+        }
+
+        for( int i : a ) {
+            PrintLineConsole( "%i", i );
             int asdf = 0;
         }
 

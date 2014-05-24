@@ -18,7 +18,7 @@ private:
 
 public:
     // constructors
-    List( uint16_t size = kDefaultSize, A &allocator = g_defaultAllocator, bool growable = true );
+    List( uint16_t size = kDefaultSize, bool growable = true, A &allocator = g_defaultAllocator );
     List( List<T, A> const &list );
     List( List<T, A> &&list );
     List& operator=( List<T, A> list );

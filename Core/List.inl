@@ -5,14 +5,14 @@
 
 // constructors
 template<typename T, typename A>
-inline List<T, A>::List( uint16_t size, A &allocator, bool growable ) :
+inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
     m_allocator( allocator ),
     m_size( size + 1 ),
     m_list( (Node*)allocator.Allocate( m_size * sizeof( Node ) ) ),
     m_freeIdx( 1 ),
     m_length( 0 ),
     m_growable( growable ) {
-    Assert( m_size <= MaxSize() );
+    Assert( size <= MaxSize(), "Cannot create list of %i elements. (Max = %llu)", (int32_t)size, MaxSize() );
     Init();
 }
 
@@ -98,7 +98,7 @@ inline size_t List<T, A>::Empty() const {
 // modifiers
 template<typename T, typename A>
 inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
-    Assert( m_length < Capacity() || m_growable );
+    Assert( m_length < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llu)", Capacity() );
 
     if( m_length == Capacity() && m_growable )
         Grow();
@@ -116,7 +116,7 @@ inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
 
     node.m_next = nextIdx;
     node.m_prev = nextNode.m_prev;
-    new ( &node.m_value ) T( val );
+    node.m_value = val;
 
     m_list[nextNode.m_prev].m_next = nodeIdx;
     nextNode.m_prev = nodeIdx;
@@ -144,7 +144,7 @@ inline void List<T, A>::PopBack() {
 
 template<typename T, typename A>
 inline void List<T, A>::Erase( const_iterator const &pos ) {
-    Assert( m_length != 0 );
+    Assert( m_length != 0, "Cannot erase from empty list." );
 
     --m_length;
 
@@ -157,8 +157,6 @@ inline void List<T, A>::Erase( const_iterator const &pos ) {
 
     // put node back on front free list
     node.m_next = m_freeIdx;
-    node.m_value.~T();
-
     m_freeIdx = nodeIdx;
 }
 
@@ -218,28 +216,26 @@ inline uint16_t List<T, A>:: TailIdx() const {
 }
 
 template<typename T, typename A>
-inline void List<T, A>::Grow( uint16_t n = kGrowSize ) {
-    Assert( m_size + n <= MaxSize() );
+inline void List<T, A>::Grow( uint16_t n ) {
+    Assert( m_size + n <= MaxSize(), "List cannot exceed maximum size of %llu elements.", MaxSize() );
 
     uint16_t oldSize = m_size;
     uint16_t newSize = oldSize + n;
 
-    Node *newList = (Node*)m_allocator.Allocate( newSize * sizeof( Node ) );
+    size_t oldSizeBytes = oldSize * sizeof( Node );
+    size_t newSizeBytes = newSize * sizeof( Node );
+    Node *newList = (Node*)m_allocator.Allocate( newSizeBytes );
 
     // copy nodes
-    for( uint16_t i = 0; i < oldSize; ++i )
-        new ( &newList[i].m_value ) T( m_list[i].m_value );
+    Node *oldList = m_list;
+    Memcpy( newList, newSizeBytes, oldList, oldSizeBytes );
 
     // initialize empty nodes
     for( uint16_t i = oldSize; i < newSize; ++i )
         newList[i].m_next = i + 1;
-    
-    // destroy old nodes
-    for( uint16_t i = 0; i < oldSize; ++i )
-        m_list[i].m_value.~T();
 
     m_freeIdx = oldSize;
     m_size = newSize;
     m_list = newList;
-    m_allocator.Deallocate( m_list );
+    m_allocator.Deallocate( oldList );
 }
