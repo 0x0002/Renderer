@@ -12,7 +12,7 @@ inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
     m_freeIdx( 1 ),
     m_length( 0 ),
     m_growable( growable ) {
-    Assert( size <= MaxSize(), "Cannot create list of %i elements. (Max = %llu)", (int32_t)size, MaxSize() );
+    Assert( size <= MaxSize() && size > 0, "Cannot create list of %i elements. (Max = %llx)", (int32_t)size, MaxSize() );
     Init();
 }
 
@@ -32,12 +32,11 @@ template<typename T, typename A>
 //inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor in VS2013
 inline List<T, A>::List( List<T, A> &&list ) :
     m_allocator( list.m_allocator ),
-    m_list( (Node*)list.m_allocator.Allocate( ( list.m_size + 1 ) * sizeof( Node ) ) ),
-    m_size( list.m_size + 1 ),
-    m_freeIdx( list.m_freeIdx ),
-    m_length( list.m_length ),
+    m_list( nullptr ),
+    m_size( 0 ),
+    m_freeIdx( 0 ),
+    m_length( 0 ),
     m_growable( list.m_growable ) {
-    Init();
     Swap( *this, list );
 }
 
@@ -97,7 +96,7 @@ inline size_t List<T, A>::Empty() const {
 // modifiers
 template<typename T, typename A>
 inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
-    Assert( m_length < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llu)", Capacity() );
+    Assert( m_length < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llx)", Capacity() );
 
     if( m_length == Capacity() && m_growable )
         Grow();
@@ -216,7 +215,7 @@ inline uint16_t List<T, A>:: TailIdx() const {
 
 template<typename T, typename A>
 inline void List<T, A>::Grow( uint16_t n ) {
-    Assert( (size_t)( m_size + n ) <= MaxSize(), "List cannot exceed maximum size of %llu elements.", MaxSize() );
+    Assert( (size_t)( m_size + n ) <= MaxSize(), "List cannot exceed maximum size of %llx elements.", MaxSize() );
 
     uint16_t oldSize = m_size;
     uint16_t newSize = oldSize + n;

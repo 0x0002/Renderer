@@ -9,7 +9,7 @@ template<typename T, typename A = Allocator>
 class Vector {
 private:
     enum {
-        kDefaultCapacity = 50,
+        kDefaultCapacity = 1,
         kGrowSize = 20
     };
 

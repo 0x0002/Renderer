@@ -11,7 +11,7 @@ template<typename T, typename A = Allocator>
 class List {
 private:
     enum {
-        kDefaultSize = 50,
+        kDefaultSize = 1,
         kGrowSize = 20
     };
 

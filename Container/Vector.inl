@@ -26,12 +26,11 @@ inline Vector<T, A>::Vector( Vector<T, A> const &vec ) :
 }
 
 template<typename T, typename A>
-//inline Vector<T, A>::Vector( Vector<T, A> &&list ) : Vector() { &&& use delegated constructor in VS2013
 inline Vector<T, A>::Vector( Vector<T, A> &&vec ) :
     m_allocator( vec.m_allocator ),
-    m_data( (T*)m_allocator.Allocate( vec.m_capacity * sizeof( T ) ) ), 
-    m_capacity( vec.m_capacity ),
-    m_size( vec.m_size ),
+    m_data( nullptr ), 
+    m_capacity( 0 ),
+    m_size( 0 ),
     m_growable( vec.m_growable ) {
     Swap( *this, vec );
 }
@@ -132,7 +131,7 @@ template<typename T, typename A>
 inline void Vector<T, A>::Erase( const_iterator const &pos ) {
     ptrdiff_t idx = pos.Value() - m_data;
 
-    Assert( idx >= 0 && (size_t)idx < m_size, "Cannot erase from invalid index. (idx = %ll)", idx );
+    Assert( idx >= 0 && (size_t)idx < m_size, "Cannot erase from invalid index. (idx = %llx)", idx );
 
     Memmove( &m_data[idx], ( m_size - idx ) * sizeof( T ), &m_data[idx + 1], ( m_size - idx - 1 ) * sizeof( T ) );
     --m_size;
@@ -198,16 +197,16 @@ inline size_t Vector<T, A>::DataSize() const {
 // misc
 template<typename T, typename A>
 inline void Swap( Vector<T, A> &a, Vector<T, A> &b ) {
-    std::swap( a.m_allocator, b.m_allocator );
-    std::swap( a.m_data,      b.m_data );
-    std::swap( a.m_capacity,  b.m_capacity );
-    std::swap( a.m_size,      b.m_size );
-    std::swap( a.m_growable,  b.m_growable );
+    std::swap( a.m_allocator,           b.m_allocator );
+    std::swap( a.m_data,                b.m_data );
+    std::swap( a.m_capacity,            b.m_capacity );
+    std::swap( a.m_size,                b.m_size );
+    std::swap( a.m_growable,            b.m_growable );
 }
 
 template<typename T, typename A>
 inline void Vector<T, A>::Grow( size_t n ) {
-    Assert( m_capacity + n <= MaxSize(), "Vector cannot exceed maximum size of %llu elements.", MaxSize() );
+    Assert( m_capacity + n <= MaxSize(), "Vector cannot exceed maximum size of %llx elements.", MaxSize() );
 
     size_t oldCapacity = m_capacity;
     size_t newCapacity = oldCapacity + n;
