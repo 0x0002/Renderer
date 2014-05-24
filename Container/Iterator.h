@@ -36,8 +36,12 @@ public:
     typedef T&                              reference;
     typedef std::random_access_iterator_tag iterator_category;
 
+    T* Value() const;
+
 private:
     T *m_value;
 };
+
+#include "Iterator.inl"
 
 #endif // ITERATOR_H

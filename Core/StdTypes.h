@@ -6,4 +6,8 @@
 
 #include <cstdint>
 
+#define PtrAdd( ptr, val ) (void*)((char*)(ptr) + (val))
+
+#define PtrDiff( ptr1, ptr2 ) (ptrdiff_t)((char*)(ptr1) - (char*)(ptr2))
+
 #endif // STD_TYPES_H

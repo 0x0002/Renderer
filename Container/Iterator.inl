@@ -96,27 +96,7 @@ T& Iterator<T>::operator[]( size_t i ) {
     return m_value[i];
 }
 
-// type definitions
-template class Iterator<char>;
-template class Iterator<int8_t>;
-template class Iterator<int16_t>;
-template class Iterator<int32_t>;
-template class Iterator<int64_t>;
-template class Iterator<uint8_t>;
-template class Iterator<uint16_t>;
-template class Iterator<uint32_t>;
-template class Iterator<uint64_t>;
-template class Iterator<float>;
-template class Iterator<double>;
-
-template class Iterator<char const>;
-template class Iterator<int8_t const>;
-template class Iterator<int16_t const>;
-template class Iterator<int32_t const>;
-template class Iterator<int64_t const>;
-template class Iterator<uint8_t const>;
-template class Iterator<uint16_t const>;
-template class Iterator<uint32_t const>;
-template class Iterator<uint64_t const>;
-template class Iterator<float const>;
-template class Iterator<double const>;
+template<typename T>
+T* Iterator<T>::Value() const {
+    return m_value;
+}

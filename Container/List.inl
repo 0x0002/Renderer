@@ -7,8 +7,8 @@
 template<typename T, typename A>
 inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
     m_allocator( allocator ),
+    m_list( (Node*)allocator.Allocate( size + 1 * sizeof( Node ) ) ),
     m_size( size + 1 ),
-    m_list( (Node*)allocator.Allocate( m_size * sizeof( Node ) ) ),
     m_freeIdx( 1 ),
     m_length( 0 ),
     m_growable( growable ) {
@@ -19,22 +19,21 @@ inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
 template<typename T, typename A>
 List<T, A>::List( List<T, A> const &list ) :
     m_allocator( list.m_allocator ),
+    m_list( (Node*)list.m_allocator.Allocate( list.m_size + 1 * sizeof( Node ) ) ),
     m_size( list.m_size + 1 ),
-    m_list( (Node*)list.m_allocator.Allocate( m_size * sizeof( Node ) ) ),
     m_freeIdx( list.m_freeIdx ),
     m_length( list.m_length ),
     m_growable( list.m_growable ) {
-    uint16_t size = (uint16_t)m_size;
-    for( uint16_t i = 0; i < size; ++i )
-        new ( &m_list[i].m_value ) T( list.m_list[i].m_value );
+    size_t sizeBytes = m_size * sizeof( T );
+    Memcpy( m_list, sizeBytes, list.m_list, sizeBytes );
 }
 
 template<typename T, typename A>
 //inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor in VS2013
 inline List<T, A>::List( List<T, A> &&list ) :
     m_allocator( list.m_allocator ),
+    m_list( (Node*)list.m_allocator.Allocate( list.m_size + 1 * sizeof( Node ) ) ),
     m_size( list.m_size + 1 ),
-    m_list( (Node*)list.m_allocator.Allocate( m_size * sizeof( Node ) ) ),
     m_freeIdx( list.m_freeIdx ),
     m_length( list.m_length ),
     m_growable( list.m_growable ) {
@@ -224,10 +223,10 @@ inline void List<T, A>::Grow( uint16_t n ) {
 
     size_t oldSizeBytes = oldSize * sizeof( Node );
     size_t newSizeBytes = newSize * sizeof( Node );
+
+    Node *oldList = m_list;
     Node *newList = (Node*)m_allocator.Allocate( newSizeBytes );
 
-    // copy nodes
-    Node *oldList = m_list;
     Memcpy( newList, newSizeBytes, oldList, oldSizeBytes );
 
     // initialize empty nodes

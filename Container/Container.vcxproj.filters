@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="FilePath.cpp" />
-    <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -15,9 +14,12 @@
     <ClInclude Include="ListIterator.h" />
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="List.inl" />
     <None Include="ListIterator.inl" />
+    <None Include="Vector.inl" />
+    <None Include="Iterator.inl" />
   </ItemGroup>
 </Project>

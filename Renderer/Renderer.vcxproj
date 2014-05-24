@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComponentBase.h" />
+    <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="ComponentType1.h" />
     <ClInclude Include="GameObject.h" />

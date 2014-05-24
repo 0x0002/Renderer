@@ -2,6 +2,7 @@
 #include "Math/Math.h"
 #include "Container/String.h"
 #include "Container/List.h"
+#include "Container/Vector.h"
 #include "Core/Print.h"
 
 
@@ -35,6 +36,7 @@ public:
 };
 
 template class List<A>;
+template class Vector<A>;
 
 int main() {
 #if 0

@@ -80,7 +80,6 @@ private:
     uint16_t  m_size;       // number of elements allocated
     uint16_t  m_freeIdx;
     uint16_t  m_length;
-
     bool      m_growable;
 };
 
