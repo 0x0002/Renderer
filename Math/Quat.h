@@ -83,7 +83,7 @@ Scalar Dot( Quat const &a, Quat const &b );
 Quat Conjugate( Quat const &q );
 Quat Inverse( Quat const &q );
 
-Quat Slerp( Quat const &a, Quat const &b, Scalar t );
+Quat Slerp( Quat const &a, Quat const &b, Scalar const &t );
 
 // rotation quaternions
 Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle );

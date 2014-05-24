@@ -6,15 +6,7 @@
     <ClInclude Include="StdTypes.h" />
     <ClInclude Include="Union.h" />
     <ClInclude Include="IEEE754.h" />
-    <ClInclude Include="HashTable.h" />
     <ClInclude Include="Hash.h" />
-    <ClInclude Include="String.h" />
-    <ClInclude Include="FilePath.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="Allocator.h" />
-    <ClInclude Include="Iterator.h" />
-    <ClInclude Include="ListNode.h" />
-    <ClInclude Include="ListIterator.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Print.h" />
@@ -23,18 +15,10 @@
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="IEEE754.cpp" />
-    <ClCompile Include="String.cpp" />
-    <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="Hash.cpp" />
-    <ClCompile Include="Allocator.cpp" />
-    <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Assert.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Console.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="List.inl" />
-    <None Include="ListIterator.inl" />
   </ItemGroup>
 </Project>

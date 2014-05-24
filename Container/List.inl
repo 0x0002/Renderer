@@ -217,7 +217,7 @@ inline uint16_t List<T, A>:: TailIdx() const {
 
 template<typename T, typename A>
 inline void List<T, A>::Grow( uint16_t n ) {
-    Assert( m_size + n <= MaxSize(), "List cannot exceed maximum size of %llu elements.", MaxSize() );
+    Assert( (size_t)( m_size + n ) <= MaxSize(), "List cannot exceed maximum size of %llu elements.", MaxSize() );
 
     uint16_t oldSize = m_size;
     uint16_t newSize = oldSize + n;

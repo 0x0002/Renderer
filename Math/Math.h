@@ -25,7 +25,7 @@ need to use both absolute and relative comparisons
 
 see http://realtimecollisiondetection.net/blog/?p=89 for more info
 ------------------------------------------------------------------------------*/
-__forceinline Bool AlmostEqual( Scalar a, Scalar b, Scalar absTol = 0.000001f , Scalar relTol = 0.01f ) {
+ForceInline Bool AlmostEqual( Scalar const &a, Scalar const &b, Scalar const &absTol = 0.000001f, Scalar const &relTol = 0.01f ) {
     // absolute and relative comparisons are combined into a single comparison
     return Abs( a - b ) <= Max( absTol, relTol * Max( Abs( a ), Abs( b ) ) );
 }

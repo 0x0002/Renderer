@@ -1,7 +1,7 @@
 #ifndef FILE_PATH_H
 #define FILE_PATH_H
 
-#include "Core/String.h"
+#include "Container/String.h"
 
 class FilePath {
 public:

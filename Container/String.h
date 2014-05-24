@@ -1,8 +1,9 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include "Container/Iterator.h"
+
 #include "Core/StdTypes.h"
-#include "Core/Iterator.h"
 
 class String {
 public:

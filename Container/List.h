@@ -1,10 +1,11 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "Container/ListNode.h"
+#include "Container/ListIterator.h"
+#include "Container/Allocator.h"
+
 #include "Core/StdTypes.h"
-#include "Core/ListNode.h"
-#include "Core/ListIterator.h"
-#include "Core/Allocator.h"
 
 template<typename T, typename A = Allocator>
 class List {

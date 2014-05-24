@@ -1,7 +1,7 @@
 #ifndef ALLOCATOR_H
 #define ALLOCATOR_H
 
-#include "Core/String.h"
+#include "Container/String.h"
 
 class Allocator {
 public:
