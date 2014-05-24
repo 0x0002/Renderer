@@ -55,7 +55,7 @@ inline bool ListConstIterator<T>::operator!=( ListConstIterator const &it ) cons
 }
 
 template<typename T>
-inline T const& ListConstIterator<T>::operator*() {
+inline T const& ListConstIterator<T>::operator*() const {
     return m_list[m_idx].m_value;
 }
 

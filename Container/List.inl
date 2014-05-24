@@ -7,7 +7,7 @@
 template<typename T, typename A>
 inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
     m_allocator( allocator ),
-    m_list( (Node*)allocator.Allocate( size + 1 * sizeof( Node ) ) ),
+    m_list( (Node*)allocator.Allocate( ( size + 1 ) * sizeof( Node ) ) ),
     m_size( size + 1 ),
     m_freeIdx( 1 ),
     m_length( 0 ),
@@ -19,7 +19,7 @@ inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
 template<typename T, typename A>
 List<T, A>::List( List<T, A> const &list ) :
     m_allocator( list.m_allocator ),
-    m_list( (Node*)list.m_allocator.Allocate( list.m_size + 1 * sizeof( Node ) ) ),
+    m_list( (Node*)list.m_allocator.Allocate( ( list.m_size + 1 ) * sizeof( Node ) ) ),
     m_size( list.m_size + 1 ),
     m_freeIdx( list.m_freeIdx ),
     m_length( list.m_length ),
@@ -32,7 +32,7 @@ template<typename T, typename A>
 //inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor in VS2013
 inline List<T, A>::List( List<T, A> &&list ) :
     m_allocator( list.m_allocator ),
-    m_list( (Node*)list.m_allocator.Allocate( list.m_size + 1 * sizeof( Node ) ) ),
+    m_list( (Node*)list.m_allocator.Allocate( ( list.m_size + 1 ) * sizeof( Node ) ) ),
     m_size( list.m_size + 1 ),
     m_freeIdx( list.m_freeIdx ),
     m_length( list.m_length ),

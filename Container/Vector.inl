@@ -81,12 +81,23 @@ inline size_t Vector<T, A>::MaxSize() const {
 
 template<typename T, typename A>
 inline void Vector<T, A>::Resize( size_t size ) {
-    Assert( m_capacity >= size || m_growable, "Cannot increase vector capacity (Capacity = %ull)", m_capacity );
+    Assert( m_capacity >= size || m_growable, "Cannot increase vector capacity to %llx. (Capacity = %llx)", size, m_capacity );
 
-    if( size > m_capacity )
+    if( size > m_capacity && m_growable ) {
         Grow( size - m_capacity );
-    else
-        m_size = size;
+        for( size_t i = m_size; i < size; ++i )
+            m_data[i] = T();
+    }
+
+    m_size = size;
+}
+
+template<typename T, typename A>
+inline void Vector<T, A>::Reserve( size_t capacity ) {
+    Assert( m_capacity >= capacity || m_growable, "Cannot increase vector capacity to %llx. (Capacity = %llx)", capacity, m_capacity );
+
+    if( capacity > m_capacity && m_growable )
+        Grow( capacity - m_capacity );
 }
 
 template<typename T, typename A>
@@ -104,7 +115,7 @@ template<typename T, typename A>
 inline void Vector<T, A>::PushBack( T const &val ) {
     Assert( m_size != m_capacity || m_growable, "Cannot insert into full vector." );
 
-    if( m_size == m_capacity )
+    if( m_size == m_capacity && m_growable )
         Grow();
 
     m_data[m_size] = val;
@@ -135,13 +146,13 @@ inline void Vector<T, A>::Clear() {
 // accessors
 template<typename T, typename A>
 inline T& Vector<T, A>::operator[]( size_t i ) {
-    Assert( i < m_size, "Cannot access invalid index. (idx = %ull)", i );
+    Assert( i < m_size, "Cannot access invalid index. (idx = %llx)", i );
     return m_data[i];
 }
 
 template<typename T, typename A>
 inline T const& Vector<T, A>::operator[]( size_t i ) const {
-    Assert( i < m_size, "Cannot access invalid index. (idx = %ull)", i );
+    Assert( i < m_size, "Cannot access invalid index. (idx = %llx)", i );
     return m_data[i];
 }
 
@@ -196,7 +207,7 @@ inline void Swap( Vector<T, A> &a, Vector<T, A> &b ) {
 
 template<typename T, typename A>
 inline void Vector<T, A>::Grow( size_t n ) {
-    Assert( m_size + n <= MaxSize(), "Vector cannot exceed maximum size of %llu elements.", MaxSize() );
+    Assert( m_capacity + n <= MaxSize(), "Vector cannot exceed maximum size of %llu elements.", MaxSize() );
 
     size_t oldCapacity = m_capacity;
     size_t newCapacity = oldCapacity + n;
@@ -210,4 +221,5 @@ inline void Vector<T, A>::Grow( size_t n ) {
 
     m_capacity = newCapacity;
     m_data = newData;
+    m_allocator.Deallocate( oldData );
 }

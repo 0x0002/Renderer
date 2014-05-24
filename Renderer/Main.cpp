@@ -460,6 +460,7 @@ int main() {
 
 #endif
     
+#if 0
     // string
     {
         String a;
@@ -512,8 +513,9 @@ int main() {
         a.Insert( it, 100 );
 
 
-        List<int>::iterator iter = a.begin();
-        for( int i : a ) {
+        List<int>::const_iterator iter = a.begin();
+        for( ; iter != a.end(); ++iter ) {
+            int i = *iter;
             PrintLine( "%i", i );
             int asdf = 0;
         }
@@ -550,7 +552,54 @@ int main() {
         int asdf = 0;
     }
 
+    // vector
+    {
+        Vector<int> v( 4 );
+        v.PushBack( 0 );
+        v.PushBack( 1 );
+        v.PushBack( 2 );
+        v.PushBack( 3 );
 
+        for( int i : v ) {
+            PrintLineConsole( "%i", i );
+            int asdf = 0;
+        }
+
+        v.Reserve( 5 );
+
+        v.PushBack( 4 );
+
+        Vector<int>::const_iterator iter = v.begin();
+
+        iter += 2;
+        v.Erase( iter );
+
+        PrintLineConsole( "" );
+        for( int i : v ) {
+            PrintLineConsole( "%i", i );
+            int asdf = 0;
+        }
+
+        v.Erase( v.begin() );
+
+        v.Erase( --v.end() );
+
+        v.PopBack();
+        v.PushBack(100);
+        v.PopBack();
+        v.PopBack();
+
+        PrintLineConsole( "" );
+        for( int i : v ) {
+            PrintLineConsole( "%i", i );
+            int asdf = 0;
+        }
+
+        v.PopBack();
+
+        int asdf = 0;
+    }
+#endif
 
     return 0;
 }

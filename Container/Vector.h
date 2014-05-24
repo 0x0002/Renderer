@@ -23,7 +23,7 @@ public:
 
     // iterators
     typedef Iterator<T> iterator;
-    typedef Iterator<T const> const_iterator;
+    typedef ConstIterator<T> const_iterator;
 
     iterator begin();
     const_iterator begin() const;
@@ -34,7 +34,9 @@ public:
     // capacity
     size_t Size() const;
     size_t MaxSize() const;
+
     void Resize( size_t size );
+    void Reserve( size_t capacity );
     size_t Capacity() const;
 
     size_t Empty() const;
