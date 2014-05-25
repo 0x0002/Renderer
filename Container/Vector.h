@@ -9,7 +9,7 @@ template<typename T, typename A = Allocator>
 class Vector {
 private:
     enum {
-        kDefaultCapacity = 1,
+        kDefaultCapacity = 0,
         kGrowSize = 20
     };
 
@@ -17,7 +17,6 @@ public:
     // constructors
     Vector( size_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_defaultAllocator );
     Vector( Vector<T, A> const &vec );
-    Vector( Vector<T, A> &&vec );
     Vector& operator=( Vector<T, A> vec );
     ~Vector();
 

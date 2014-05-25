@@ -10,6 +10,7 @@
 #include <list>
 #include <map>
 #include <algorithm>
+#include <memory>
 
 class A {
 public:
@@ -17,15 +18,20 @@ public:
         int asdf = 0;
     }
 
+    A( int i ) : m_i( i ) {
+        int asdf = 0;
+    }
+
     ~A() {
         int asdf = 0;
     }
 
-    A( A const &a ) {
+    A( A const &a ) : m_i( a.m_i ) {
         int asdf = 0;
     }
 
-    A& operator=( A a ) {
+    A& operator=( A const &a ) {
+        m_i = a.m_i;
         int asdf = 0;
         return *this;
     }
@@ -33,6 +39,24 @@ public:
     A( A const &&a ) {
         int asdf = 0;
     }
+
+
+
+    operator int() const { return m_i; }
+
+    virtual char const* Value() const { return "A"; }
+
+private:
+    int m_i;
+};
+
+class B : public A {
+public:
+    virtual char const* Value() const { return "B"; }
+};
+
+class C : public A {
+    virtual char const* Value() const { return "C"; }
 };
 
 template class List<A>;
@@ -460,7 +484,7 @@ int main() {
 
 #endif
     
-#if 0
+#if 1
     // string
     {
         String a;
@@ -495,15 +519,22 @@ int main() {
 
     // list
     {
+#if 0
         std::list<int> l;
         l.cbegin();
 
-        List<int> a( 4 );
+        List<A> a( 4 );
 
         a.PushBack( 1 );
         a.PushBack( 2 );
         a.PushBack( 3 );
         a.PushFront( 4 );
+
+        for( int i : a ) {
+            PrintLineConsole( "%i", i );
+            int asdf = 0;
+        }
+
         a.PushFront( 5 );
 
         auto it = a.begin();
@@ -513,10 +544,10 @@ int main() {
         a.Insert( it, 100 );
 
 
-        List<int>::const_iterator iter = a.begin();
+        List<A>::const_iterator iter = a.begin();
         for( ; iter != a.end(); ++iter ) {
             int i = *iter;
-            PrintLine( "%i", i );
+            PrintLineConsole( "%i", i );
             int asdf = 0;
         }
 
@@ -527,7 +558,7 @@ int main() {
         a.Erase( it );
 
         for( int i : a ) {
-            PrintLine( "%i", i );
+            PrintLineConsole( "%i", i );
             int asdf = 0;
         }
 
@@ -550,6 +581,31 @@ int main() {
 
         //A asdf;
         int asdf = 0;
+
+#endif
+
+        List<A*> list( 2 );
+
+        list.PushBack( new A() );
+        list.PushBack( new B() );
+        list.PushBack( new C() );
+
+        PrintLineConsole( "" );
+        for( A const *a : list )
+            PrintLineConsole( "%s", a->Value() );
+
+        List<A*> list2( list );
+        PrintLineConsole( "" );
+        for( A const *a : list2 )
+            PrintLineConsole( "%s", a->Value() );
+
+        List<A*> list3;
+        list3 = list2;
+        PrintLineConsole( "" );
+        for( A const *a : list3 )
+            PrintLineConsole( "%s", a->Value() );
+
+        std::for_each( list.begin(), list.end(), std::default_delete<A>() );
     }
 
     // vector
@@ -595,7 +651,7 @@ int main() {
             int asdf = 0;
         }
 
-        v.PopBack();
+        //v.PopBack();
 
         int asdf = 0;
     }

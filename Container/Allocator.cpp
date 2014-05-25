@@ -19,3 +19,10 @@ void Allocator::Deallocate( void *p ) {
 String const& Allocator::GetName() const {
     return m_name;
 }
+bool Allocator::operator==( Allocator const &allocator ) const {
+    return this == &allocator;
+}
+
+bool Allocator::operator!=( Allocator const &allocator ) const {
+    return this != &allocator;
+}

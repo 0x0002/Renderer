@@ -11,7 +11,7 @@ template<typename T, typename A = Allocator>
 class List {
 private:
     enum {
-        kDefaultSize = 1,
+        kDefaultCapacity = 0,
         kGrowSize = 20
     };
 
@@ -19,9 +19,8 @@ private:
 
 public:
     // constructors
-    List( uint16_t size = kDefaultSize, bool growable = true, A &allocator = g_defaultAllocator );
+    List( uint16_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_defaultAllocator );
     List( List<T, A> const &list );
-    List( List<T, A> &&list );
     List& operator=( List<T, A> list );
     ~List();
 
@@ -77,9 +76,9 @@ private:
 private:
     A        &m_allocator;
     Node     *m_list;
-    uint16_t  m_size;       // number of elements allocated
+    uint16_t  m_capacity;       // number of elements allocated
     uint16_t  m_freeIdx;
-    uint16_t  m_length;
+    uint16_t  m_size;
     bool      m_growable;
 };
 

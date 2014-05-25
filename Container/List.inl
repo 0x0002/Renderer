@@ -5,49 +5,45 @@
 
 // constructors
 template<typename T, typename A>
-inline List<T, A>::List( uint16_t size, bool growable, A &allocator ) :
+inline List<T, A>::List( uint16_t capacity, bool growable, A &allocator ) :
     m_allocator( allocator ),
-    m_list( (Node*)allocator.Allocate( ( size + 1 ) * sizeof( Node ) ) ),
-    m_size( size + 1 ),
+    m_list( (Node*)allocator.Allocate( ( capacity + 1 ) * sizeof( Node ) ) ),
+    m_capacity( capacity + 1 ),
     m_freeIdx( 1 ),
-    m_length( 0 ),
+    m_size( 0 ),
     m_growable( growable ) {
-    Assert( size <= MaxSize() && size > 0, "Cannot create list of %i elements. (Max = %llx)", (int32_t)size, MaxSize() );
+    Assert( capacity <= MaxSize(), "Cannot create list of %i elements. (Max = %llx)", (int32_t)capacity, MaxSize() );
     Init();
 }
 
 template<typename T, typename A>
 List<T, A>::List( List<T, A> const &list ) :
     m_allocator( list.m_allocator ),
-    m_list( (Node*)list.m_allocator.Allocate( ( list.m_size + 1 ) * sizeof( Node ) ) ),
-    m_size( list.m_size + 1 ),
-    m_freeIdx( list.m_freeIdx ),
-    m_length( list.m_length ),
-    m_growable( list.m_growable ) {
-    size_t sizeBytes = m_size * sizeof( T );
-    Memcpy( m_list, sizeBytes, list.m_list, sizeBytes );
-}
-
-template<typename T, typename A>
-//inline List<T, A>::List( List<T, A> const &&list ) : List() { &&& use delegated constructor in VS2013
-inline List<T, A>::List( List<T, A> &&list ) :
-    m_allocator( list.m_allocator ),
-    m_list( nullptr ),
+    m_list( (Node*)list.m_allocator.Allocate( list.m_capacity * sizeof( Node ) ) ),
+    m_capacity( list.m_capacity ),
+    m_freeIdx( 1 ),
     m_size( 0 ),
-    m_freeIdx( 0 ),
-    m_length( 0 ),
     m_growable( list.m_growable ) {
-    Swap( *this, list );
+    
+    Init();
+
+    for( T const &val : list )
+        PushBack( val );
 }
 
 template<typename T, typename A>
 inline List<T, A>& List<T, A>::operator=( List<T, A> list ) {
+    Assert( list.m_allocator == m_allocator, "Cannot assign list created with different allocator" );
     Swap( *this, list );
     return *this;
 }
 
 template<typename T, typename A>
 inline List<T, A>::~List() {
+
+    while( !Empty() )
+        PopBack();
+
     m_allocator.Deallocate( m_list );
 }
 
@@ -75,7 +71,7 @@ inline typename List<T, A>::const_iterator List<T, A>::end() const {
 // capacity
 template<typename T, typename A>
 inline size_t List<T, A>::Size() const {
-    return m_length;
+    return m_size;
 }
 
 template<typename T, typename A>
@@ -85,23 +81,23 @@ inline size_t List<T, A>::MaxSize() const {
 
 template<typename T, typename A>
 inline size_t List<T, A>::Capacity() const {
-    return m_size - 1;
+    return m_capacity - 1;
 }
 
 template<typename T, typename A>
 inline size_t List<T, A>::Empty() const {
-        return m_length == 0;
+        return m_size == 0;
 }
 
 // modifiers
 template<typename T, typename A>
 inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
-    Assert( m_length < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llx)", Capacity() );
+    Assert( m_size < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llx)", Capacity() );
 
-    if( m_length == Capacity() && m_growable )
+    if( m_size == Capacity() && m_growable )
         Grow();
 
-    ++m_length;
+    ++m_size;
 
     // remove node from free list
     uint16_t nodeIdx = m_freeIdx;
@@ -112,9 +108,9 @@ inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
     uint16_t nextIdx = pos.Idx();
     Node &nextNode = m_list[nextIdx];
 
+    Construct( &node.m_value, val );
     node.m_next = nextIdx;
     node.m_prev = nextNode.m_prev;
-    node.m_value = val;
 
     m_list[nextNode.m_prev].m_next = nodeIdx;
     nextNode.m_prev = nodeIdx;
@@ -142,13 +138,14 @@ inline void List<T, A>::PopBack() {
 
 template<typename T, typename A>
 inline void List<T, A>::Erase( const_iterator const &pos ) {
-    Assert( m_length != 0, "Cannot erase from empty list." );
+    Assert( m_size != 0, "Cannot erase from empty list." );
 
-    --m_length;
+    --m_size;
 
     // remove node from list
     uint16_t nodeIdx = pos.Idx();
     Node &node = m_list[nodeIdx];
+    Destroy( &node.m_value );
 
     m_list[node.m_next].m_prev = node.m_prev;
     m_list[node.m_prev].m_next = node.m_next;
@@ -184,17 +181,17 @@ template<typename T, typename A>
 inline void Swap( List<T, A> &a, List<T, A> &b ) {
     std::swap( a.m_allocator, b.m_allocator );
     std::swap( a.m_list,      b.m_list );
-    std::swap( a.m_size,      b.m_size );
+    std::swap( a.m_capacity,      b.m_capacity );
     std::swap( a.m_freeIdx,   b.m_freeIdx );
-    std::swap( a.m_growable,  b.m_growable );
+    std::swap( a.m_size,    b.m_size );
     std::swap( a.m_growable,  b.m_growable );
 }
 
 template<typename T, typename A>
 inline void List<T, A>::Init() {
     // initialize free list of nodes
-    uint16_t size = m_size;
-    for( uint16_t i = 0; i < size; ++i ) {
+    uint16_t size = m_capacity;
+    for( uint16_t i = 1; i < size; ++i ) {
         m_list[i].m_next = i + 1;
     }
 
@@ -215,25 +212,33 @@ inline uint16_t List<T, A>:: TailIdx() const {
 
 template<typename T, typename A>
 inline void List<T, A>::Grow( uint16_t n ) {
-    Assert( (size_t)( m_size + n ) <= MaxSize(), "List cannot exceed maximum size of %llx elements.", MaxSize() );
+    Assert( (size_t)( m_capacity + n ) <= MaxSize(), "List cannot exceed maximum size of %llx elements.", MaxSize() );
 
-    uint16_t oldSize = m_size;
-    uint16_t newSize = oldSize + n;
+    uint16_t oldCapacity = m_capacity;
+    uint16_t newCapacity = oldCapacity + n;
 
-    size_t oldSizeBytes = oldSize * sizeof( Node );
-    size_t newSizeBytes = newSize * sizeof( Node );
+    size_t newSizeBytes = newCapacity * sizeof( Node );
 
     Node *oldList = m_list;
     Node *newList = (Node*)m_allocator.Allocate( newSizeBytes );
 
-    Memcpy( newList, newSizeBytes, oldList, oldSizeBytes );
+    newList[kEndIdx].m_next = oldList[kEndIdx].m_next;
+    newList[kEndIdx].m_prev = oldList[kEndIdx].m_prev;
+    for( uint16_t i = 1; i < oldCapacity; ++i ) {
+        Node &n = newList[i];
+        Node &o = oldList[i];
+        n.m_next = o.m_next;
+        n.m_prev = o.m_prev;
+        Construct( &n.m_value, o.m_value );
+        Destroy( &o.m_value );
+    }
 
     // initialize empty nodes
-    for( uint16_t i = oldSize; i < newSize; ++i )
+    for( uint16_t i = oldCapacity; i < newCapacity; ++i )
         newList[i].m_next = i + 1;
 
-    m_freeIdx = oldSize;
-    m_size = newSize;
+    m_freeIdx = oldCapacity;
+    m_capacity = newCapacity;
     m_list = newList;
     m_allocator.Deallocate( oldList );
 }

@@ -2,19 +2,19 @@
 // const iterator
 template<typename T>
 inline ListConstIterator<T>::ListConstIterator() :
-m_list( nullptr ),
+    m_list( nullptr ),
     m_idx( 0 ) {
 }
 
 template<typename T>
 inline ListConstIterator<T>::ListConstIterator( ListIterator<T> const &it ) :
-m_list( it.m_list ),
+    m_list( it.m_list ),
     m_idx( it.m_idx ) {
 }
 
 template<typename T>
 inline ListConstIterator<T>::ListConstIterator( ListNode<T> const *list, uint16_t idx ) :
-m_list( list ),
+    m_list( list ),
     m_idx( idx ) {
 }
 

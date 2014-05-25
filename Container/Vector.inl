@@ -26,16 +26,6 @@ inline Vector<T, A>::Vector( Vector<T, A> const &vec ) :
 }
 
 template<typename T, typename A>
-inline Vector<T, A>::Vector( Vector<T, A> &&vec ) :
-    m_allocator( vec.m_allocator ),
-    m_data( nullptr ), 
-    m_capacity( 0 ),
-    m_size( 0 ),
-    m_growable( vec.m_growable ) {
-    Swap( *this, vec );
-}
-
-template<typename T, typename A>
 inline Vector<T, A>& Vector<T, A>::operator=( Vector<T, A> vec ) {
     Swap( *this, vec );
     return *this;
