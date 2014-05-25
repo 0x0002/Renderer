@@ -3,11 +3,12 @@
 
 #include "Core/Align.h"
 #include "Core/IEEE754.h"
+#include "Core/MemoryManager.h"
 
 #include <cstdint>
 
-#define PtrAdd( ptr, val ) (void*)((char*)(ptr) + (val))
+#define OffsetPtr( ptr, bytes ) (void*)((char*)(ptr) + (bytes))
 
-#define PtrDiff( ptr1, ptr2 ) (ptrdiff_t)((char*)(ptr1) - (char*)(ptr2))
+#define SubPtr( ptr1, ptr2 ) (ptrdiff_t)((char*)(ptr1) - (char*)(ptr2))
 
 #endif // STD_TYPES_H

@@ -11,6 +11,10 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="PermAllocator.h" />
+    <ClInclude Include="HeapAllocator.h" />
+    <ClInclude Include="Allocator.h" />
+    <ClInclude Include="MemoryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />
@@ -20,5 +24,9 @@
     <ClCompile Include="Assert.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="PermAllocator.cpp" />
+    <ClCompile Include="HeapAllocator.cpp" />
+    <ClCompile Include="Allocator.cpp" />
+    <ClCompile Include="MemoryManager.cpp" />
   </ItemGroup>
 </Project>

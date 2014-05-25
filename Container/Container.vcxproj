@@ -130,13 +130,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="FilePath.cpp" />
     <None Include="Iterator.inl" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Allocator.h" />
     <ClInclude Include="FilePath.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="Iterator.h" />

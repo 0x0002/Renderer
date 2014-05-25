@@ -1,7 +1,7 @@
 #ifndef COMPONENT_BASE_H
 #define COMPONENT_BASE_H
 
-#include "ComponentType.h"
+#include "ComponentTypes.h"
 
 #include "Core/StdTypes.h"
 #include "Container/FilePath.h"

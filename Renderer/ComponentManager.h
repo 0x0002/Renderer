@@ -1,22 +1,28 @@
 #ifndef COMPONENT_MANAGER_H
 #define COMPONENT_MANAGER_H
 
-#include <Container/List.h>
-#include <Container/Vector.h>
+#include "Renderer/ComponentIncludes.h"
+#include "Renderer/ComponentTypes.h"
 
-class ComponentBase;
+#include "Container/Vector.h"
+
+#include "Core/StdTypes.h"
 
 class ComponentManager {
 public:
-
+    void Initialize();
 
 
 private:
+    uint8_t                 **m_componentData    [Component::kCount];
+    size_t                    m_componentSize    [Component::kCount];
 
-    // list of arrays of component data. one list per type
-    List<ComponentBase*> m_components;
+    Vector<Component::Type>  *m_derivedTypeLookup[Component::kCount];
 
-    Vector<Vector<uint8_t*>> m_components;
+    // stuff
 };
+
+// global instance
+extern ComponentManager g_componentManager;
 
 #endif // COMPONENT_MANAGER_H

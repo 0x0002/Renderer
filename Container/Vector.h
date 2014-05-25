@@ -1,9 +1,10 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "Container/Iterator.h"
-
 #include "Core/StdTypes.h"
+#include "Core/HeapAllocator.h"
+
+#include "Container/Iterator.h"
 
 template<typename T, typename A = Allocator>
 class Vector {
@@ -15,7 +16,7 @@ private:
 
 public:
     // constructors
-    Vector( size_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_defaultAllocator );
+    Vector( size_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_heapAllocator );
     Vector( Vector<T, A> const &vec );
     Vector& operator=( Vector<T, A> vec );
     ~Vector();

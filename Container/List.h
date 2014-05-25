@@ -1,13 +1,13 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "Core/StdTypes.h"
+#include "Core/HeapAllocator.h"
+
 #include "Container/ListNode.h"
 #include "Container/ListIterator.h"
-#include "Container/Allocator.h"
 
-#include "Core/StdTypes.h"
-
-template<typename T, typename A = Allocator>
+template<typename T, typename A = HeapAllocator>
 class List {
 private:
     enum {
@@ -19,7 +19,7 @@ private:
 
 public:
     // constructors
-    List( uint16_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_defaultAllocator );
+    List( uint16_t capacity = kDefaultCapacity, bool growable = true, A &allocator = g_heapAllocator );
     List( List<T, A> const &list );
     List& operator=( List<T, A> list );
     ~List();

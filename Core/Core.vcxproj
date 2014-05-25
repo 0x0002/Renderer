@@ -131,23 +131,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Align.h" />
+    <ClInclude Include="Allocator.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Hash.h" />
+    <ClInclude Include="HeapAllocator.h" />
     <ClInclude Include="IEEE754.h" />
+    <ClInclude Include="MemoryManager.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="PermAllocator.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="StdTypes.h" />
     <ClInclude Include="Union.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="Assert.cpp" />
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Hash.cpp" />
+    <ClCompile Include="HeapAllocator.cpp" />
     <ClCompile Include="IEEE754.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="MemoryManager.cpp" />
+    <ClCompile Include="PermAllocator.cpp" />
     <ClCompile Include="Print.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

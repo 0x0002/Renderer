@@ -1,7 +1,7 @@
 #ifndef ATOMIC_H
 #define ATOMIC_H
 
-#include "StdTypes.h"
+#include "Core/StdTypes.h"
 
 // variables must be aligned on a 32-bit boundary
 uint32_t AtomicAdd( volatile uint32_t *addend, uint32_t value );

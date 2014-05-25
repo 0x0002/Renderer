@@ -4,6 +4,7 @@
 #include "Container/List.h"
 #include "Container/Vector.h"
 #include "Core/Print.h"
+#include "Core/MemoryManager.h"
 
 
 #include <string>
@@ -63,6 +64,8 @@ template class List<A>;
 template class Vector<A>;
 
 int main() {
+    g_memoryManager.Initialize();
+
 #if 0
     Vec4 a( 1.0f, 2.0f, 3.0f, 4.0f );
 
@@ -484,7 +487,7 @@ int main() {
 
 #endif
     
-#if 1
+#if 0
     // string
     {
         String a;
@@ -656,6 +659,15 @@ int main() {
         int asdf = 0;
     }
 #endif
+
+    {
+        A *a0 = new A();
+        A *a1 = new A[10];
+
+        int asdf = 0;
+    }
+
+    g_memoryManager.SetHeapAllocator();
 
     return 0;
 }

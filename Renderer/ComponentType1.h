@@ -5,7 +5,6 @@
 
 class ComponentType1 : public ComponentBase {
 public:
-    virtual void Load() override;
     virtual void Initialize() override;
     virtual void Update( float dt ) override;
     virtual void Uninitialize() override;
