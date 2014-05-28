@@ -28,6 +28,9 @@
     <ClInclude Include="ComponentMultiTypeIterator.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentIterator.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -38,6 +41,9 @@
     <ClCompile Include="ComponentBase.cpp" />
     <ClCompile Include="ComponentType2.cpp" />
     <ClCompile Include="ComponentMultiTypeIterator.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentIterator.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
