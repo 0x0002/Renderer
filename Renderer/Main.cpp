@@ -675,8 +675,16 @@ int main() {
     g_memoryManager.SetHeapAllocator();
 
 
-    for( ComponentBase *b : g_componentManager.Components<ComponentBase>() ) {
+    for( ComponentBase *b : g_componentManager.AllComponents<ComponentBase>() ) {
 
+    }
+
+    ComponentMultiTypeConstIterator<ComponentBase> it = g_componentManager.AllComponents<ComponentBase>().begin();
+    while( it != g_componentManager.AllComponents<ComponentBase>().end() ) {
+        ComponentBase const *b = *it;
+
+
+        ++it;
     }
 
     // deinitialize
