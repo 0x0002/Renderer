@@ -15,7 +15,7 @@ public:
     void Deinitialize();
 
     template<typename T>
-    ComponentIterator<T> Components();
+    ComponentIteratorHelper<T> Components();
 
 private:
     uint8_t                 *m_componentData    [Component::kCount];   // actual component data
@@ -26,8 +26,8 @@ private:
 };
 
 template<typename T>
-inline ComponentIterator<T> ComponentManager::Components() {
-    return ComponentIterator( m_componentData, m_componentCount, m_componentSize, m_inheritanceLookup[T::kType] );
+inline ComponentIteratorHelper<T> ComponentManager::Components() {
+    return ComponentIteratorHelper<T>( &m_componentData, &m_componentCount, &m_componentSize, &m_inheritanceLookup[T::kType] );
 }
 
 // global instance

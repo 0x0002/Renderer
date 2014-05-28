@@ -675,6 +675,10 @@ int main() {
     g_memoryManager.SetHeapAllocator();
 
 
+    for( ComponentBase *b : g_componentManager.Components<ComponentBase>() ) {
+
+    }
+
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();
     g_componentManager.Deinitialize();
