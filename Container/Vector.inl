@@ -2,7 +2,6 @@
 #include "Core/Memory.h"
 #include "Core/Assert.h"
 
-#include <limits>
 #include <utility>
 
 // constructors
@@ -66,7 +65,7 @@ inline size_t Vector<T, A>::Size() const {
 
 template<typename T, typename A>
 inline size_t Vector<T, A>::MaxSize() const {
-    return std::numeric_limits<size_t>::max();
+    return (size_t)(-1);
 }
 
 template<typename T, typename A>

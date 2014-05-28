@@ -18,16 +18,16 @@ public:
     ComponentIteratorHelper<T> Components();
 
 private:
-    uint8_t                 *m_componentData    [Component::kCount];   // actual component data
-    size_t                   m_componentCount   [Component::kCount];   // number in use
-    size_t                   m_componentMax     [Component::kCount];   // number allocated
-    size_t                   m_componentSize    [Component::kCount];   // size of each type (bytes)
-    Vector<Component::Type> *m_inheritanceLookup[Component::kCount];   // used to iterate through components
+    uint8_t                 *m_componentData    [Component::kCount + 1];   // actual component data
+    size_t                   m_componentCount   [Component::kCount + 1];   // number in use
+    size_t                   m_componentMax     [Component::kCount + 1];   // number allocated
+    size_t                   m_componentSize    [Component::kCount + 1];   // size of each type (bytes)
+    Vector<Component::Type> *m_inheritanceLookup[Component::kCount + 1];   // used to iterate through components
 };
 
 template<typename T>
 inline ComponentIteratorHelper<T> ComponentManager::Components() {
-    return ComponentIteratorHelper<T>( &m_componentData, &m_componentCount, &m_componentSize, &m_inheritanceLookup[T::kType] );
+    return ComponentIteratorHelper<T>( &m_componentData, &m_componentCount, &m_componentSize, m_inheritanceLookup[T::kType] );
 }
 
 // global instance

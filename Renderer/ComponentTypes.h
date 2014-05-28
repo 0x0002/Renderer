@@ -7,8 +7,8 @@ namespace Component {
 
     enum Type {
         #include "Renderer/ComponentDeclarations.h"
-        kCount,
-        kNone
+        kNone,
+        kCount = kNone,
     };
 
     #undef DeclareComponent

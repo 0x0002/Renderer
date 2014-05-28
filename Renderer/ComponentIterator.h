@@ -12,15 +12,18 @@
 template<typename T>
 class ComponentIterator {
 public:
-    ComponentIterator( uint8_t *(*m_componentData )[Component::kCount],
-                       size_t const (*m_componentCount)[Component::kCount],
-                       size_t const (*m_componentSize )[Component::kCount],
-                       Vector<Component::Type> * const *m_inheritanceLookup,
+    ComponentIterator();
+    ComponentIterator( uint8_t *(*m_componentData)[Component::kCount + 1],
+                       size_t const (*m_componentCount)[Component::kCount + 1],
+                       size_t const (*m_componentSize)[Component::kCount + 1],
+                       Vector<Component::Type> const *m_inheritanceLookup,
                        uint8_t *m_data, 
                        size_t m_stride,
                        size_t m_i,
                        size_t m_count,
-                       size_t m_inheritanceIdx );
+                       size_t m_inheritanceIdx,
+                       size_t m_typeCount, 
+                       bool end );
 
     ComponentIterator<T>& operator++();
     ComponentIterator<T>& operator--();
@@ -39,11 +42,15 @@ public:
     typedef std::bidirectional_iterator_tag iterator_category;
 
 private:
+    void FindNextType();
+    void FindPrevType();
+
+private:
     // references to g_componentManager data
-    uint8_t                        *(*m_componentData )[Component::kCount];
-    size_t                    const (*m_componentCount)[Component::kCount];
-    size_t                    const (*m_componentSize )[Component::kCount];
-    Vector<Component::Type> * const  *m_inheritanceLookup;
+    uint8_t                        *(*m_componentData)[Component::kCount + 1];
+    size_t                   const (*m_componentCount)[Component::kCount + 1];
+    size_t                   const (*m_componentSize )[Component::kCount + 1];
+    Vector<Component::Type>  const  *m_inheritanceLookup;
     
     // current position
     uint8_t *m_data;
@@ -51,16 +58,16 @@ private:
     size_t   m_i;
     size_t   m_count;
     size_t   m_inheritanceIdx;
+    size_t   m_typeCount;
 };
 
 template<typename T>
 class ComponentIteratorHelper {
 public:
-    ComponentIteratorHelper();
-    ComponentIteratorHelper( uint8_t *(*componentData )[Component::kCount],
-                             size_t const (*componentCount)[Component::kCount],
-                             size_t const (*componentSize )[Component::kCount],
-                             Vector<Component::Type> * const *inheritanceLookup );
+    ComponentIteratorHelper( uint8_t *(*componentData)[Component::kCount + 1],
+                             size_t const (*componentCount)[Component::kCount + 1],
+                             size_t const (*componentSize)[Component::kCount + 1],
+                             Vector<Component::Type> const *inheritanceLookup );
 
     // iterators
     typedef ComponentIterator<T> iterator;
@@ -73,10 +80,10 @@ public:
     //const_iterator end() const;
 
 private:
-    uint8_t                        *(*m_componentData )[Component::kCount];
-    size_t                    const (*m_componentCount)[Component::kCount];
-    size_t                    const (*m_componentSize )[Component::kCount];
-    Vector<Component::Type> * const  *m_inheritanceLookup;
+    uint8_t                       *(*m_componentData )[Component::kCount + 1];
+    size_t                   const (*m_componentCount)[Component::kCount + 1];
+    size_t                   const (*m_componentSize )[Component::kCount + 1];
+    Vector<Component::Type> const   *m_inheritanceLookup;
 };
 
 #endif // COMPONENT_ITERATOR_H
