@@ -2,6 +2,8 @@
 #define MEMORY_MANAGER_H
 
 #include "Core/StdTypes.h"
+#include "Core/PermAllocator.h"
+#include "Core/HeapAllocator.h"
 
 class MemoryManager {
 public:
@@ -9,7 +11,10 @@ public:
     ~MemoryManager();
 
     void Initialize();
+    void Deinitialize();
+
     void SetHeapAllocator();
+    void UnsetHeapAllocator();
 
     void* Allocate( size_t size );
     void Deallocate( void *ptr );

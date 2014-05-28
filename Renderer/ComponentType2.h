@@ -1,9 +1,9 @@
-#ifndef COMPONENT_TYPE_1_H
-#define COMPONENT_TYPE_1_H
+#ifndef COMPONENT_TYPE_2_H
+#define COMPONENT_TYPE_2_H
 
-#include "Renderer/ComponentBase.h"
+#include "Renderer/ComponentType1.h"
 
-class ComponentType1 : public ComponentBase {
+class ComponentType2 : public ComponentType1 {
 public:
     static Component::Type const kType;
 
@@ -16,4 +16,4 @@ private:
     int m_i;
 };
 
-#endif // COMPONENT_TYPE_1_H
+#endif // COMPONENT_TYPE_2_H

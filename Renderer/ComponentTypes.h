@@ -3,7 +3,7 @@
 
 namespace Component {
 
-    #define DeclareComponent( typeName, baseTypeName ) k##typeName,
+    #define DeclareComponent( typeName, baseTypeName, max ) k##typeName,
 
     enum Type {
         #include "Renderer/ComponentDeclarations.h"

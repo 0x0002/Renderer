@@ -1,6 +1,5 @@
 #include "Core/MemoryManager.h"
-#include "Core/PermAllocator.h"
-#include "Core/HeapAllocator.h"
+
 #include <cstdlib>
 
 size_t const kTotalMemory = 1024 * 1024 * 100; // 100MB
@@ -26,9 +25,6 @@ MemoryManager::MemoryManager( size_t totalMemory ) :
 }
 
 MemoryManager::~MemoryManager() {
-    g_heapAllocator.Deinitialize();
-    m_allocFn   = DefaultAllocate;
-    m_deallocFn = DefaultDeallocate;
     operator delete( m_begin );
 }
 
@@ -38,11 +34,22 @@ void MemoryManager::Initialize() {
     m_deallocFn = PermDeallocate;
 }
 
+void MemoryManager::Deinitialize() {
+    m_allocFn   = DefaultAllocate;
+    m_deallocFn = DefaultDeallocate;
+}
+
 void MemoryManager::SetHeapAllocator() {
     g_permAllocator.Deinitialize();
     g_heapAllocator.Initialize( g_permAllocator.Begin(), SubPtr( m_end, g_permAllocator.Begin() ) );
     m_allocFn   = HeapAllocate;
     m_deallocFn = HeapDeallocate;
+}
+
+void MemoryManager::UnsetHeapAllocator() {
+    g_heapAllocator.Deinitialize();
+    m_allocFn   = PermAllocate;
+    m_deallocFn = PermDeallocate;
 }
 
 void* MemoryManager::Allocate( size_t size ) {

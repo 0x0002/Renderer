@@ -22,10 +22,21 @@
     <ClInclude Include="ComponentType1.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentIterator.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentType2.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="ComponentManager.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentType1.cpp" />
+    <ClCompile Include="ComponentBase.cpp" />
+    <ClCompile Include="ComponentType2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

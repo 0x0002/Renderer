@@ -11,13 +11,17 @@
 class ComponentManager {
 public:
     void Initialize();
+    void Deinitialize();
 
+    template<typename T>
+    void Components();
 
 private:
-    uint8_t                 **m_componentData    [Component::kCount];
-    size_t                    m_componentSize    [Component::kCount];
+    uint8_t                 *m_componentData    [Component::kCount];   // actual component data
+    size_t                   m_componentCount   [Component::kCount];   // number in use
+    size_t                   m_componentSize    [Component::kCount];   // size of each type
 
-    Vector<Component::Type>  *m_derivedTypeLookup[Component::kCount];
+    Vector<Component::Type> *m_inheritanceLookup[Component::kCount];
 
     // stuff
 };

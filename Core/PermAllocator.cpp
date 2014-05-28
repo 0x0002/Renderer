@@ -23,6 +23,8 @@ void PermAllocator::Deinitialize() {
 }
 
 void* PermAllocator::Allocate( size_t size ) {
+    Assert( m_initialized, "HeapAllocator \"%s\" is not initialized.", GetName() );
+
     size_t allocSize = ( size + kMinAllocSize - 1 ) & ~( kMinAllocSize - 1 );
 
     if( allocSize > Available() ) {

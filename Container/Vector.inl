@@ -1,5 +1,6 @@
 
 #include "Core/Memory.h"
+#include "Core/Assert.h"
 
 #include <limits>
 #include <utility>

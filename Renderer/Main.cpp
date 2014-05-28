@@ -6,6 +6,8 @@
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
 
+#include "Renderer/ComponentManager.h"
+
 
 #include <string>
 #include <list>
@@ -64,8 +66,6 @@ template class List<A>;
 template class Vector<A>;
 
 int main() {
-    g_memoryManager.Initialize();
-
 #if 0
     Vec4 a( 1.0f, 2.0f, 3.0f, 4.0f );
 
@@ -660,14 +660,24 @@ int main() {
     }
 #endif
 
+#if 0
     {
         A *a0 = new A();
         A *a1 = new A[10];
 
         int asdf = 0;
     }
+#endif
 
+    // initialize
+    g_memoryManager.Initialize();
+    g_componentManager.Initialize();
     g_memoryManager.SetHeapAllocator();
 
+
+    // deinitialize
+    g_memoryManager.UnsetHeapAllocator();
+    g_componentManager.Deinitialize();
+    g_memoryManager.Deinitialize();
     return 0;
 }
