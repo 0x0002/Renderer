@@ -1,5 +1,5 @@
-#ifndef COMPONENT_ITERATOR_H
-#define COMPONENT_ITERATOR_H
+#ifndef COMPONENT_MULTI_TYPE_ITERATOR_H
+#define COMPONENT_MULTI_TYPE_ITERATOR_H
 
 #include "Renderer/ComponentTypes.h"
 
@@ -145,4 +145,4 @@ private:
     Vector<Component::Type> const   *m_inheritanceLookup;
 };
 
-#endif // COMPONENT_ITERATOR_H
+#endif // COMPONENT_MULTI_TYPE_ITERATOR_H

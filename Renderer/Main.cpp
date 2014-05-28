@@ -687,6 +687,10 @@ int main() {
         ++it;
     }
 
+    for( ComponentType1 const *t1 : g_componentManager.AllComponents<ComponentType1>() ) {
+
+    }
+
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();
     g_componentManager.Deinitialize();

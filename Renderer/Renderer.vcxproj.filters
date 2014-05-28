@@ -22,10 +22,10 @@
     <ClInclude Include="ComponentType1.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentIterator.h">
+    <ClInclude Include="ComponentType2.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentType2.h">
+    <ClInclude Include="ComponentMultiTypeIterator.h">
       <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,7 +37,7 @@
     <ClCompile Include="ComponentType1.cpp" />
     <ClCompile Include="ComponentBase.cpp" />
     <ClCompile Include="ComponentType2.cpp" />
-    <ClCompile Include="ComponentIterator.cpp">
+    <ClCompile Include="ComponentMultiTypeIterator.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>

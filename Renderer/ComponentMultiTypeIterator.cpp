@@ -1,4 +1,4 @@
-#include "Renderer/ComponentIterator.h"
+#include "Renderer/ComponentMultiTypeIterator.h"
 #include "Renderer/ComponentIncludes.h"
 
 // const iterator

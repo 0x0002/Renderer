@@ -3,7 +3,7 @@
 
 #include "Renderer/ComponentIncludes.h"
 #include "Renderer/ComponentTypes.h"
-#include "Renderer/ComponentIterator.h"
+#include "Renderer/ComponentMultiTypeIterator.h"
 
 #include "Container/Vector.h"
 
