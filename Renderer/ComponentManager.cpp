@@ -18,9 +18,10 @@ void ComponentManager::Initialize() {
 
         #define DeclareComponent( typeName, baseTypeName, max ) \
         case Component::k##typeName: { \
-            m_componentSize[i] = sizeof( typeName ); \
             m_componentData[i] = new uint8_t[ max * sizeof( typeName ) ]; \
             m_componentCount[i] = 0; \
+            m_componentMax[i] = max; \
+            m_componentSize[i] = sizeof( typeName ); \
             if( Component::k##baseTypeName != Component::kNone ) \
                 m_inheritanceLookup[Component::k##baseTypeName]->PushBack( Component::k##typeName ); \
             break; \

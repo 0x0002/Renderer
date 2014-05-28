@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComponentBase.cpp" />
+    <ClCompile Include="ComponentIterator.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="ComponentType1.cpp" />
     <ClCompile Include="ComponentType2.cpp" />

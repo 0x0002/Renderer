@@ -37,6 +37,9 @@
     <ClCompile Include="ComponentType1.cpp" />
     <ClCompile Include="ComponentBase.cpp" />
     <ClCompile Include="ComponentType2.cpp" />
+    <ClCompile Include="ComponentIterator.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
