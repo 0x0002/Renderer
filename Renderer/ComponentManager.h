@@ -25,7 +25,6 @@ public:
     List<UntypedHandle>::iterator BeginHandle() const;
     List<UntypedHandle>::iterator Create( Component::Type type );
     List<UntypedHandle>::iterator Destroy( List<UntypedHandle>::const_iterator it );
-    //void Destroy( uint16_t 
 
 private:
     uint8_t                 *m_data             [Component::kCount + 1];   // actual component data
@@ -40,6 +39,7 @@ private:
     List<UntypedHandle>     *m_handles; // preallocated pool of handles
 
     // friends
+    friend class UntypedHandle;
     template<typename T> friend class Handle;
 };
 

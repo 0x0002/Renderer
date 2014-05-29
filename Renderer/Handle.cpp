@@ -16,11 +16,6 @@ Handle<T>::Handle( UntypedHandle const &handle ) :
 }
 
 template<typename T>
-Handle<T>::Handle( size_t generation, uint32_t id ) :
-    m_handle( generation, id, T::kType ) {
-}
-
-template<typename T>
 bool Handle<T>::operator==( Handle const &handle ) const {
     return m_handle == handle.m_handle;
 }

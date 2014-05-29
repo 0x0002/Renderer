@@ -8,6 +8,7 @@
 
 #include "Renderer/ComponentManager.h"
 #include "Renderer/ComponentIncludes.h"
+#include "Renderer/ComponentTypes.h"
 
 
 #include <string>
@@ -694,6 +695,17 @@ int main() {
     for( ComponentType2 const *t2 : Components<ComponentType2>() ) {
 
     }
+
+    g_componentManager.Create( Component::kComponentBase );
+    g_componentManager.Create( Component::kComponentType1 );
+    g_componentManager.Create( Component::kComponentType2 );
+
+    for( ComponentBase *c : AllComponents<ComponentBase>() ) {
+        c->Initialize();
+    }
+
+
+    int asdf = 0;
 
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();

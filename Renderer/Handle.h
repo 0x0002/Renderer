@@ -4,14 +4,11 @@
 #include "Renderer/ComponentTypes.h"
 #include "Renderer/UntypedHandle.h"
 
-#include "Core/StdTypes.h"
-
 template<typename T>
 class Handle {
 public:
     Handle();
     Handle( UntypedHandle const &handle );
-    Handle( size_t generation, uint32_t id );
 
     bool operator==( Handle const &handle ) const;
     bool operator!=( Handle const &handle ) const;
@@ -20,9 +17,6 @@ public:
 
 private:
     UntypedHandle m_handle;
-
-    // friends
-    friend class UntypedHandle;
 };
 
 #endif // COMPONENT_HANDLE_H

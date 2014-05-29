@@ -22,7 +22,7 @@ void ComponentManager::Initialize() {
     m_generation       [Component::kNone] = new uint64_t[1];
     m_idToData         [Component::kNone] = new uint32_t[1];
     m_availableId      [Component::kNone] = new uint32_t[1];
-    m_count            [Component::kNone] = 1; // important for iterator to work properly
+    m_count            [Component::kNone] = (uint32_t)-1; // important to be non-zero for multitype iterator to work properly
     m_max              [Component::kNone] = 0;
     m_size             [Component::kNone] = 0;
     m_inheritanceLookup[Component::kNone] = new Vector<Component::Type>( Component::kCount + 1, false, g_permAllocator );
@@ -105,17 +105,6 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
     uint8_t *data = m_data[type] + componentIdx * m_size[type];
     ++m_count[type];
 
-    // construct the component
-    #define DeclareComponent( typeName, baseTypeName, max ) \
-    case Component::k##typeName: Construct( (typeName*)data, typeName() ); break;
-
-    switch( type ) {
-    #include "ComponentDeclarations.h"
-    default: AssertAlways( "Invalid component type." ); break;	
-    };
-
-    #undef DeclareComponent
-
     // assign an id
     // remove id from front of the array. when this component is destroyed, the id is placed at the back of the array
     uint32_t id = m_availableId[type][0]; 
@@ -125,6 +114,17 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
     // shift available ids so we use all ids evenly
     size_t shiftSize = ( m_max[type] - m_count[type] ) * sizeof( uint32_t );
     Memmove( m_availableId[type], shiftSize, m_availableId[type] + 1, shiftSize );
+
+    // construct the component
+    #define DeclareComponent( typeName, baseTypeName, max ) \
+    case Component::k##typeName: Construct( (typeName*)data, typeName( id ) ); break;
+
+    switch( type ) {
+    #include "ComponentDeclarations.h"
+    default: AssertAlways( "Invalid component type." ); break;	
+    };
+
+    #undef DeclareComponent
 
     return m_handles->Insert( m_handles->begin(), UntypedHandle( generation, id, type ) );
 }
@@ -138,9 +138,18 @@ List<UntypedHandle>::iterator ComponentManager::Destroy( List<UntypedHandle>::co
     uint8_t *data = m_data[type] + componentIdx * m_size[type];
     --m_count[type];
 
-    // destruct the component
+    // destruct component then swap last component into it's array slot
     #define DeclareComponent( typeName, baseTypeName, max ) \
-    case Component::k##typeName: Destruct( (typeName*)data ); break;
+    case Component::k##typeName: {                                          \
+        typeName *d = (typeName*)data;                                      \
+        Destruct( d );                                                      \
+        if( m_count[type] ) {                                               \
+            uint8_t *endData = m_data[type] + m_count[type] * m_size[type]; \
+            Construct( d, *(typeName*)endData );                            \
+            m_idToData[type][d->m_id] = componentIdx;                       \
+        }                                                                   \
+        break; \
+    }
 
     switch( handle.m_type ) {
     #include "ComponentDeclarations.h"

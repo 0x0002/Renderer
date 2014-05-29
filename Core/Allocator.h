@@ -25,6 +25,11 @@ private:
 #pragma warning( disable: 4100 )
 
 template<typename T>
+inline void Construct( T *p ) {
+    new ( p ) T();
+}
+
+template<typename T>
 inline void Construct( T *p, T const &val ) {
     new ( p ) T( val );
 }
