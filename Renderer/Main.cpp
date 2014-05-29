@@ -9,6 +9,7 @@
 #include "Renderer/ComponentManager.h"
 #include "Renderer/ComponentIncludes.h"
 #include "Renderer/ComponentTypes.h"
+#include "Renderer/Handle.h"
 
 
 #include <string>
@@ -612,7 +613,69 @@ int main() {
 
         std::for_each( list.begin(), list.end(), std::default_delete<A>() );
     }
+#endif
 
+#if 0
+    {
+        A *a0 = new A();
+        A *a1 = new A[10];
+
+        int asdf = 0;
+    }
+#endif
+
+    // initialize
+    g_memoryManager.Initialize();
+    g_componentManager.Initialize();
+    g_memoryManager.SetHeapAllocator();
+
+    for( ComponentBase *b : g_componentManager.AllComponents<ComponentBase>() ) {
+
+    }
+
+    ComponentMultiTypeConstIterator<ComponentBase> it = g_componentManager.AllComponents<ComponentBase>().begin();
+    while( it != g_componentManager.AllComponents<ComponentBase>().end() ) {
+        ComponentBase const *b = *it;
+
+
+        ++it;
+    }
+
+    for( ComponentType1 const *t1 : g_componentManager.AllComponents<ComponentType1>() ) {
+
+    }
+
+    for( ComponentType2 const *t2 : Components<ComponentType2>() ) {
+
+    }
+
+    List<UntypedHandle>::iterator bn = g_componentManager.Create( Component::kComponentBase );
+    Handle<ComponentBase> b = *bn;
+
+    List<UntypedHandle>::iterator c1n = g_componentManager.Create( Component::kComponentType1 );
+    Handle<ComponentType1> c1 = *c1n;
+
+    List<UntypedHandle>::iterator c2n = g_componentManager.Create( Component::kComponentType2 );
+    Handle<ComponentType2> c2 = *c2n;
+
+    ComponentBase *base = *b;
+    g_componentManager.Destroy( bn );
+    base = *b;
+
+    for( ComponentBase *c : AllComponents<ComponentBase>() ) {
+        c->Initialize();
+    }
+
+    
+
+    int asdf = 0;
+
+
+
+
+
+
+#if 0
     // vector
     {
         Vector<int> v( 4 );
@@ -662,50 +725,8 @@ int main() {
     }
 #endif
 
-#if 0
-    {
-        A *a0 = new A();
-        A *a1 = new A[10];
-
-        int asdf = 0;
-    }
-#endif
-
-    // initialize
-    g_memoryManager.Initialize();
-    g_componentManager.Initialize();
-    g_memoryManager.SetHeapAllocator();
-
-    for( ComponentBase *b : g_componentManager.AllComponents<ComponentBase>() ) {
-
-    }
-
-    ComponentMultiTypeConstIterator<ComponentBase> it = g_componentManager.AllComponents<ComponentBase>().begin();
-    while( it != g_componentManager.AllComponents<ComponentBase>().end() ) {
-        ComponentBase const *b = *it;
 
 
-        ++it;
-    }
-
-    for( ComponentType1 const *t1 : g_componentManager.AllComponents<ComponentType1>() ) {
-
-    }
-
-    for( ComponentType2 const *t2 : Components<ComponentType2>() ) {
-
-    }
-
-    g_componentManager.Create( Component::kComponentBase );
-    g_componentManager.Create( Component::kComponentType1 );
-    g_componentManager.Create( Component::kComponentType2 );
-
-    for( ComponentBase *c : AllComponents<ComponentBase>() ) {
-        c->Initialize();
-    }
-
-
-    int asdf = 0;
 
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();

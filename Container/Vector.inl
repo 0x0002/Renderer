@@ -12,6 +12,7 @@ inline Vector<T, A>::Vector( size_t capacity, bool growable, A &allocator ) :
     m_capacity( capacity ),
     m_size( 0 ),
     m_growable( growable ) {
+    Assert( capacity <= MaxSize(), "Cannot create vector of %i elements. (Max = %llx)", (int32_t)capacity, MaxSize() );
 }
 
 template<typename T, typename A>
@@ -21,8 +22,9 @@ inline Vector<T, A>::Vector( Vector<T, A> const &vec ) :
     m_capacity( vec.m_size ),
     m_size( vec.m_size ),
     m_growable( vec.m_growable ) {
-    size_t sizeBytes = m_capacity * sizeof( T );
-    Memcpy( m_data, sizeBytes, vec.m_data, sizeBytes );
+
+    for( T const &val : vec )
+        PushBack( val );
 }
 
 template<typename T, typename A>
@@ -33,6 +35,7 @@ inline Vector<T, A>& Vector<T, A>::operator=( Vector<T, A> vec ) {
 
 template<typename T, typename A>
 inline Vector<T, A>::~Vector() {
+    Clear();
     m_allocator.Deallocate( m_data );
 }
 
@@ -75,7 +78,7 @@ inline void Vector<T, A>::Resize( size_t size ) {
     if( size > m_capacity && m_growable ) {
         Grow( size - m_capacity );
         for( size_t i = m_size; i < size; ++i )
-            m_data[i] = T();
+            Construct( &m_data[i] );
     }
 
     m_size = size;
@@ -107,7 +110,7 @@ inline void Vector<T, A>::PushBack( T const &val ) {
     if( m_size == m_capacity && m_growable )
         Grow();
 
-    m_data[m_size] = val;
+    Construct( &m_data[m_size], val );
     ++m_size;
 }
 
@@ -115,6 +118,7 @@ template<typename T, typename A>
 inline void Vector<T, A>::PopBack() {
     Assert( m_size != 0, "Cannot erase from empty vector." );
     --m_size;
+    Destruct( &m_data[m_size] );
 }
 
 template<typename T, typename A>
@@ -123,12 +127,19 @@ inline void Vector<T, A>::Erase( const_iterator const &pos ) {
 
     Assert( idx >= 0 && (size_t)idx < m_size, "Cannot erase from invalid index. (idx = %llx)", idx );
 
-    Memmove( &m_data[idx], ( m_size - idx ) * sizeof( T ), &m_data[idx + 1], ( m_size - idx - 1 ) * sizeof( T ) );
     --m_size;
+
+    size_t newSize = m_size;
+    for( size_t i = idx; i < newSize; ++i )
+        m_data[i] = m_data[i + 1];
 }
 
 template<typename T, typename A>
 inline void Vector<T, A>::Clear() {
+    size_t size = m_size;
+    for( size_t i = 0; i < size; ++i )
+        Destruct( &m_data[i] );
+
     m_size = 0;
 }
 
