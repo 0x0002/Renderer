@@ -31,10 +31,10 @@
     <ClInclude Include="ComponentBase.h">
       <Filter>Component\ComponentTypes</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentHandle.h">
+    <ClInclude Include="UntypedHandle.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="UntypedHandle.h">
+    <ClInclude Include="Handle.h">
       <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,10 +58,10 @@
     <ClCompile Include="ComponentBase.cpp">
       <Filter>Component\ComponentTypes</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentHandle.cpp">
+    <ClCompile Include="UntypedHandle.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="UntypedHandle.cpp">
+    <ClCompile Include="Handle.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>

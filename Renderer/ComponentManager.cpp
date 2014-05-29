@@ -22,7 +22,6 @@ void ComponentManager::Initialize() {
     m_generation       [Component::kNone] = new uint64_t[1];
     m_idToData         [Component::kNone] = new uint32_t[1];
     m_availableId      [Component::kNone] = new uint32_t[1];
-    m_availableIdCount [Component::kNone] = 0;
     m_count            [Component::kNone] = 1; // important for iterator to work properly
     m_max              [Component::kNone] = 0;
     m_size             [Component::kNone] = 0;
@@ -38,7 +37,6 @@ void ComponentManager::Initialize() {
             m_generation        [i] = new uint64_t[max];                       \
             m_idToData          [i] = new uint32_t[max];                       \
             m_availableId       [i] = new uint32_t[max];                       \
-            m_availableIdCount  [i] = max;                                     \
             Memset( m_generation[i], 0, max * sizeof( uint64_t ) );            \
             for( uint32_t j = 0; j < max; ++j )                                \
                 m_availableId[i][j] = j;                                       \
@@ -104,7 +102,7 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
 
     // create component in the next available array index. components are always packed into the lower indices
     uint32_t componentIdx = m_count[type]; 
-    uint8_t *data = m_data[componentIdx * m_size[type]];
+    uint8_t *data = m_data[type] + componentIdx * m_size[type];
     ++m_count[type];
 
     // construct the component
@@ -124,5 +122,38 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
     uint64_t generation = m_generation[type][id];
     m_idToData[type][id] = componentIdx;
 
+    // shift available ids so we use all ids evenly
+    size_t shiftSize = ( m_max[type] - m_count[type] ) * sizeof( uint32_t );
+    Memmove( m_availableId[type], shiftSize, m_availableId[type] + 1, shiftSize );
+
     return m_handles->Insert( m_handles->begin(), UntypedHandle( generation, id, type ) );
+}
+
+List<UntypedHandle>::iterator ComponentManager::Destroy( List<UntypedHandle>::const_iterator it ) {
+    UntypedHandle handle = *it;
+    Component::Type type = handle.m_type;
+
+    // find the component data
+    uint32_t componentIdx = m_idToData[type][handle.m_id];
+    uint8_t *data = m_data[type] + componentIdx * m_size[type];
+    --m_count[type];
+
+    // destruct the component
+    #define DeclareComponent( typeName, baseTypeName, max ) \
+    case Component::k##typeName: Destruct( (typeName*)data ); break;
+
+    switch( handle.m_type ) {
+    #include "ComponentDeclarations.h"
+    default: AssertAlways( "Invalid component type." ); break;	
+    };
+
+    #undef DeclareComponent
+
+    // put the id at the back of the array
+    m_availableId[type][m_max[type] - m_count[type] - 1] = handle.m_id;
+
+    // increment the generation to invalidate handles
+    ++m_generation[type][handle.m_id];
+
+    return m_handles->Erase( it );
 }

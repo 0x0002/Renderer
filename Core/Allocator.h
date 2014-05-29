@@ -21,14 +21,19 @@ private:
     char const *m_name;
 };
 
+#pragma warning( push )
+#pragma warning( disable: 4100 )
+
 template<typename T>
 inline void Construct( T *p, T const &val ) {
     new ( p ) T( val );
 }
 
 template<typename T>
-inline void Destroy( T *val ) {
+inline void Destruct( T *val ) {
     val->~T();
 }
+
+#pragma warning( pop )
 
 #endif // ALLOCATOR_H

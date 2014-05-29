@@ -7,6 +7,7 @@
 #include "Core/MemoryManager.h"
 
 #include "Renderer/ComponentManager.h"
+#include "Renderer/ComponentIncludes.h"
 
 
 #include <string>
@@ -674,7 +675,6 @@ int main() {
     g_componentManager.Initialize();
     g_memoryManager.SetHeapAllocator();
 
-#if 0
     for( ComponentBase *b : g_componentManager.AllComponents<ComponentBase>() ) {
 
     }
@@ -694,7 +694,6 @@ int main() {
     for( ComponentType2 const *t2 : Components<ComponentType2>() ) {
 
     }
-#endif
 
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();

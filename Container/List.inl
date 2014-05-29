@@ -147,7 +147,7 @@ inline typename List<T, A>::iterator List<T, A>::Erase( const_iterator const &po
     // remove node from list
     uint16_t nodeIdx = pos.Idx();
     Node &node = m_list[nodeIdx];
-    Destroy( &node.m_value );
+    Destruct( &node.m_value );
 
     m_list[node.m_next].m_prev = node.m_prev;
     m_list[node.m_prev].m_next = node.m_next;
@@ -235,7 +235,7 @@ inline void List<T, A>::Grow( uint16_t n ) {
         n.m_next = o.m_next;
         n.m_prev = o.m_prev;
         Construct( &n.m_value, o.m_value );
-        Destroy( &o.m_value );
+        Destruct( &o.m_value );
     }
 
     // initialize empty nodes

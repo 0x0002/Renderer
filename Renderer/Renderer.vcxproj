@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ComponentBase.h" />
     <ClInclude Include="ComponentDeclarations.h" />
-    <ClInclude Include="ComponentHandle.h" />
+    <ClInclude Include="Handle.h" />
     <ClInclude Include="ComponentIncludes.h" />
     <ClInclude Include="ComponentIterator.h" />
     <ClInclude Include="ComponentMultiTypeIterator.h" />
@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComponentBase.cpp" />
-    <ClCompile Include="ComponentHandle.cpp" />
+    <ClCompile Include="Handle.cpp" />
     <ClCompile Include="ComponentIterator.cpp" />
     <ClCompile Include="ComponentMultiTypeIterator.cpp" />
     <ClCompile Include="ComponentManager.cpp" />

@@ -20,6 +20,9 @@ public:
 
 private:
     UntypedHandle m_handle;
+
+    // friends
+    friend class UntypedHandle;
 };
 
 #endif // COMPONENT_HANDLE_H

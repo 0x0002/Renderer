@@ -24,7 +24,7 @@ public:
 
     List<UntypedHandle>::iterator BeginHandle() const;
     List<UntypedHandle>::iterator Create( Component::Type type );
-    List<UntypedHandle>::iterator Destroy( UntypedHandle const &handle );
+    List<UntypedHandle>::iterator Destroy( List<UntypedHandle>::const_iterator it );
     //void Destroy( uint16_t 
 
 private:
@@ -32,7 +32,6 @@ private:
     uint64_t                *m_generation       [Component::kCount + 1];   // whenever a component is destroyed, this is incremented. used to invalidate handles
     uint32_t                *m_idToData         [Component::kCount + 1];   // used to look up data using a handle
     uint32_t                *m_availableId      [Component::kCount + 1];   // used to track which ids are available
-    uint32_t                 m_availableIdCount [Component::kCount + 1];   // number of available ids for each type
     uint32_t                 m_count            [Component::kCount + 1];   // number in use
     uint32_t                 m_max              [Component::kCount + 1];   // number allocated
     size_t                   m_size             [Component::kCount + 1];   // size of each type (bytes)
@@ -41,7 +40,7 @@ private:
     List<UntypedHandle>     *m_handles; // preallocated pool of handles
 
     // friends
-    //template<typename T> friend class Handle;
+    template<typename T> friend class Handle;
 };
 
 template<typename T>
