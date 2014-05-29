@@ -78,7 +78,6 @@ ForceInline Quat& Quat::operator*=( Quat const &q ) {
     __m128 temp2 = _mm_mul_ps( q_yzxy, zxyy );
     __m128 temp3 = _mm_mul_ps( q_zxyz, yzxz );
 
-    __m128 temp4 = _mm_sub_ps( temp2, temp3 );
     __m128 xyz_ = _mm_add_ps( temp0, _mm_add_ps( temp1, _mm_sub_ps( temp2, temp3 ) ) );
     __m128 ___w = _mm_sub_ps( temp0, _mm_add_ps( temp1, _mm_add_ps( temp2, temp3 ) ) );
 
@@ -136,7 +135,6 @@ ForceInline Quat Quat::operator*( Quat const &q ) const {
     __m128 temp2 = _mm_mul_ps( q_yzxy, zxyy );
     __m128 temp3 = _mm_mul_ps( q_zxyz, yzxz );
 
-    __m128 temp4 = _mm_sub_ps( temp2, temp3 );
     __m128 xyz_ = _mm_add_ps( temp0, _mm_add_ps( temp1, _mm_sub_ps( temp2, temp3 ) ) );
     __m128 ___w = _mm_sub_ps( temp0, _mm_add_ps( temp1, _mm_add_ps( temp2, temp3 ) ) );
 

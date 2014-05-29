@@ -7,7 +7,7 @@
 #include "Container/ListNode.h"
 #include "Container/ListIterator.h"
 
-template<typename T, typename A = HeapAllocator>
+template<typename T, typename A = Allocator>
 class List {
 private:
     enum {
@@ -42,13 +42,13 @@ public:
     size_t Empty() const;
 
     // modifiers
-    void Insert( const_iterator const &pos, T const &val );
+    iterator Insert( const_iterator const &pos, T const &val );
     void PushFront( T const &val );
     void PushBack( T const &val );
 
     void PopFront();
     void PopBack();
-    void Erase( const_iterator const &pos );
+    iterator Erase( const_iterator const &pos );
 
     // accessors
     T& Front();

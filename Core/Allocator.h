@@ -3,6 +3,8 @@
 
 #include "Core/StdTypes.h"
 
+#include <new>
+
 class Allocator {
 public:
     Allocator( char const *name ); // does not make a copy of string

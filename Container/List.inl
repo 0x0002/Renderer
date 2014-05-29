@@ -91,7 +91,7 @@ inline size_t List<T, A>::Empty() const {
 
 // modifiers
 template<typename T, typename A>
-inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
+inline typename List<T, A>::iterator List<T, A>::Insert( const_iterator const &pos, T const &val ) {
     Assert( m_size < Capacity() || m_growable, "Cannot insert into full list. (Capacity = %llx)", Capacity() );
 
     if( m_size == Capacity() && m_growable )
@@ -114,6 +114,8 @@ inline void List<T, A>::Insert( const_iterator const &pos, T const &val ) {
 
     m_list[nextNode.m_prev].m_next = nodeIdx;
     nextNode.m_prev = nodeIdx;
+
+    return iterator( m_list, nodeIdx );
 }
 
 template<typename T, typename A>
@@ -137,7 +139,7 @@ inline void List<T, A>::PopBack() {
 }
 
 template<typename T, typename A>
-inline void List<T, A>::Erase( const_iterator const &pos ) {
+inline typename List<T, A>::iterator List<T, A>::Erase( const_iterator const &pos ) {
     Assert( m_size != 0, "Cannot erase from empty list." );
 
     --m_size;
@@ -149,10 +151,13 @@ inline void List<T, A>::Erase( const_iterator const &pos ) {
 
     m_list[node.m_next].m_prev = node.m_prev;
     m_list[node.m_prev].m_next = node.m_next;
+    iterator next( m_list, node.m_next );
 
     // put node back on front free list
     node.m_next = m_freeIdx;
     m_freeIdx = nodeIdx;
+
+    return next;
 }
 
 // accessors

@@ -7,9 +7,9 @@ class ComponentType1 : public ComponentBase {
 public:
     static Component::Type const kType;
 
-    virtual void Initialize() override;
-    virtual void Update( float dt ) override;
-    virtual void Uninitialize() override;
+    virtual void Initialize() override {}
+    virtual void Update( float dt ) override {}
+    virtual void Uninitialize() override {}
 
 private:
     float m_f;

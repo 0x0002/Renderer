@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ComponentBase.h" />
     <ClInclude Include="ComponentDeclarations.h" />
+    <ClInclude Include="ComponentHandle.h" />
     <ClInclude Include="ComponentIncludes.h" />
     <ClInclude Include="ComponentIterator.h" />
     <ClInclude Include="ComponentMultiTypeIterator.h" />
@@ -31,15 +32,18 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UntypedHandle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComponentBase.cpp" />
+    <ClCompile Include="ComponentHandle.cpp" />
     <ClCompile Include="ComponentIterator.cpp" />
     <ClCompile Include="ComponentMultiTypeIterator.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="ComponentType1.cpp" />
     <ClCompile Include="ComponentType2.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="UntypedHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Container\Container.vcxproj">

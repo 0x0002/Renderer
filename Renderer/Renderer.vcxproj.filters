@@ -4,9 +4,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="ComponentBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentDeclarations.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -19,16 +16,25 @@
     <ClInclude Include="ComponentTypes.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentType1.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentType2.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentMultiTypeIterator.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="ComponentIterator.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentType2.h">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentType1.h">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentBase.h">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentHandle.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="UntypedHandle.h">
       <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,19 +43,34 @@
     <ClCompile Include="ComponentManager.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentType1.cpp" />
-    <ClCompile Include="ComponentBase.cpp" />
-    <ClCompile Include="ComponentType2.cpp" />
     <ClCompile Include="ComponentMultiTypeIterator.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="ComponentIterator.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentType1.cpp">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentType2.cpp">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentBase.cpp">
+      <Filter>Component\ComponentTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentHandle.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="UntypedHandle.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
       <UniqueIdentifier>{3ac0d900-8280-48a1-ad2d-b3e723f68a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ComponentTypes">
+      <UniqueIdentifier>{36b75852-7121-4ef7-a8ed-ca77465a75ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

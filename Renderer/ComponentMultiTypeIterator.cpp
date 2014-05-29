@@ -32,15 +32,15 @@ ComponentMultiTypeConstIterator<T>::ComponentMultiTypeConstIterator( ComponentMu
 
 template<typename T>
 ComponentMultiTypeConstIterator<T>::ComponentMultiTypeConstIterator( uint8_t *(*componentData)[Component::kCount + 1],
-                                                                     size_t const (*componentCount)[Component::kCount + 1],
+                                                                     uint32_t const (*componentCount)[Component::kCount + 1],
                                                                      size_t const (*componentSize)[Component::kCount + 1],
                                                                      Vector<Component::Type> const *inheritanceLookup,
                                                                      uint8_t *data, 
                                                                      size_t stride,
-                                                                     size_t i,
-                                                                     size_t count,
-                                                                     size_t inheritanceIdx,
-                                                                     size_t typeCount,
+                                                                     uint32_t i,
+                                                                     uint32_t count,
+                                                                     uint32_t inheritanceIdx,
+                                                                     uint32_t typeCount,
                                                                      bool end ) :
     m_componentData( componentData ),
     m_componentCount( componentCount ),
@@ -153,15 +153,15 @@ ComponentMultiTypeIterator<T>::ComponentMultiTypeIterator() :
 
 template<typename T>
 ComponentMultiTypeIterator<T>::ComponentMultiTypeIterator( uint8_t *(*componentData)[Component::kCount + 1],
-                                                           size_t const (*componentCount)[Component::kCount + 1],
+                                                           uint32_t const (*componentCount)[Component::kCount + 1],
                                                            size_t const (*componentSize)[Component::kCount + 1],
                                                            Vector<Component::Type> const *inheritanceLookup,
                                                            uint8_t *data, 
                                                            size_t stride,
-                                                           size_t i,
-                                                           size_t count,
-                                                           size_t inheritanceIdx,
-                                                           size_t typeCount,
+                                                           uint32_t i,
+                                                           uint32_t count,
+                                                           uint32_t inheritanceIdx,
+                                                           uint32_t typeCount,
                                                            bool end ) :
     m_componentData( componentData ),
     m_componentCount( componentCount ),
@@ -260,7 +260,7 @@ inline void ComponentMultiTypeIterator<T>::FindPrevType() {
 // helper
 template<typename T>
 ComponentMultiTypeIteratorHelper<T>::ComponentMultiTypeIteratorHelper( uint8_t *(*componentData)[Component::kCount + 1],
-                                                                       size_t const (*componentCount)[Component::kCount + 1],
+                                                                       uint32_t const (*componentCount)[Component::kCount + 1],
                                                                        size_t const (*componentSize)[Component::kCount + 1],
                                                                        Vector<Component::Type> const *inheritanceLookup ) :
     m_componentData( componentData ),
@@ -279,7 +279,7 @@ typename ComponentMultiTypeIteratorHelper<T>::iterator ComponentMultiTypeIterato
                                           0,
                                           (*m_componentCount)[T::kType],
                                           0,
-                                          (*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_inheritanceLookup).Size(),
                                           false );
 }
 
@@ -292,7 +292,7 @@ typename ComponentMultiTypeIteratorHelper<T>::const_iterator ComponentMultiTypeI
                                           0,
                                           (*m_componentCount)[T::kType],
                                           0,
-                                          (*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_inheritanceLookup).Size(),
                                           false );
 }
 
@@ -305,7 +305,7 @@ typename ComponentMultiTypeIteratorHelper<T>::iterator ComponentMultiTypeIterato
                                           0,
                                           (*m_componentCount)[Component::kNone],
                                           0,
-                                          (*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_inheritanceLookup).Size(),
                                           true );
 }
 
@@ -318,7 +318,7 @@ typename ComponentMultiTypeIteratorHelper<T>::const_iterator ComponentMultiTypeI
                                           0,
                                           (*m_componentCount)[Component::kNone],
                                           0,
-                                          (*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_inheritanceLookup).Size(),
                                           true );
 }
 
