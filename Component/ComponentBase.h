@@ -7,19 +7,14 @@
 
 #include "Core/StdTypes.h"
 
-
-
-
-#include "Core/Print.h"
-
 class ComponentBase {
 public:
     static Component::Type const kType;
 
-    ComponentBase( GameObject *object, uint32_t id ) : m_object( object ), m_id( id ), m_type( kType ) {PrintLine( "ComponentBase::Constructor" );}
-    virtual ~ComponentBase() { PrintLine( "ComponentBase::Destructor" ); }
+    ComponentBase( GameObject *object, uint32_t id ) : m_object( object ), m_id( id ), m_type( kType ) {}
+    virtual ~ComponentBase() {}
 
-    virtual void Initialize() { PrintLine( "ComponentBase::Initialize" ); }
+    virtual void Initialize() {}
     virtual void Update( float dt ) {}
     virtual void Uninitialize() {}
 
