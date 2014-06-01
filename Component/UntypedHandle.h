@@ -15,6 +15,8 @@ public:
     bool operator==( UntypedHandle const &handle ) const;
     bool operator!=( UntypedHandle const &handle ) const;
 
+    Component::Type Type() const;
+
 private:
     UntypedHandle( uint32_t id, Component::Type type );
     UntypedHandle( uint64_t generation, uint32_t id, Component::Type type );

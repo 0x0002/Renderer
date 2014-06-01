@@ -45,6 +45,11 @@ T* Handle<T>::operator->() const {
     return (T*)( g_componentManager.m_data[T::kType] + componentIdx * sizeof( T ) );
 }
 
+template<typename T>
+Handle<T>::operator UntypedHandle() const {
+    return m_handle;
+}
+
 // instantiate iterator types
 #define DeclareComponent( typeName, baseTypeName, max ) \
     template class Handle<typeName>;

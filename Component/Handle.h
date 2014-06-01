@@ -16,6 +16,8 @@ public:
     T* operator*() const;
     T* operator->() const;
 
+    operator UntypedHandle() const;
+
 private:
     UntypedHandle m_handle;
 };

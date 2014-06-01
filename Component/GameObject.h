@@ -14,6 +14,9 @@ public:
      UntypedHandle AddComponent( Component::Type type );
      void RemoveComponent( UntypedHandle const &handle );
 
+     bool HasComponent( Component::Type type );
+     UntypedHandle GetComponent( Component::Type type );
+
      Transform& Tform();
      Transform const& Tform() const;
 

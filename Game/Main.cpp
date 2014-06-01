@@ -684,6 +684,14 @@ int main() {
     Handle<ComponentType1> type1 = a->AddComponent( Component::kComponentType1 );
     Handle<ComponentType2> type2 = a->AddComponent( Component::kComponentType2 );
 
+    a->RemoveComponent( base );
+    a->RemoveComponent( type2 );
+    a->RemoveComponent( type1 );
+
+    bool testbase = a->HasComponent( Component::kComponentBase );
+    bool testtype1 = a->HasComponent( Component::kComponentType1 );
+    bool testtype2 = a->HasComponent( Component::kComponentType2 );
+
     for( ComponentBase *b : AllComponents<ComponentBase>() ) {
         b->Initialize();
         b->Translation() += Vec4::XAxis();

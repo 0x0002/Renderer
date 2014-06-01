@@ -7,6 +7,10 @@ GameObject* ComponentBase::Object() {
     return m_object;
 }
 
+Component::Type ComponentBase::Type() const {
+    return m_type;
+}
+
 UntypedHandle ComponentBase::Handle() const {
     return UntypedHandle( m_id, m_type );
 }

@@ -15,12 +15,14 @@ UntypedHandle::UntypedHandle( uint64_t generation, uint32_t id, Component::Type 
     m_type( type ) {
 }
 
-
-
 bool UntypedHandle::operator==( UntypedHandle const &handle ) const {
     return m_generation == handle.m_generation && m_id == handle.m_id && m_type == handle.m_type;
 }
 
 bool UntypedHandle::operator!=( UntypedHandle const &handle ) const {
     return !( *this == handle );
+}
+
+Component::Type UntypedHandle::Type() const {
+    return m_type;
 }

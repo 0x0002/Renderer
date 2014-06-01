@@ -24,6 +24,26 @@ void GameObject::RemoveComponent( UntypedHandle const &handle ) {
         g_componentManager.Destroy( it );
 }
 
+bool GameObject::HasComponent( Component::Type type ) {
+    for( auto it = m_componentBegin; it != m_componentEnd; ++it ) {
+
+        if( it->Type() == type )
+            return true;
+    }
+
+    return false;
+}
+ 
+UntypedHandle GameObject::GetComponent( Component::Type type ) {
+    for( auto it = m_componentBegin; it != m_componentEnd; ++it ) {
+
+        if( it->Type() == type )
+            return *it;
+    }
+    
+    return UntypedHandle();
+}
+
 Transform& GameObject::Tform() {
     return m_transform;
 }

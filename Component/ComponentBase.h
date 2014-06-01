@@ -25,6 +25,7 @@ public:
 
     // non-virtual
     GameObject* Object();
+    Component::Type Type() const;
     UntypedHandle Handle() const;
 
     Transform& Tform();
