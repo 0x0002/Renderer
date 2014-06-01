@@ -5,10 +5,11 @@
 #include "Core/Align.h"
 
 #include "Math/SSE.h"
-#include "Math/Scalar.h"
-#include "Math/Vec4.h"
-#include "Math/Bool.h"
-#include "Math/Quat.h"
+
+class Scalar;
+class Vec4;
+class Bool;
+class Quat;
 
 class Mat44 {
 public:

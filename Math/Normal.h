@@ -2,14 +2,18 @@
 #define NORMAL_H
 
 #include "Math/SSE.h"
-#include "Math/Vec4.h"
-#include "Math/Scalar.h"
+
+class Vec4;
+class Transform;
 
 class Normal {
 public:
     // constructors
     Normal();
     Normal( Vec4 const &v );
+
+    Normal& operator*=( Transform const &t );
+    Normal operator*( Transform const &t ) const;
 
 private:
     __m128 m_value;

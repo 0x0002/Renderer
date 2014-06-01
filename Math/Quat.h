@@ -2,10 +2,11 @@
 #define QUAT_H
 
 #include "Math/SSE.h"
-#include "Math/Vec4.h"
-#include "Math/Scalar.h"
-#include "Math/Bool.h"
 #include "Math/Trig.h"
+
+class Vec4;
+class Scalar;
+class Bool;
 
 class Quat {
 public:

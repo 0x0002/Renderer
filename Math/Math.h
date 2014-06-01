@@ -7,6 +7,7 @@
 #include "Math/Bool.h"
 #include "Math/Normal.h"
 #include "Math/Quat.h"
+#include "Math/Transform.h"
 
 #define kEpsilon Scalar( 0.00001f )
 
@@ -36,6 +37,7 @@ ForceInline Bool AlmostEqual( Scalar const &a, Scalar const &b, Scalar const &ab
 #include "Math/Bool.inl"
 #include "Math/Normal.inl"
 #include "Math/Quat.inl"
+#include "Math/Transform.inl"
 
 #include "Math/Trig.h"
 

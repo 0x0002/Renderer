@@ -141,6 +141,7 @@
     <ClInclude Include="Quat.h" />
     <ClInclude Include="Scalar.h" />
     <ClInclude Include="SSE.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Trig.h" />
     <ClInclude Include="Vec4.h" />
   </ItemGroup>
@@ -154,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp" />
+    <None Include="Transform.inl">
+      <FileType>CppCode</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

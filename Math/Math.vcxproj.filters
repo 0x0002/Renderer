@@ -10,6 +10,7 @@
     <ClInclude Include="Normal.h" />
     <ClInclude Include="Quat.h" />
     <ClInclude Include="Trig.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bool.inl" />
@@ -21,5 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Transform.inl" />
   </ItemGroup>
 </Project>

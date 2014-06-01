@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClInclude Include="..\Game\ComponentType1.h" />
     <ClInclude Include="..\Game\ComponentType2.h" />
-    <ClInclude Include="..\Game\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Game\ComponentType1.cpp" />

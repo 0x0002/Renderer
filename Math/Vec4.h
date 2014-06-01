@@ -5,11 +5,13 @@
 #include "Core/Align.h"
 
 #include "Math/SSE.h"
-#include "Math/Mat44.h"
-#include "Math/Scalar.h"
-#include "Math/Bool.h"
-#include "Math/Normal.h"
-#include "Math/Quat.h"
+
+class Mat44;
+class Scalar;
+class Bool;
+class Normal;
+class Quat;
+class Transform;
 
 class Vec4 {
 public:
@@ -32,6 +34,7 @@ public:
     Vec4& operator*=( Vec4 const &v );
     Vec4& operator*=( Mat44 const &m );
     Vec4& operator*=( Quat const &m );
+    Vec4& operator*=( Transform const &t );
     Vec4& operator*=( Scalar const &s );
     Vec4& operator/=( Scalar const &s );
 
@@ -45,6 +48,7 @@ public:
     Vec4 operator*( Vec4 const &v ) const;
     Vec4 operator*( Mat44 const &m ) const;
     Vec4 operator*( Quat const &q ) const;
+    Vec4 operator*( Transform const &t ) const;
     Vec4 operator*( Scalar const &s ) const;
     Vec4 operator/( Scalar const &s ) const;
 

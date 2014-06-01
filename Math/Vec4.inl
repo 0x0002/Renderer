@@ -108,6 +108,11 @@ ForceInline Vec4& Vec4::operator*=( Quat const &q ) {
     return *this;
 }
 
+ForceInline Vec4& Vec4::operator*=( Transform const &t ) {
+    *this = t.m_translation + ( *this * t.m_scale ) * t.m_rotation;
+    return *this;
+}
+
 ForceInline Vec4& Vec4::operator*=( Scalar const &s ) {
     m_value = _mm_mul_ps( m_value, s.m_value );
     return *this;
@@ -189,6 +194,10 @@ ForceInline Vec4 Vec4::operator*( Quat const &q ) const {
 
     __m128 result = _mm_add_ps( temp0, _mm_add_ps( temp1, temp2 ) );
     return _mm_insert_ps( result, result, INSERT_ZERO( 3 ) );
+}
+
+ForceInline Vec4 Vec4::operator*( Transform const &t ) const {
+    return t.m_translation + ( *this * t.m_scale ) * t.m_rotation;
 }
 
 ForceInline Vec4 Vec4::operator*( Scalar const &s ) const {
