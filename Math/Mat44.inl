@@ -40,7 +40,7 @@ ForceInline Mat44::Mat44( Quat const &q ) {
               0,                     0,                 0, 1 ); */
 
     __m128 selectY = _mm_setr_ps( 0.0f, union_cast<float>( 0xffffffff ), 0.0f, 0.0f );
-    __m128 selectZ = _mm_setr_ps( 0.0f, union_cast<float>( 0xffffffff ), 0.0f, 0.0f );
+    __m128 selectZ = _mm_setr_ps( 0.0f, 0.0f, union_cast<float>( 0xffffffff ), 0.0f );
 
     __m128 xyzw_2 = _mm_add_ps( q.m_value, q.m_value );
     __m128 yzxw_2 = _mm_shuffle_ps( xyzw_2, xyzw_2, SHUFFLE( 1, 2, 0, 3 ) );
@@ -66,9 +66,9 @@ ForceInline Mat44::Mat44( Quat const &q ) {
     m_r[0] = Select( selectZ, temp2, Select( selectY, temp0, temp1 ) );
     m_r[1] = Select( selectZ, temp0, Select( selectY, temp1, temp2 ) );
     m_r[2] = Select( selectZ, temp1, Select( selectY, temp2, temp0 ) );
-    m_r[0] = _mm_insert_ps( m_r[0], temp2, INSERT( 3, 3 ) );
-    m_r[1] = _mm_insert_ps( m_r[1], temp2, INSERT( 3, 3 ) );
-    m_r[2] = _mm_insert_ps( m_r[2], temp2, INSERT( 3, 3 ) );
+    m_r[0] = _mm_insert_ps( m_r[0], m_r[0], INSERT_ZERO( 3 ) );
+    m_r[1] = _mm_insert_ps( m_r[1], m_r[1], INSERT_ZERO( 3 ) );
+    m_r[2] = _mm_insert_ps( m_r[2], m_r[2], INSERT_ZERO( 3 ) );
     m_r[3] = _mm_setr_ps( 0.0f, 0.0f, 0.0f, 1.0f );
 }
 
@@ -472,7 +472,7 @@ ForceInline Mat44 Inverse( Mat44 const &m, Scalar *determinant ) {
 }
 
 // transformation matrices
-ForceInline Mat44 Translation( Scalar const &tx, Scalar const &ty, Scalar const &tz ) {
+ForceInline Mat44 Mat44Translation( Scalar const &tx, Scalar const &ty, Scalar const &tz ) {
     /* Mat44( 1,  0,  0,  0,
               0,  1,  0,  0,
               0,  0,  1,  0,
@@ -487,7 +487,7 @@ ForceInline Mat44 Translation( Scalar const &tx, Scalar const &ty, Scalar const 
                   row3 );
 }
 
-ForceInline Mat44 Translation( Vec4 const &t ) {
+ForceInline Mat44 Mat44Translation( Vec4 const &t ) {
     /* Mat44( 1,  0,  0,  0,
               0,  1,  0,  0,
               0,  0,  1,  0,
@@ -502,7 +502,7 @@ ForceInline Mat44 Translation( Vec4 const &t ) {
                   row3 );
 }
 
-ForceInline Mat44 RotationX( Scalar const &angle ) {
+ForceInline Mat44 Mat44RotationX( Scalar const &angle ) {
     /* Mat44( 1,  0,  0,  0,
               0,  c,  s,  0,
               0, -s,  c,  0,
@@ -525,7 +525,7 @@ ForceInline Mat44 RotationX( Scalar const &angle ) {
                   Vec4::WAxis() );
 }
 
-ForceInline Mat44 RotationY( Scalar const &angle ) {
+ForceInline Mat44 Mat44RotationY( Scalar const &angle ) {
     /* Mat44( c,  0, -s,  0,
               0,  1,  0,  0,
               s,  0,  c,  0,
@@ -548,7 +548,7 @@ ForceInline Mat44 RotationY( Scalar const &angle ) {
                   Vec4::WAxis() );
 }
 
-ForceInline Mat44 RotationZ( Scalar const &angle ) {
+ForceInline Mat44 Mat44RotationZ( Scalar const &angle ) {
     /* Mat44(  c,  s,  0,  0,
               -s,  c,  0,  0,
                0,  0,  1,  0,
@@ -571,11 +571,11 @@ ForceInline Mat44 RotationZ( Scalar const &angle ) {
                   Vec4::WAxis() );
 }
 
-ForceInline Mat44 RotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {
-    return RotationZ( roll ) * RotationX( pitch ) * RotationY( yaw );
+ForceInline Mat44 Mat44RotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {
+    return Mat44RotationZ( roll ) * Mat44RotationX( pitch ) * Mat44RotationY( yaw );
 }
 
-ForceInline Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
+ForceInline Mat44 Mat44RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
     /* Mat44( t * x * x + c,     t * x * y + s * z, t * x * z - s * y, 0,
               t * x * y - s * z, t * y * y + c,     t * y * z + s * x, 0,
               t * x * z + s * y, t * y * z - s * x, t * z * z + c,     0,
@@ -606,16 +606,16 @@ ForceInline Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
                   Vec4::WAxis() );
 }
 
-ForceInline Mat44 Scaling( Scalar const &s ) {
+ForceInline Mat44 Mat44Scaling( Scalar const &s ) {
     /* Mat44( s, 0, 0, 0,
               0, s, 0, 0,
               0, 0, s, 0,
               0, 0, 0, 1 ) */
 
-    return Scaling( s, s, s );
+    return Mat44Scaling( s, s, s );
 }
 
-ForceInline Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz ) {
+ForceInline Mat44 Mat44Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz ) {
     /* Mat44( sx,  0,  0, 0,
                0, sy,  0, 0,
                0,  0, sz, 0,
@@ -628,7 +628,20 @@ ForceInline Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz 
                   Vec4::WAxis().m_value );
 }
 
-ForceInline Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up ) {
+ForceInline Mat44 Mat44Scaling( Vec4 const &s ) {
+    /* Mat44( sx,  0,  0, 0,
+               0, sy,  0, 0,
+               0,  0, sz, 0,
+               0,  0,  0, 1 ) */
+
+    __m128 zero = _mm_setzero_ps();
+    return Mat44( _mm_blend_ps( zero, s.m_value, BLEND( 1, 0, 0, 0 ) ),
+                  _mm_blend_ps( zero, s.m_value, BLEND( 0, 1, 0, 0 ) ),
+                  _mm_blend_ps( zero, s.m_value, BLEND( 0, 0, 1, 0 ) ),
+                  Vec4::WAxis().m_value );
+}
+
+ForceInline Mat44 Mat44LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up ) {
     /* Mat44( xAxis.x,            yAxis.x,            zAxis.x,            0,
               xAxis.y,            yAxis.y,            zAxis.y,            0,
               xAxis.z,            yAxis.z,            zAxis.z,            0,
@@ -645,7 +658,7 @@ ForceInline Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up ) {
 }
  
 // projection matrices
-ForceInline Mat44 OrthographicRH( Scalar const &width, Scalar const &height, Scalar const &zNear, Scalar const &zFar ) {
+ForceInline Mat44 Mat44OrthographicRH( Scalar const &width, Scalar const &height, Scalar const &zNear, Scalar const &zFar ) {
     /*  Mat44( 2 / width, 0,          0,                        0,
                0,         2 / height, 0,                        0,
                0,         0,          1 / ( zNear - zFar ),     0,
@@ -657,7 +670,7 @@ ForceInline Mat44 OrthographicRH( Scalar const &width, Scalar const &height, Sca
                   0.0f,         0.0f,          zNear / ( zNear - zFar ), 1.0f );
 }
 
-ForceInline Mat44 PerspectiveFovRH( Scalar const &fov, Scalar const &aspectRatio, Scalar const &zNear, Scalar const &zFar ) {
+ForceInline Mat44 Mat44PerspectiveFovRH( Scalar const &fov, Scalar const &aspectRatio, Scalar const &zNear, Scalar const &zFar ) {
     /* Mat44( xScale, 0,      0,                                0,
               0,      yScale, 0,                                0,
               0,      0,      zFar / ( zNear - zFar ),         -1,

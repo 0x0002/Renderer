@@ -15,6 +15,7 @@ ForceInline Transform Transform::operator*=( Transform const &t ) {
     m_scale *= t.m_scale;
     m_rotation *= t.m_rotation;
     m_translation = t.m_translation + ( m_translation * t.m_scale ) * t.m_rotation;
+    return *this;
 }
 
 ForceInline Transform Transform::operator*( Transform const &t ) const {
@@ -23,22 +24,36 @@ ForceInline Transform Transform::operator*( Transform const &t ) const {
                       t.m_translation + ( m_translation * t.m_scale ) * t.m_rotation );
 }
 
-#if 0
-ForceInline Vec4 Transform::operator*( Vec4 const &v ) const {
-    m_translation + ( v * m_scale ) * m_rotation;
-}
-
-ForceInline Vec4 Transform::operator*( Normal const &n ) const {
-    return n * Transpose( Inverse( *this ) );
-}
-#endif
-
 ForceInline Transform::operator Mat44() const {
-    return Scaling( m_scale.X(), m_scale.Y(), m_scale.Z() ) * Mat44( m_rotation ) * Translation( m_translation );
+    return Mat44Scaling( m_scale ) * Mat44( m_rotation ) * Mat44Translation( m_translation );
 }
 
-ForceInline Transform Inverse( Transform const &transform ) {
-    return Transform( Vec4( 1.0f / transform.m_scale.X(), 1.0f / transform.m_scale.Y(), 1.0f / transform.m_scale.Z(), 0.0f ),
-                      Inverse( transform.m_rotation ),
-                      -transform.m_translation );
+ForceInline Transform Inverse( Transform const &t ) {
+    Vec4 s( 1.0f / t.m_scale.X(), 1.0f / t.m_scale.Y(), 1.0f / t.m_scale.Z(), 0.0f );
+    Quat q = Inverse( t.m_rotation );
+    return Transform( s, q, ( -t.m_translation * s ) * q );
+}
+
+ForceInline Vec4 Transform::Scale() const {
+    return m_scale;
+}
+
+ForceInline Quat Transform::Rotation() const {
+    return m_rotation;
+}
+
+ForceInline Vec4 Transform::Translation() const {
+    return m_translation;
+}
+
+ForceInline void Transform::SetScale( Vec4 const &s ) {
+    m_scale = s;
+}
+
+ForceInline void Transform::SetRotation( Quat const &q ) {
+    m_rotation = q;
+}
+
+ForceInline void Transform::SetTranslation( Vec4 const &t ) {
+    m_translation = t;
 }

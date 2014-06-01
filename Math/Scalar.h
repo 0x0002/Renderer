@@ -71,7 +71,7 @@ private:
     friend Scalar Dot3( Vec4 const &a, Vec4 const &b );
     friend Mat44 operator*( Scalar const &s, Mat44 const &m );
     friend Mat44 Inverse( Mat44 const &m, Scalar *determinant );
-    friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Mat44 Mat44Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
     friend Quat operator*( Scalar const &s, Quat const &q );
     friend Quat operator/( Scalar const &s, Quat const &q );
     friend Scalar Length( Quat const &q );

@@ -76,7 +76,8 @@ private:
     friend Mat44 Transpose( Mat44 const &m );
     friend Mat44 Abs( Mat44 const &m );
     friend Mat44 Inverse( Mat44 const &m, Scalar *determinant );
-    friend Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Mat44 Mat44Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+    friend Mat44 Mat44Scaling( Vec4 const &s );
     friend Mat44 RotationQuaternion( Quat const &q );
 };
 
@@ -85,19 +86,20 @@ Mat44 Abs( Mat44 const &m );
 Mat44 Inverse( Mat44 const &m, Scalar *determinant = nullptr );
 
 // transformation matrices
-Mat44 Translation( Scalar const &tx, Scalar const &ty, Scalar const &tz );
-Mat44 Translation( Vec4 const &t );
-Mat44 RotationX( Scalar const &angle ); // angle is in radians
-Mat44 RotationY( Scalar const &angle ); // angle is in radians
-Mat44 RotationZ( Scalar const &angle ); // angle is in radians
-Mat44 RotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ); // angle is in radians
-Mat44 RotationAxisAngle( Vec4 const &axis, Scalar const &angle ); // angle is in radians
-Mat44 Scaling( Scalar const &s );
-Mat44 Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
-Mat44 LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up );
+Mat44 Mat44Translation( Scalar const &tx, Scalar const &ty, Scalar const &tz );
+Mat44 Mat44Translation( Vec4 const &t );
+Mat44 Mat44RotationX( Scalar const &angle ); // angle is in radians
+Mat44 Mat44RotationY( Scalar const &angle ); // angle is in radians
+Mat44 Mat44RotationZ( Scalar const &angle ); // angle is in radians
+Mat44 Mat44RotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ); // angle is in radians
+Mat44 Mat44RotationAxisAngle( Vec4 const &axis, Scalar const &angle ); // angle is in radians
+Mat44 Mat44Scaling( Scalar const &s );
+Mat44 Mat44Scaling( Scalar const &sx, Scalar const &sy, Scalar const &sz );
+Mat44 Mat44Scaling( Vec4 const &s );
+Mat44 Mat44LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up );
 
 // projection matrices
-Mat44 OrthographicRH( Scalar const &width, Scalar const &height, Scalar const &zNear, Scalar const &zFar );
-Mat44 PerspectiveFovRH( Scalar const &fov, Scalar const &aspectRatio, Scalar const &zNear, Scalar const &zFar );
+Mat44 Mat44OrthographicRH( Scalar const &width, Scalar const &height, Scalar const &zNear, Scalar const &zFar );
+Mat44 Mat44PerspectiveFovRH( Scalar const &fov, Scalar const &aspectRatio, Scalar const &zNear, Scalar const &zFar );
 
 #endif // MAT44_H

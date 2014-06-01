@@ -7,13 +7,24 @@
 
 class Transform {
 public:
+    // constructors
     Transform();
     Transform( Vec4 const &scale, Quat const &rotation, Vec4 const &translation );
 
+    // binary operators
     Transform operator*=( Transform const &t );
     Transform operator*( Transform const &t ) const;
 
+    // accessors
     operator Mat44() const;
+
+    Vec4 Scale() const;
+    Quat Rotation() const;
+    Vec4 Translation() const;
+
+    void SetScale( Vec4 const &s );
+    void SetRotation( Quat const &q );
+    void SetTranslation( Vec4 const &t );
 
 private:
     Vec4 m_scale;
@@ -23,9 +34,9 @@ private:
     // friends
     friend class Vec4;
     friend class Normal;
-    friend Transform Inverse( Transform const &transform );
+    friend Transform Inverse( Transform const &t );
 };
 
-Transform Inverse( Transform const &transform );
+Transform Inverse( Transform const &t );
 
 #endif // TRANSFORM_H

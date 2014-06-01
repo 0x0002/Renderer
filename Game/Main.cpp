@@ -725,7 +725,36 @@ int main() {
     }
 #endif
 
+    // transform
+    {
+        Vec4 x = Vec4::XAxis();
 
+        Transform t;
+        t.SetScale( Vec4( 2.0f, 2.0f, 2.0f, 0.0f ) );
+        t.SetRotation( QuatRotationAxisAngle( Vec4::YAxis(), kPiBy2 ) );
+        t.SetTranslation( Vec4::YAxis() );
+
+        Transform t2 = t;
+        //t *= t2;
+
+        x *= t;
+        x *= t;
+        
+        x *= Inverse( t );
+        
+        x = x * t;
+
+        Normal n = Vec4::XAxis();
+
+        n *= t;
+        n *= t;
+
+        n *= Inverse( t );
+
+
+
+        int asdf = 0;
+    }
 
 
     // deinitialize
