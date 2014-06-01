@@ -32,6 +32,7 @@ public:
     bool operator>=( ConstIterator const &it ) const;
 
     T const& operator*() const;
+    T const* operator->() const;
     T const& operator[]( size_t i ) const;
 
     typedef size_t                          difference_type;
@@ -71,6 +72,7 @@ public:
     bool operator>=( Iterator const &it ) const;
 
     T& operator*();
+    T* operator->();
     T& operator[]( size_t i );
 
     typedef size_t                          difference_type;

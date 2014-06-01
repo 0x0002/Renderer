@@ -7,6 +7,8 @@
     <ClCompile Include="ComponentMultiTypeIterator.cpp" />
     <ClCompile Include="Handle.cpp" />
     <ClCompile Include="UntypedHandle.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComponentBase.h" />

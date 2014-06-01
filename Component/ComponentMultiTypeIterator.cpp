@@ -107,6 +107,11 @@ T const* ComponentMultiTypeConstIterator<T>::operator*() const {
 }
 
 template<typename T>
+T const* ComponentMultiTypeConstIterator<T>::operator->() const {
+    return (T*)( m_data + m_i * m_stride );
+}
+
+template<typename T>
 inline void ComponentMultiTypeConstIterator<T>::FindNextType() {
     Component::Type type;
 
@@ -224,6 +229,11 @@ bool ComponentMultiTypeIterator<T>::operator!=( ComponentMultiTypeIterator const
 
 template<typename T>
 T* ComponentMultiTypeIterator<T>::operator*() {
+    return (T*)( m_data + m_i * m_stride );
+}
+
+template<typename T>
+T* ComponentMultiTypeIterator<T>::operator->() {
     return (T*)( m_data + m_i * m_stride );
 }
 

@@ -60,6 +60,11 @@ inline T const& ListConstIterator<T>::operator*() const {
 }
 
 template<typename T>
+inline T const* ListConstIterator<T>::operator->() const {
+    return &m_list[m_idx].m_value;
+}
+
+template<typename T>
 inline uint16_t ListConstIterator<T>::Idx() const {
     return m_idx;
 }
@@ -116,6 +121,11 @@ inline bool ListIterator<T>::operator!=( ListIterator const &it ) const {
 template<typename T>
 inline T& ListIterator<T>::operator*() {
     return m_list[m_idx].m_value;
+}
+
+template<typename T>
+inline T* ListIterator<T>::operator->() {
+    return &m_list[m_idx].m_value;
 }
 
 template<typename T>

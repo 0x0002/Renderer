@@ -91,13 +91,15 @@ void ComponentManager::Deinitialize() {
         delete[] m_availableId[i];
         delete m_inheritanceLookup[i];
     }
+
+    delete m_handles;
 }
 
-List<UntypedHandle>::iterator ComponentManager::BeginHandle() const {
+List<UntypedHandle>::iterator ComponentManager::FrontHandle() const {
     return m_handles->begin();
 }
 
-List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
+List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type, GameObject *object ) {
     Assert( m_count[type] != m_max[type], "All components of type %i are in use.", type );
 
     // create component in the next available array index. components are always packed into the lower indices
@@ -117,7 +119,7 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
 
     // construct the component
     #define DeclareComponent( typeName, baseTypeName, max ) \
-    case Component::k##typeName: Construct( (typeName*)data, typeName( id ) ); break;
+    case Component::k##typeName: Construct( (typeName*)data, typeName( object, id ) ); break;
 
     switch( type ) {
     #include "Component/ComponentDeclarations.h"

@@ -96,6 +96,11 @@ T const& ConstIterator<T>::operator*() const {
 }
 
 template<typename T>
+T const* ConstIterator<T>::operator->() const {
+    return m_value;
+}
+
+template<typename T>
 T const& ConstIterator<T>::operator[]( size_t i ) const {
     return m_value[i];
 }
@@ -193,6 +198,11 @@ bool Iterator<T>::operator>=( Iterator<T> const &it ) const {
 template<typename T>
 T& Iterator<T>::operator*() {
     return *m_value;
+}
+
+template<typename T>
+T* Iterator<T>::operator->() {
+    return m_value;
 }
 
 template<typename T>

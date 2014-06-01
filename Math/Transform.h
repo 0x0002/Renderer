@@ -18,13 +18,14 @@ public:
     // accessors
     operator Mat44() const;
 
-    Vec4 Scale() const;
-    Quat Rotation() const;
-    Vec4 Translation() const;
+    Vec4& Scale();
+    Vec4 const& Scale() const;
 
-    void SetScale( Vec4 const &s );
-    void SetRotation( Quat const &q );
-    void SetTranslation( Vec4 const &t );
+    Quat& Rotation();
+    Quat const& Rotation() const;
+    
+    Vec4& Translation();
+    Vec4 const& Translation() const;
 
 private:
     Vec4 m_scale;

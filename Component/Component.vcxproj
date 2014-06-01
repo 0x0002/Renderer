@@ -134,7 +134,9 @@
     <ClCompile Include="ComponentIterator.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="ComponentMultiTypeIterator.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Handle.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="UntypedHandle.cpp" />
   </ItemGroup>
   <ItemGroup>

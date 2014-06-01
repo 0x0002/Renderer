@@ -34,26 +34,26 @@ ForceInline Transform Inverse( Transform const &t ) {
     return Transform( s, q, ( -t.m_translation * s ) * q );
 }
 
-ForceInline Vec4 Transform::Scale() const {
+ForceInline Vec4& Transform::Scale() {
     return m_scale;
 }
 
-ForceInline Quat Transform::Rotation() const {
+ForceInline Vec4 const& Transform::Scale() const {
+    return m_scale;
+}
+
+ForceInline Quat& Transform::Rotation() {
     return m_rotation;
 }
 
-ForceInline Vec4 Transform::Translation() const {
+ForceInline Quat const& Transform::Rotation() const {
+    return m_rotation;
+}
+
+ForceInline Vec4& Transform::Translation() {
     return m_translation;
 }
 
-ForceInline void Transform::SetScale( Vec4 const &s ) {
-    m_scale = s;
-}
-
-ForceInline void Transform::SetRotation( Quat const &q ) {
-    m_rotation = q;
-}
-
-ForceInline void Transform::SetTranslation( Vec4 const &t ) {
-    m_translation = t;
+ForceInline Vec4 const& Transform::Translation() const {
+    return m_translation;
 }

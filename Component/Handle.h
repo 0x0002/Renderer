@@ -14,6 +14,7 @@ public:
     bool operator!=( Handle const &handle ) const;
 
     T* operator*() const;
+    T* operator->() const;
 
 private:
     UntypedHandle m_handle;

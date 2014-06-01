@@ -24,6 +24,7 @@ public:
     bool operator!=( ListConstIterator const &it ) const;
 
     T const& operator*() const;
+    T const* operator->() const;
 
     typedef size_t                          difference_type;
     typedef T const                         value_type;
@@ -53,6 +54,7 @@ public:
     bool operator!=( ListIterator const &it ) const;
 
     T& operator*();
+    T* operator->();
 
     typedef size_t                          difference_type;
     typedef T                               value_type;

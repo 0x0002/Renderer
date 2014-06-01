@@ -100,6 +100,11 @@ T const* ComponentConstIterator<T>::operator*() const {
 }
 
 template<typename T>
+T const* ComponentConstIterator<T>::operator->() const {
+    return m_value;
+}
+
+template<typename T>
 T const* ComponentConstIterator<T>::operator[]( size_t i ) const {
     return m_value + i;
 }
@@ -191,6 +196,11 @@ bool ComponentIterator<T>::operator>=( ComponentIterator<T> const &it ) const {
 
 template<typename T>
 T* ComponentIterator<T>::operator*() {
+    return m_value;
+}
+
+template<typename T>
+T* ComponentIterator<T>::operator->() {
     return m_value;
 }
 

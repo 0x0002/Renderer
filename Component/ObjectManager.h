@@ -1,18 +1,18 @@
 #ifndef OBJECT_MANAGER_H
 #define OBJECT_MANAGER_H
 
-class FilePath;
-class GameObject;
+#include "Component/GameObject.h"
 
 class ObjectManager {
 public:
-    void Load( FilePath const &path );
+    void Initialize();
+    void Deinitialize();
 
-    GameObject* Create();
-    void Destroy( GameObject *object );
+    List<GameObject>::iterator Create();
+    void Destroy( List<GameObject>::const_iterator it );
 
 private:
-    // memory pool of game objects
+    List<GameObject> *m_objects;
 };
 
 // global instance

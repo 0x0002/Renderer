@@ -9,7 +9,7 @@ class ComponentType1 : public ComponentBase {
 public:
     static Component::Type const kType;
 
-    ComponentType1( uint32_t id ) : ComponentBase( id ) {PrintLine( "ComponentType1::Constructor" );}
+    ComponentType1( GameObject *object, uint32_t id ) : ComponentBase( object, id ) {PrintLine( "ComponentType1::Constructor" );}
     virtual ~ComponentType1() {PrintLine( "ComponentType1::Destructor" );}
 
     virtual void Initialize() override { PrintLine( "ComponentType1::Initialize" ); }

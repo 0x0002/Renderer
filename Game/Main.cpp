@@ -6,11 +6,11 @@
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
 
+#include "Component/ObjectManager.h"
 #include "Component/ComponentManager.h"
 #include "Component/ComponentIncludes.h"
 #include "Component/ComponentTypes.h"
 #include "Component/Handle.h"
-
 
 #include <string>
 #include <list>
@@ -627,8 +627,11 @@ int main() {
     // initialize
     g_memoryManager.Initialize();
     g_componentManager.Initialize();
+    g_objectManager.Initialize();
     g_memoryManager.SetHeapAllocator();
 
+
+#if 0
     for( ComponentBase *b : g_componentManager.AllComponents<ComponentBase>() ) {
 
     }
@@ -648,6 +651,8 @@ int main() {
     for( ComponentType2 const *t2 : Components<ComponentType2>() ) {
 
     }
+
+
 
     List<UntypedHandle>::iterator bn = g_componentManager.Create( Component::kComponentBase );
     Handle<ComponentBase> b = *bn;
@@ -669,8 +674,24 @@ int main() {
     
 
     int asdf = 0;
+#endif
 
+    //std::list<A>::iterator asdf;
+    //asdf->Value();
 
+    auto a = g_objectManager.Create();
+    Handle<ComponentBase> base = a->AddComponent( Component::kComponentBase );
+    Handle<ComponentType1> type1 = a->AddComponent( Component::kComponentType1 );
+    Handle<ComponentType2> type2 = a->AddComponent( Component::kComponentType2 );
+
+    for( ComponentBase *b : AllComponents<ComponentBase>() ) {
+        b->Initialize();
+        b->Translation() += Vec4::XAxis();
+    }
+
+    a->Tform();
+
+    int asdf = 0;
 
 
 
@@ -730,9 +751,9 @@ int main() {
         Vec4 x = Vec4::XAxis();
 
         Transform t;
-        t.SetScale( Vec4( 2.0f, 2.0f, 2.0f, 0.0f ) );
-        t.SetRotation( QuatRotationAxisAngle( Vec4::YAxis(), kPiBy2 ) );
-        t.SetTranslation( Vec4::YAxis() );
+        t.Scale() = Vec4( 2.0f, 2.0f, 2.0f, 0.0f );
+        t.Rotation() = QuatRotationAxisAngle( Vec4::YAxis(), kPiBy2 );
+        t.Translation() = Vec4::YAxis();
 
         Transform t2 = t;
         //t *= t2;
@@ -759,6 +780,7 @@ int main() {
 
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();
+    g_objectManager.Deinitialize();
     g_componentManager.Deinitialize();
     g_memoryManager.Deinitialize();
     return 0;

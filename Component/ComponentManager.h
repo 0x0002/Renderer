@@ -11,6 +11,8 @@
 
 #include "Core/StdTypes.h"
 
+class GameObject;
+
 class ComponentManager {
 public:
     void Initialize();
@@ -22,8 +24,9 @@ public:
     template<typename T>
     ComponentIteratorHelper<T> Components(); // returns iterator for only type T components
 
-    List<UntypedHandle>::iterator BeginHandle() const;
-    List<UntypedHandle>::iterator Create( Component::Type type );
+private:
+    List<UntypedHandle>::iterator FrontHandle() const;
+    List<UntypedHandle>::iterator Create( Component::Type type, GameObject *object );
     List<UntypedHandle>::iterator Destroy( List<UntypedHandle>::const_iterator it );
 
 private:
@@ -41,6 +44,8 @@ private:
     // friends
     friend class UntypedHandle;
     template<typename T> friend class Handle;
+    friend class ObjectManager;
+    friend class GameObject;
 };
 
 template<typename T>
