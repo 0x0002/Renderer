@@ -6,7 +6,7 @@ namespace Component {
     #define DeclareComponent( typeName, baseTypeName, max ) k##typeName,
 
     enum Type {
-        #include "Renderer/ComponentDeclarations.h"
+        #include "Component/ComponentDeclarations.h"
         kNone,
         kCount = kNone,
     };

@@ -1,7 +1,7 @@
 #ifndef COMPONENT_TYPE_1_H
 #define COMPONENT_TYPE_1_H
 
-#include "Renderer/ComponentBase.h"
+#include "Component/ComponentBase.h"
 
 #include "Core/Print.h"
 

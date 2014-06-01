@@ -1,10 +1,10 @@
 #ifndef COMPONENT_MANAGER_H
 #define COMPONENT_MANAGER_H
 
-#include "Renderer/ComponentTypes.h"
-#include "Renderer/ComponentIterator.h"
-#include "Renderer/ComponentMultiTypeIterator.h"
-#include "Renderer/UntypedHandle.h"
+#include "Component/ComponentTypes.h"
+#include "Component/ComponentIterator.h"
+#include "Component/ComponentMultiTypeIterator.h"
+#include "Component/UntypedHandle.h"
 
 #include "Container/Vector.h"
 #include "Container/List.h"

@@ -1,5 +1,5 @@
-#include "Renderer/ComponentMultiTypeIterator.h"
-#include "Renderer/ComponentIncludes.h"
+#include "Component/ComponentMultiTypeIterator.h"
+#include "Component/ComponentIncludes.h"
 
 // const iterator
 template<typename T>
@@ -328,6 +328,6 @@ typename ComponentMultiTypeIteratorHelper<T>::const_iterator ComponentMultiTypeI
     template class ComponentMultiTypeConstIterator<typeName>; \
     template class ComponentMultiTypeIteratorHelper<typeName>; 
 
-#include "ComponentDeclarations.h"
+#include "Component/ComponentDeclarations.h"
 
 #undef DeclareComponent

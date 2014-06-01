@@ -1,5 +1,5 @@
-#include "Renderer/UntypedHandle.h"
-#include "Renderer/ComponentManager.h"
+#include "Component/UntypedHandle.h"
+#include "Component/ComponentManager.h"
 
 UntypedHandle::UntypedHandle() : m_generation( (uint64_t)-1 ), m_id( 0 ), m_type( Component::kNone ) {}
 

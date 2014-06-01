@@ -1,7 +1,7 @@
 #ifndef COMPONENT_MULTI_TYPE_ITERATOR_H
 #define COMPONENT_MULTI_TYPE_ITERATOR_H
 
-#include "Renderer/ComponentTypes.h"
+#include "Component/ComponentTypes.h"
 
 #include "Container/Vector.h"
 

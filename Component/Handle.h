@@ -1,8 +1,8 @@
 #ifndef COMPONENT_HANDLE_H
 #define COMPONENT_HANDLE_H
 
-#include "Renderer/ComponentTypes.h"
-#include "Renderer/UntypedHandle.h"
+#include "Component/ComponentTypes.h"
+#include "Component/UntypedHandle.h"
 
 template<typename T>
 class Handle {

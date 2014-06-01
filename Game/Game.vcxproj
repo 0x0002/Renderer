@@ -19,26 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Game\ComponentDeclarations.h" />
-    <ClInclude Include="..\Game\ComponentIncludes.h" />
-    <ClInclude Include="..\Game\ComponentType1.h" />
-    <ClInclude Include="..\Game\ComponentType2.h" />
+    <ClInclude Include="ComponentBase.h" />
+    <ClInclude Include="ComponentType2.h" />
+    <ClInclude Include="ComponentType1.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Game\ComponentType1.cpp" />
-    <ClCompile Include="..\Game\ComponentType2.cpp" />
-    <ClCompile Include="..\Game\Main.cpp" />
+    <ClCompile Include="ComponentBase.cpp" />
+    <ClCompile Include="ComponentType1.cpp" />
+    <ClCompile Include="ComponentType2.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Component\Component.vcxproj">
-      <Project>{b8c18f65-eff5-47e6-93e6-02336e5f0225}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\Container\Container.vcxproj">
       <Project>{1adc124a-28f2-4aca-8ba8-226e5abe2af7}</Project>
     </ProjectReference>
@@ -52,7 +46,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}</ProjectGuid>
     <RootNamespace>Project3</RootNamespace>
-    <ProjectName>Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

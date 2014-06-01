@@ -1,7 +1,7 @@
 #ifndef COMPONENT_TYPE_2_H
 #define COMPONENT_TYPE_2_H
 
-#include "Renderer/ComponentType1.h"
+#include "Game/ComponentType1.h"
 
 #include "Core/Print.h"
 

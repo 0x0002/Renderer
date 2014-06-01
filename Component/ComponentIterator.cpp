@@ -1,5 +1,5 @@
-#include "Renderer/ComponentIterator.h"
-#include "Renderer/ComponentIncludes.h"
+#include "Component/ComponentIterator.h"
+#include "Component/ComponentIncludes.h"
 
 #include "Container/Iterator.h"
 
@@ -237,6 +237,6 @@ typename ComponentIteratorHelper<T>::const_iterator ComponentIteratorHelper<T>::
     template class ComponentConstIterator<typeName>; \
     template class ComponentIteratorHelper<typeName>; 
 
-#include "ComponentDeclarations.h"
+#include "Component/ComponentDeclarations.h"
 
 #undef DeclareComponent

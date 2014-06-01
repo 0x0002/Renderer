@@ -127,6 +127,8 @@ inline void Vector<T, A>::Erase( const_iterator const &pos ) {
 
     Assert( idx >= 0 && (size_t)idx < m_size, "Cannot erase from invalid index. (idx = %llx)", idx );
 
+    Destruct( &m_data[idx] );
+
     --m_size;
 
     size_t newSize = m_size;

@@ -1,4 +1,4 @@
-#include "Renderer/ComponentBase.h"
+#include "Component/ComponentBase.h"
 
 Component::Type const ComponentBase::kType = Component::kComponentBase;
 

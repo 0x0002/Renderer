@@ -1,8 +1,8 @@
 #ifndef COMPONENT_BASE_H
 #define COMPONENT_BASE_H
 
-#include "Renderer/ComponentTypes.h"
-#include "Renderer/UntypedHandle.h"
+#include "Component/ComponentTypes.h"
+#include "Component/UntypedHandle.h"
 
 #include "Core/StdTypes.h"
 

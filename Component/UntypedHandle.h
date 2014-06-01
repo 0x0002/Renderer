@@ -1,7 +1,7 @@
 #ifndef UNTYPED_HANDLE_H
 #define UNTYPED_HANDLE_H
 
-#include "Renderer/ComponentTypes.h"
+#include "Component/ComponentTypes.h"
 
 #include "Core/StdTypes.h"
 

@@ -6,10 +6,10 @@
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
 
-#include "Renderer/ComponentManager.h"
-#include "Renderer/ComponentIncludes.h"
-#include "Renderer/ComponentTypes.h"
-#include "Renderer/Handle.h"
+#include "Component/ComponentManager.h"
+#include "Component/ComponentIncludes.h"
+#include "Component/ComponentTypes.h"
+#include "Component/Handle.h"
 
 
 #include <string>

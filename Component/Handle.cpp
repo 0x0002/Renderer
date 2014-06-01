@@ -1,6 +1,6 @@
-#include "Renderer/Handle.h"
-#include "Renderer/ComponentManager.h"
-#include "Renderer/ComponentIncludes.h"
+#include "Component/Handle.h"
+#include "Component/ComponentManager.h"
+#include "Component/ComponentIncludes.h"
 
 #include "Core/Assert.h"
 
@@ -39,6 +39,6 @@ T* Handle<T>::operator*() const {
 #define DeclareComponent( typeName, baseTypeName, max ) \
     template class Handle<typeName>;
 
-#include "ComponentDeclarations.h"
+#include "Component/ComponentDeclarations.h"
 
 #undef DeclareComponent

@@ -1,5 +1,5 @@
-#include "Renderer/ComponentManager.h"
-#include "Renderer/ComponentIncludes.h"
+#include "Component/ComponentManager.h"
+#include "Component/ComponentIncludes.h"
 
 #include "Core/Memory.h"
 #include "Core/Assert.h"
@@ -48,7 +48,7 @@ void ComponentManager::Initialize() {
         }
 
         switch( i ) {
-        #include "ComponentDeclarations.h"
+        #include "Component/ComponentDeclarations.h"
         default: AssertAlways( "Invalid component type." ); break;	
         };
 
@@ -120,7 +120,7 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type ) {
     case Component::k##typeName: Construct( (typeName*)data, typeName( id ) ); break;
 
     switch( type ) {
-    #include "ComponentDeclarations.h"
+    #include "Component/ComponentDeclarations.h"
     default: AssertAlways( "Invalid component type." ); break;	
     };
 
@@ -145,14 +145,14 @@ List<UntypedHandle>::iterator ComponentManager::Destroy( List<UntypedHandle>::co
         Destruct( d );                                                      \
         if( m_count[type] ) {                                               \
             uint8_t *endData = m_data[type] + m_count[type] * m_size[type]; \
-            Construct( d, *(typeName*)endData );                            \
+            *d = *(typeName*)endData;                                       \
             m_idToData[type][d->m_id] = componentIdx;                       \
         }                                                                   \
         break; \
     }
 
     switch( handle.m_type ) {
-    #include "ComponentDeclarations.h"
+    #include "Component/ComponentDeclarations.h"
     default: AssertAlways( "Invalid component type." ); break;	
     };
 

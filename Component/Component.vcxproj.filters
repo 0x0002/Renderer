@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ComponentBase.cpp" />
+    <ClCompile Include="ComponentIterator.cpp" />
+    <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="ComponentMultiTypeIterator.cpp" />
+    <ClCompile Include="Handle.cpp" />
+    <ClCompile Include="UntypedHandle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ComponentBase.h" />
+    <ClInclude Include="ComponentIterator.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="ComponentMultiTypeIterator.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Handle.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="UntypedHandle.h" />
+    <ClInclude Include="ComponentTypes.h" />
+    <ClInclude Include="ComponentDeclarations.h" />
+    <ClInclude Include="ComponentIncludes.h" />
+  </ItemGroup>
+</Project>
