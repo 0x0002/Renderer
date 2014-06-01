@@ -19,11 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Game\ComponentDeclarations.h" />
-    <ClInclude Include="..\Game\ComponentIncludes.h" />
     <ClInclude Include="..\Game\ComponentType1.h" />
     <ClInclude Include="..\Game\ComponentType2.h" />
-    <ClInclude Include="Transform.h" />
+    <ClInclude Include="..\Game\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Game\ComponentType1.cpp" />
