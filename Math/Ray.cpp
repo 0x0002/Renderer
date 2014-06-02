@@ -24,8 +24,19 @@ Ray::Ray( Vec4 const &origin, Vec4 const &direction, Ray const &parent, Scalar c
     m_time( parent.m_time ),
     m_depth( parent.m_depth + 1 )  {
 }
- 
+
+Ray& Ray::operator*=( Transform const &t ) {
+    m_origin *= t;
+    m_direction *= t;
+    return *this;
+}
+
+Ray Ray::operator*( Transform const &t ) const {
+    Ray copy( *this );
+    return copy *= t;
+}
 
 Vec4 Ray::Point( Scalar const &t ) const {
     return m_origin + m_direction * t;
 }
+

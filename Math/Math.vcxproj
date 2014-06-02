@@ -140,6 +140,7 @@
     <ClInclude Include="Normal.h" />
     <ClInclude Include="Quat.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="RayDifferential.h" />
     <ClInclude Include="Scalar.h" />
     <ClInclude Include="SSE.h" />
     <ClInclude Include="Transform.h" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="RayDifferential.cpp" />
     <None Include="Transform.inl">
       <FileType>CppCode</FileType>
     </None>

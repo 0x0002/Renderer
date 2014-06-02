@@ -9,6 +9,9 @@ public:
     Ray( Vec4 const &origin, Vec4 const &direction, Scalar const &start, Scalar const &end = kInfinity, Scalar const &t = 0.0f, int d = 0 );
     Ray( Vec4 const &origin, Vec4 const &direction, Ray const &parent, Scalar const &start, Scalar const &end = kInfinity );
 
+    Ray& operator*=( Transform const &t );
+    Ray operator*( Transform const &t ) const;
+
     Vec4 Point( Scalar const &t ) const;
 
 public:

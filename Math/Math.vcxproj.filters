@@ -12,6 +12,7 @@
     <ClInclude Include="Trig.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="RayDifferential.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bool.inl" />
@@ -25,5 +26,6 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Transform.inl" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="RayDifferential.cpp" />
   </ItemGroup>
 </Project>
