@@ -119,7 +119,7 @@ List<UntypedHandle>::iterator ComponentManager::Create( Component::Type type, Ga
 
     // construct the component
     #define DeclareComponent( typeName, baseTypeName, max ) \
-    case Component::k##typeName: Construct( (typeName*)data, typeName( object, id ) ); break;
+    case Component::k##typeName: Construct( (typeName*)data, typeName( object, id, typeName##::kType ) ); break;
 
     switch( type ) {
     #include "Component/ComponentDeclarations.h"

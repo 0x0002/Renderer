@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <memory>
 
+#if 0
 class A {
 public:
     A() {
@@ -67,6 +68,7 @@ class C : public A {
 
 template class List<A>;
 template class Vector<A>;
+#endif
 
 int main() {
 #if 0
@@ -679,6 +681,7 @@ int main() {
     //std::list<A>::iterator asdf;
     //asdf->Value();
 
+#if 0
     auto a = g_objectManager.Create();
     Handle<ComponentBase> base = a->AddComponent( Component::kComponentBase );
     Handle<ComponentType1> type1 = a->AddComponent( Component::kComponentType1 );
@@ -700,7 +703,7 @@ int main() {
     a->Tform();
 
     int asdf = 0;
-
+#endif
 
 
 
@@ -754,6 +757,7 @@ int main() {
     }
 #endif
 
+#if 0
     // transform
     {
         Vec4 x = Vec4::XAxis();
@@ -784,6 +788,7 @@ int main() {
 
         int asdf = 0;
     }
+#endif
 
 
     // deinitialize

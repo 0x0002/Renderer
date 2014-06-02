@@ -11,11 +11,11 @@ class ComponentBase {
 public:
     static Component::Type const kType;
 
-    ComponentBase( GameObject *object, uint32_t id ) : m_object( object ), m_id( id ), m_type( kType ) {}
+    ComponentBase( GameObject *object, uint32_t id, Component::Type type ) : m_object( object ), m_id( id ), m_type( type ) {}
     virtual ~ComponentBase() {}
 
     virtual void Initialize() {}
-    virtual void Update( float dt ) {}
+    virtual void Update( float /*dt*/ ) {}
     virtual void Uninitialize() {}
 
     // non-virtual

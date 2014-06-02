@@ -3,7 +3,6 @@
 
 // &&& this file could be generated from ComponentDeclarations.h
 #include "Component/ComponentBase.h"
-#include "Game/ComponentType1.h"
-#include "Game/ComponentType2.h"
+#include "Game/Shape.h"
 
 #endif // COMPONENT_INCLUDES_H
