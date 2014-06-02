@@ -9,7 +9,8 @@
 #include "Math/Quat.h"
 #include "Math/Transform.h"
 
-#define kEpsilon Scalar( 0.00001f )
+#define kEpsilon 0.00001f
+#define kInfinity 3.402823466e+38f
 
 /*------------------------------------------------------------------------------
 float == float comparison within an epsilon
