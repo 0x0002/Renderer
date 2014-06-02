@@ -5,13 +5,11 @@
 #include "Container/Vector.h"
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
-
 #include "Component/ObjectManager.h"
 #include "Component/ComponentManager.h"
 #include "Component/ComponentIncludes.h"
 #include "Component/ComponentTypes.h"
 #include "Component/Handle.h"
-
 #include <string>
 #include <list>
 #include <map>

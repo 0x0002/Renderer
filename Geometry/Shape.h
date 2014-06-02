@@ -2,10 +2,10 @@
 #define SHAPE_H
 
 #include "Component/ComponentBase.h"
+#include "Geometry/DifferentialGeometry.h"
 
 class Ray;
 class Scalar;
-class DifferentialGeometry;
 
 class Shape : public ComponentBase {
 public:
@@ -25,7 +25,7 @@ public:
     virtual bool Intersect( Ray const &ray ) const;
 
     virtual DifferentialGeometry GetShadingGeom( DifferentialGeometry const &intersectGeom );
-    virtual Scalar GetArea() const;
+    virtual Scalar GetArea() const; // surface area
 };
 
 #endif // SHAPE_H

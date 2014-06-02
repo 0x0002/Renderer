@@ -1,5 +1,4 @@
 #include "Container/FilePath.h"
-
 #include <algorithm>
 #include <cctype>
 

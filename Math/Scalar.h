@@ -3,7 +3,6 @@
 
 #include "Core/Align.h"
 #include "Core/Union.h"
-
 #include "Math/SSE.h"
 #include "Math/Bool.h"
 

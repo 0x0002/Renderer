@@ -1,8 +1,6 @@
 #include "Component/ComponentIterator.h"
 #include "Component/ComponentIncludes.h"
-
 #include "Container/Iterator.h"
-
 #include "Core/StdTypes.h"
 #include "Core/Assert.h"
 

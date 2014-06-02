@@ -2,11 +2,8 @@
 #define COMPONENT_MULTI_TYPE_ITERATOR_H
 
 #include "Component/ComponentTypes.h"
-
 #include "Container/Vector.h"
-
 #include "Core/StdTypes.h"
-
 #include <xutility>
 
 template<typename T>

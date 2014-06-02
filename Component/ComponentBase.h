@@ -4,7 +4,6 @@
 #include "Component/ComponentTypes.h"
 #include "Component/UntypedHandle.h"
 #include "Component/GameObject.h"
-
 #include "Core/StdTypes.h"
 
 class ComponentBase {

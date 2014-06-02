@@ -1,6 +1,5 @@
 #include "Core/Memory.h"
 #include "Core/Assert.h"
-
 #include <utility>
 
 // constructors

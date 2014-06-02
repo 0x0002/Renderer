@@ -5,10 +5,8 @@
 #include "Component/ComponentIterator.h"
 #include "Component/ComponentMultiTypeIterator.h"
 #include "Component/UntypedHandle.h"
-
 #include "Container/Vector.h"
 #include "Container/List.h"
-
 #include "Core/StdTypes.h"
 
 class GameObject;

@@ -10,7 +10,7 @@ class Normal {
 public:
     // constructors
     Normal();
-    Normal( Vec4 const &v );
+    explicit Normal( Vec4 const &v );
 
     Normal& operator*=( Transform const &t );
     Normal operator*( Transform const &t ) const;

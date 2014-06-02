@@ -16,5 +16,5 @@ ForceInline Normal& Normal::operator*=( Transform const &t ) {
 ForceInline Normal Normal::operator*( Transform const &t ) const {
     Vec4 s( 1.0f / t.m_scale.X(), 1.0f / t.m_scale.Y(), 1.0f / t.m_scale.Z(), 0.0f );
     Quat q = Inverse( t.m_rotation );
-    return Vec4( *this ) * Transpose( (Mat44)q * Mat44Scaling( s ) );
+    return Normal( Vec4( *this ) * Transpose( (Mat44)q * Mat44Scaling( s ) ) );
 }

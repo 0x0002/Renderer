@@ -1,4 +1,4 @@
-#include "Math/RayDifferential.h"
+#include "Geometry/RayDifferential.h"
 
 RayDifferential::RayDifferential() :
     Ray(),

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{83CB6D69-18E6-463A-BD66-44B6ECD8962B}</ProjectGuid>
-    <RootNamespace>Math</RootNamespace>
+    <ProjectGuid>{4846E331-A3E0-4023-8F32-5DF566A50C2E}</ProjectGuid>
+    <RootNamespace>Geometry</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,11 +69,11 @@
     <OutDir>$(SolutionDir)Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\$(TargetName)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\$(TargetName)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\$(TargetName)\</IntDir>
   </PropertyGroup>
@@ -85,7 +85,6 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -96,7 +95,6 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -109,7 +107,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -124,7 +121,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -134,32 +130,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bool.h" />
-    <ClInclude Include="Mat44.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="Normal.h" />
-    <ClInclude Include="Quat.h" />
-    <ClInclude Include="Ray.h" />
-    <ClInclude Include="Scalar.h" />
-    <ClInclude Include="SSE.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Trig.h" />
-    <ClInclude Include="Vec4.h" />
+    <ClCompile Include="DifferentialGeometry.cpp" />
+    <ClCompile Include="RayDifferential.cpp" />
+    <ClCompile Include="Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Bool.inl" />
-    <None Include="Mat44.inl" />
-    <None Include="Normal.inl" />
-    <None Include="Quat.inl" />
-    <None Include="Scalar.inl" />
-    <None Include="Vec4.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Ray.cpp" />
-    <None Include="Transform.inl">
-      <FileType>CppCode</FileType>
-    </None>
+    <ClInclude Include="DifferentialGeometry.h" />
+    <ClInclude Include="RayDifferential.h" />
+    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

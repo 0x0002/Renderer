@@ -2,9 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "Math/Math.h"
-
 #include "Component/UntypedHandle.h"
-
 #include "Container/List.h"
 
 class GameObject {

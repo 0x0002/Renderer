@@ -2,7 +2,6 @@
 #define UNTYPED_HANDLE_H
 
 #include "Component/ComponentTypes.h"
-
 #include "Core/StdTypes.h"
 
 template<typename T>

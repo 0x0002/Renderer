@@ -3,7 +3,6 @@
 
 #include "Core/StdTypes.h"
 #include "Core/HeapAllocator.h"
-
 #include "Container/Iterator.h"
 
 template<typename T, typename A = Allocator>

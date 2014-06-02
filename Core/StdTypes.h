@@ -3,7 +3,6 @@
 
 #include "Core/Align.h"
 #include "Core/IEEE754.h"
-
 #include <cstdint>
 
 #define OffsetPtr( ptr, bytes ) (void*)((char*)(ptr) + (bytes))

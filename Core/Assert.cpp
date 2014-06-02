@@ -1,5 +1,4 @@
 #include "Core/Assert.h"
-
 #include <cstdio>
 #include <cstring>
 #include <windows.h>

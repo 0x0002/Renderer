@@ -1,5 +1,4 @@
 #include "Core/Console.h"
-
 #include <windows.h>	// windows.h header
 #include <iostream>		// console window stuff
 #include <io.h>			// _open_osfhandle

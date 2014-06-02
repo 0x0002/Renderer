@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Component", "Component\Comp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj", "{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "Geometry\Geometry.vcxproj", "{4846E331-A3E0-4023-8F32-5DF566A50C2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -81,6 +83,18 @@ Global
 		{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}.Release|Win32.Build.0 = Release|Win32
 		{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}.Release|x64.ActiveCfg = Release|x64
 		{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}.Release|x64.Build.0 = Release|x64
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|Win32.Build.0 = Debug|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|x64.ActiveCfg = Debug|x64
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Debug|x64.Build.0 = Debug|x64
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|Win32.ActiveCfg = Release|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|Win32.Build.0 = Release|Win32
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|x64.ActiveCfg = Release|x64
+		{4846E331-A3E0-4023-8F32-5DF566A50C2E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

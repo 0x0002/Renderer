@@ -2,7 +2,6 @@
 #define STRING_H
 
 #include "Container/Iterator.h"
-
 #include "Core/StdTypes.h"
 
 class String {

@@ -3,7 +3,6 @@
 
 #include "Core/StdTypes.h"
 #include "Core/HeapAllocator.h"
-
 #include "Container/ListNode.h"
 #include "Container/ListIterator.h"
 

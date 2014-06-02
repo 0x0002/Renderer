@@ -3,7 +3,6 @@
 
 #include "Core/StdTypes.h"
 #include "Core/Align.h"
-
 #include "Math/SSE.h"
 
 class Mat44;

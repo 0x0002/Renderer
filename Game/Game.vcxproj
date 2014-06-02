@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Component\Component.vcxproj">
@@ -32,12 +31,12 @@
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{675de6a9-0c5f-405c-9514-93009f65101d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Geometry\Geometry.vcxproj">
+      <Project>{4846e331-a3e0-4023-8f32-5df566a50c2e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Math\Math.vcxproj">
       <Project>{83cb6d69-18e6-463a-bd66-44b6ecd8962b}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}</ProjectGuid>

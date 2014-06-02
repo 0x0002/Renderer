@@ -1,5 +1,4 @@
 #include "Container/Iterator.h"
-
 #include "Core/StdTypes.h"
 
 // const iterator

@@ -1,7 +1,6 @@
 #include "Core/Print.h"
-
 #include <cstdio>
-#include <stdarg.h>
+#include <cstdarg>
 #include <windows.h>
 
 enum { 

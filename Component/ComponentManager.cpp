@@ -1,9 +1,7 @@
 #include "Component/ComponentManager.h"
 #include "Component/ComponentIncludes.h"
-
 #include "Core/Memory.h"
 #include "Core/Assert.h"
-
 #include <numeric>
 
 // global instance

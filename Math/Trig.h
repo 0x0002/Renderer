@@ -15,7 +15,7 @@
 #define ToDegree( radian ) ( (radian) * Scalar( 180.0f / 3.14159265358979323846f ) )
 
 // &&& lol fix trig functions
-#include <math.h>
+#include <cmath>
 
 ForceInline Scalar Sin( Scalar const &theta ) {
     return sinf( theta );

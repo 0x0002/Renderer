@@ -1,5 +1,4 @@
 #include "Core/Allocator.h"
-
 #include <memory>
 
 Allocator::Allocator( char const *name ) : m_name( name ) {

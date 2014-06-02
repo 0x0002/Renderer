@@ -2,7 +2,6 @@
 #define LIST_ITERATOR_H
 
 #include "Container/ListNode.h"
-
 #include <xutility>
 
 template<typename T>

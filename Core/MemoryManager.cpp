@@ -1,5 +1,4 @@
 #include "Core/MemoryManager.h"
-
 #include <cstdlib>
 
 size_t const kTotalMemory = 1024 * 1024 * 100; // 100MB
