@@ -8,7 +8,7 @@ DifferentialGeometry::DifferentialGeometry( Handle<Shape> const &shape,
                                             Vec4 const &p,
                                             Vec4 const &dpdu, Vec4 const &dpdv,
                                             Normal const &dndu, Normal const &dndv,
-                                            Scalar const &u, Scalar const &v ) :
+                                            float u, float v ) :
     m_shape( shape ),
     m_p( p ),
     m_dpdu( dpdu ), m_dpdv( dpdv ),

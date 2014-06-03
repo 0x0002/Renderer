@@ -278,11 +278,11 @@ ForceInline Quat Slerp( Quat const &a, Quat const &b, Scalar const &t ) {
 // transformation quaternions
 ForceInline Quat QuatRotationAxisAngle( Vec4 const &axis, Scalar const &angle ) {
     Vec4 a = Normalize3w0( axis );
-    Scalar s, c;
+    float s, c;
     SinCos( angle * 0.5f, &s, &c );
 
     Vec4 xyz_ = a * s;
-    return Normalize( Quat( _mm_insert_ps( xyz_.m_value, c.m_value, INSERT( 3, 3 ) ) ) );
+    return Normalize( Quat( _mm_insert_ps( xyz_.m_value, _mm_set_ps1( c ), INSERT( 3, 3 ) ) ) );
 }
 
 ForceInline Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitch, Scalar const &roll ) {
@@ -291,18 +291,18 @@ ForceInline Quat QuatRotationYawPitchRoll( Scalar const &yaw, Scalar const &pitc
              cy * cp * sr - sy * sp * cr,
              cy * cp * cr + sy * sp * sr); */
 
-    Scalar sy, cy;
+    float sy, cy;
     SinCos( yaw * 0.5f, &sy, &cy );
 
-    Scalar sp, cp;
+    float sp, cp;
     SinCos( pitch * 0.5f, &sp, &cp );
 
-    Scalar sr, cr;
+    float sr, cr;
     SinCos( roll * 0.5f, &sr, &cr );
 
-    __m128 cysycycy = _mm_blend_ps( cy.m_value, sy.m_value, BLEND( 0, 1, 0, 0 ) );
-    __m128 spcpcpcp = _mm_blend_ps( sp.m_value, cp.m_value, BLEND( 0, 1, 1, 1 ) );
-    __m128 crcrsrcr = _mm_blend_ps( cr.m_value, sr.m_value, BLEND( 0, 0, 1, 0 ) );
+    __m128 cysycycy = _mm_setr_ps( cy, sy, cy, cy );
+    __m128 spcpcpcp = _mm_setr_ps( sp, cp, cp, cp );
+    __m128 crcrsrcr = _mm_setr_ps( cr, cr, sr, cr );
 
     __m128 sycysysy = _mm_shuffle_ps( cysycycy, cysycycy, SHUFFLE( 1, 0, 1, 1 ) );
     __m128 cpspspsp = _mm_shuffle_ps( spcpcpcp, spcpcpcp, SHUFFLE( 1, 0, 0, 0 ) );

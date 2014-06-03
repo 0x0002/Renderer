@@ -3,46 +3,46 @@
 
 #include "Scalar.h"
 
-#define kPi      Scalar( 3.14159265358979323846f )
-#define k2Pi     Scalar( 6.28318530717958647692f )
-#define kPiBy2   Scalar( 3.14159265358979323846f / 2.0f )
-#define kPiBy4   Scalar( 3.14159265358979323846f / 4.0f )
-#define kInvPi   Scalar( 1.0f / 3.14159265358979323846f )
-#define kInv2Pi  Scalar( 1.0f / 6.28318530717958647692f )
-#define kSqrtTwo Scalar( 1.41421356237309504880f )
+#define kPi      ( 3.14159265358979323846f )
+#define k2Pi     ( 6.28318530717958647692f )
+#define kPiBy2   ( kPi / 2.0f )
+#define kPiBy4   ( kPi / 4.0f )
+#define kInvPi   ( 1.0f / kPi )
+#define kInv2Pi  ( 1.0f / k2Pi )
+#define kSqrtTwo ( 1.41421356237309504880f )
 
-#define ToRadian( degree ) ( (degree) * Scalar( 3.14159265358979323846f / 180.0f ) )
-#define ToDegree( radian ) ( (radian) * Scalar( 180.0f / 3.14159265358979323846f ) )
+#define ToRadian( degree ) ( (degree) * ( kPi / 180.0f ) )
+#define ToDegree( radian ) ( (radian) * ( 180.0f / kPi ) )
 
 // &&& lol fix trig functions
 #include <cmath>
 
-ForceInline Scalar Sin( Scalar const &theta ) {
+ForceInline float Sin( float theta ) {
     return sinf( theta );
 }
 
-ForceInline Scalar Cos( Scalar const &theta ) {
+ForceInline float Cos( float theta ) {
     return cosf( theta );
 }
 
-ForceInline Scalar Tan( Scalar const &theta ) {
+ForceInline float Tan( float theta ) {
     return tanf( theta );
 }
 
-ForceInline void SinCos( Scalar const &theta, Scalar *sin, Scalar *cos ) {
+ForceInline void SinCos( float theta, float *sin, float *cos ) {
     *sin = sinf( theta );
     *cos = cosf( theta );
 }
 
-ForceInline Scalar Asin( Scalar const &s ) {
+ForceInline float Asin( float s ) {
     return asinf( s );
 }
 
-ForceInline Scalar Acos( Scalar const &s ) {
+ForceInline float Acos( float s ) {
     return acosf( s );
 }
 
-ForceInline Scalar Atan2( Scalar const &y, Scalar const &x ) {
+ForceInline float Atan2( float y, float x ) {
     return  atan2f( y, x );
 }
 

@@ -1,11 +1,11 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+#include "Math/Math.h"
 #include "Component/ComponentBase.h"
-#include "Geometry/DifferentialGeometry.h"
 
 class Ray;
-class Scalar;
+class DifferentialGeometry;
 
 class Shape : public ComponentBase {
 public:
@@ -21,11 +21,11 @@ public:
     //virtual AABB GetBounds();
     //virtual AABB GetWorldBounds();
 
-    virtual bool Intersect( Ray const &ray, Scalar *tHit, Scalar *epsilon, DifferentialGeometry *geom ) const;
-    virtual bool Intersect( Ray const &ray ) const;
+    virtual bool Intersect( Ray const &ray, float *tHit, float *epsilon, DifferentialGeometry *geom ) const;
+    virtual bool Intersect( Ray const &objSpaceRay, float *tHit ) const;
 
-    virtual DifferentialGeometry GetShadingGeom( DifferentialGeometry const &intersectGeom );
-    virtual Scalar GetArea() const; // surface area
+    virtual void GetShadingGeom( DifferentialGeometry const &intersectGeom, DifferentialGeometry *shadingGeom ) const;
+    virtual float GetArea() const;
 };
 
 #endif // SHAPE_H

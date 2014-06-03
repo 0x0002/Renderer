@@ -4,10 +4,12 @@
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="RayDifferential.cpp" />
     <ClCompile Include="DifferentialGeometry.cpp" />
+    <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shape.h" />
     <ClInclude Include="RayDifferential.h" />
     <ClInclude Include="DifferentialGeometry.h" />
+    <ClInclude Include="Sphere.h" />
   </ItemGroup>
 </Project>

@@ -6,11 +6,11 @@
 class RayDifferential : public Ray {
 public:
     RayDifferential();
-    RayDifferential( Vec4 const &origin, Vec4 const &direction, Scalar const &start, Scalar const &end = kInfinity, Scalar const &t = 0.0f, int d = 0 );
-    RayDifferential( Vec4 const &origin, Vec4 const &direction, Ray const &parent, Scalar const &start, Scalar const &end = kInfinity );
+    RayDifferential( Vec4 const &origin, Vec4 const &direction, float start, float end = kInfinity, float t = 0.0f, int d = 0 );
+    RayDifferential( Vec4 const &origin, Vec4 const &direction, Ray const &parent, float start, float end = kInfinity );
     RayDifferential( Ray const &ray );
 
-    void ScaleDifferentials( Scalar const &s );
+    void ScaleDifferentials( float s );
 
 public:
     bool m_hasDifferentials;

@@ -787,8 +787,6 @@ int main() {
         int asdf = 0;
     }
 #endif
-
-
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();
     g_objectManager.Deinitialize();

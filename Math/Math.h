@@ -42,4 +42,45 @@ ForceInline Bool AlmostEqual( Scalar const &a, Scalar const &b, Scalar const &ab
 
 #include "Math/Trig.h"
 
+ForceInline Bool Quadratic( Scalar const &a, Scalar const &b, Scalar const &c, Scalar *t0, Scalar *t1 ) {
+    Scalar discrim = ( b * b ) - ( 4.0f * a * c );
+    if( discrim < 0.0f )
+        return false;
+
+    Scalar sqrtDiscrim = Sqrt( discrim );
+
+    // -B +- sqrtDiscrim can cause loss of precision so we use alternate form
+    Scalar temp0 = -0.5f * ( b - sqrtDiscrim );
+    Scalar temp1 = -0.5f * ( b + sqrtDiscrim );
+    Scalar q = Select( b < 0.0f, temp0, temp1 );
+
+    Scalar e = q / a;
+    Scalar f = c / q;
+
+    *t0 = Min( e, f );
+    *t1 = Max( e, f );
+
+    return true;
+}
+
+ForceInline float Abs( float f ) {
+    return f >= 0.0f ? f : -f;
+}
+
+ForceInline float Min( float a, float b ) {
+    return a < b ? a : b;
+}
+
+ForceInline float Max( float a, float b ) {
+    return a > b : a : b;
+}
+
+ForceInline float Sqrt( float f ) {
+    return sqrtf( f );
+}
+
+ForceInline float Clamp( float f, float min, float max ) {
+    return Min( max, Max( f, min ) );
+}
+
 #endif // MATH_H

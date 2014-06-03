@@ -1,11 +1,9 @@
 #ifndef DIFFERENTIAL_GEOMETRY_H
 #define DIFFERENTIAL_GEOMETRY_H
 
-#include "Math/Vec4.h"
-#include "Math/Normal.h"
-#include "Math/Scalar.h"
-#include "Geometry/Shape.h"
+#include "Math/Math.h"
 #include "Component/Handle.h"
+#include "Geometry/Shape.h"
 
 class DifferentialGeometry {
 public:
@@ -14,14 +12,14 @@ public:
                           Vec4 const &p,
                           Vec4 const &dpdu, Vec4 const &dpdv,
                           Normal const &dndu, Normal const &dndv,
-                          Scalar const &u, Scalar const &v );
+                          float u, float v );
 
 public:
     Handle<Shape> m_shape;
     Vec4   m_p;    // surface position
     Normal m_n;    // normalized surface normal
-    Scalar m_u;    // parametric value
-    Scalar m_v;    // parametric value
+    float  m_u;    // parametric value
+    float  m_v;    // parametric value
     Vec4   m_dpdu; // partial derivative of surface position
     Vec4   m_dpdv; // partial derivative of surface position
     Normal m_dndu; // partial derivative of surface normal

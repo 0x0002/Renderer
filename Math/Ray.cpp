@@ -7,7 +7,7 @@ Ray::Ray() :
     m_depth( 0 ) {
 }
 
-Ray::Ray( Vec4 const &origin, Vec4 const &direction, Scalar const &start, Scalar const &end, Scalar const &t, int d ) :
+Ray::Ray( Vec4 const &origin, Vec4 const &direction, float start, float end, float t, int d ) :
     m_origin( origin ),
     m_direction( direction ),
     m_mint( start ),
@@ -16,7 +16,7 @@ Ray::Ray( Vec4 const &origin, Vec4 const &direction, Scalar const &start, Scalar
     m_depth( d )  {
 }
 
-Ray::Ray( Vec4 const &origin, Vec4 const &direction, Ray const &parent, Scalar const &start, Scalar const &end ) :
+Ray::Ray( Vec4 const &origin, Vec4 const &direction, Ray const &parent, float start, float end ) :
     m_origin( origin ),
     m_direction( direction ),
     m_mint( start ),
@@ -36,7 +36,7 @@ Ray Ray::operator*( Transform const &t ) const {
     return copy *= t;
 }
 
-Vec4 Ray::Point( Scalar const &t ) const {
+Vec4 Ray::Point( float t ) const {
     return m_origin + m_direction * t;
 }
 

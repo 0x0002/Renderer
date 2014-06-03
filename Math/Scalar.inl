@@ -143,3 +143,7 @@ ForceInline Scalar Max( Scalar const &a, Scalar const &b ) {
 ForceInline Scalar Sqrt( Scalar const &s ) {
     return sqrtf( s );
 }
+
+ForceInline Scalar Clamp( Scalar const &s, Scalar const &min, Scalar const &max ) {
+    return Min( max, Max( s, min ) );
+}
