@@ -7,7 +7,8 @@
 void WritePPM( FilePath const &path, uint32_t width, uint32_t height, float const *data ) {
     // 16 bit ppm format
 
-    FILE *file = fopen( path.FullPath(), "wb" );
+    FILE *file;
+    fopen_s(  &file, path.FullPath(), "wb" );
     Assert( file, "Could not open %s", path.FullPath() );
 
     float maxValue = 65535.0f;

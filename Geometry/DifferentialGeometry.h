@@ -3,19 +3,19 @@
 
 #include "Math/Math.h"
 #include "Component/Handle.h"
-#include "Geometry/Shape.h"
+#include "Geometry/ShapeBase.h"
 
 class DifferentialGeometry {
 public:
     DifferentialGeometry();
-    DifferentialGeometry( Handle<Shape> const &shape,
+    DifferentialGeometry( Handle<ShapeBase> const &shape,
                           Vec4 const &p,
                           Vec4 const &dpdu, Vec4 const &dpdv,
                           Normal const &dndu, Normal const &dndv,
                           float u, float v );
 
 public:
-    Handle<Shape> m_shape;
+    Handle<ShapeBase> m_shape;
     Vec4   m_p;    // surface position
     Normal m_n;    // normalized surface normal
     float  m_u;    // parametric value

@@ -4,7 +4,7 @@ DifferentialGeometry::DifferentialGeometry() {
 
 }
 
-DifferentialGeometry::DifferentialGeometry( Handle<Shape> const &shape,
+DifferentialGeometry::DifferentialGeometry( Handle<ShapeBase> const &shape,
                                             Vec4 const &p,
                                             Vec4 const &dpdu, Vec4 const &dpdv,
                                             Normal const &dndu, Normal const &dndv,

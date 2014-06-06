@@ -83,4 +83,8 @@ ForceInline float Clamp( float f, float min, float max ) {
     return Min( max, Max( f, min ) );
 }
 
+ForceInline float Lerp( float a, float b, float t ) {
+    return ( 1.0f - t ) * a + t * b ;
+}
+
 #endif // MATH_H

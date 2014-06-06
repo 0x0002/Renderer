@@ -14,6 +14,8 @@
 // theta = atan2( x, z )
 // phi = acos( y )
 
+Component::Type const Sphere::kType = Component::kSphere;
+
 bool Sphere::Intersect( Ray const &ray, float *tHit, float *epsilon, DifferentialGeometry *geom ) const {
     Transform tf = Tform();
     Ray r = ray * Inverse( tf );

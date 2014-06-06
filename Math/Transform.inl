@@ -28,12 +28,6 @@ ForceInline Transform::operator Mat44() const {
     return Mat44Scaling( m_scale ) * Mat44( m_rotation ) * Mat44Translation( m_translation );
 }
 
-ForceInline Transform Inverse( Transform const &t ) {
-    Vec4 s( 1.0f / t.m_scale.X(), 1.0f / t.m_scale.Y(), 1.0f / t.m_scale.Z(), 0.0f );
-    Quat q = Inverse( t.m_rotation );
-    return Transform( s, q, ( -t.m_translation * s ) * q );
-}
-
 ForceInline Vec4& Transform::Scale() {
     return m_scale;
 }
@@ -57,3 +51,10 @@ ForceInline Vec4& Transform::Translation() {
 ForceInline Vec4 const& Transform::Translation() const {
     return m_translation;
 }
+
+ForceInline Transform Inverse( Transform const &t ) {
+    Vec4 s( 1.0f / t.m_scale.X(), 1.0f / t.m_scale.Y(), 1.0f / t.m_scale.Z(), 0.0f );
+    Quat q = Inverse( t.m_rotation );
+    return Transform( s, q, ( -t.m_translation * s ) * q );
+}
+

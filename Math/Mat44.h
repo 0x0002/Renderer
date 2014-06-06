@@ -82,7 +82,7 @@ private:
 
 Mat44 Transpose( Mat44 const &m );
 Mat44 Abs( Mat44 const &m );
-Mat44 Inverse( Mat44 const &m, Scalar *determinant = nullptr );
+Mat44 Inverse( Mat44 const &m, float *determinant = nullptr );
 
 // transformation matrices
 Mat44 Mat44Translation( float tx, float ty, float tz );

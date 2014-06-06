@@ -3,8 +3,13 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="CameraBase.cpp" />
+    <ClCompile Include="PerspectiveCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h" />
+    <ClInclude Include="CameraSample.h" />
+    <ClInclude Include="PerspectiveCamera.h" />
+    <ClInclude Include="CameraBase.h" />
   </ItemGroup>
 </Project>

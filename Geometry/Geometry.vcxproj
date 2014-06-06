@@ -132,13 +132,13 @@
   <ItemGroup>
     <ClCompile Include="DifferentialGeometry.cpp" />
     <ClCompile Include="RayDifferential.cpp" />
-    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="ShapeBase.cpp" />
     <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DifferentialGeometry.h" />
     <ClInclude Include="RayDifferential.h" />
-    <ClInclude Include="Shape.h" />
+    <ClInclude Include="ShapeBase.h" />
     <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

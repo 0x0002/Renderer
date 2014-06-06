@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PerspectiveCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Component\Component.vcxproj">
@@ -40,7 +42,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraBase.h" />
+    <ClInclude Include="CameraSample.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="PerspectiveCamera.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}</ProjectGuid>

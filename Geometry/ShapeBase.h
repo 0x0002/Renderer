@@ -1,5 +1,5 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#ifndef SHAPE_BASE_H
+#define SHAPE_BASE_H
 
 #include "Math/Math.h"
 #include "Component/ComponentBase.h"
@@ -7,16 +7,12 @@
 class Ray;
 class DifferentialGeometry;
 
-class Shape : public ComponentBase {
+class ShapeBase : public ComponentBase {
 public:
     static Component::Type const kType;
 
-    Shape( GameObject *object, uint32_t id, Component::Type type ) : ComponentBase( object, id, type ) {}
-    virtual ~Shape() {}
-
-    virtual void Initialize() {}
-    virtual void Update( float /*dt*/ ) {}
-    virtual void Uninitialize() {}
+    ShapeBase( GameObject *object, uint32_t id, Component::Type type ) : ComponentBase( object, id, type ) {}
+    virtual ~ShapeBase() {}
 
     //virtual AABB GetBounds();
     //virtual AABB GetWorldBounds();

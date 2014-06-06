@@ -1,13 +1,13 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "Geometry/Shape.h"
+#include "Geometry/ShapeBase.h"
 
-class Sphere : public Shape {
+class Sphere : public ShapeBase {
 public:
     static Component::Type const kType;
 
-    Sphere( GameObject *object, uint32_t id, Component::Type type ) : Shape( object, id, type ) {}
+    Sphere( GameObject *object, uint32_t id, Component::Type type ) : ShapeBase( object, id, type ) {}
     virtual ~Sphere() {}
 
     virtual void Initialize() override {}
