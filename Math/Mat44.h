@@ -99,6 +99,6 @@ Mat44 Mat44LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up );
 
 // projection matrices
 Mat44 Mat44OrthographicRH( float width, float height, float zNear, float zFar );
-Mat44 Mat44PerspectiveFovRH( float fov, float aspectRatio, float zNear, float zFar );
+Mat44 Mat44PerspectiveFov( float fov, float aspectRatio, float zNear, float zFar );
 
 #endif // MAT44_H

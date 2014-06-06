@@ -5,12 +5,18 @@
 #include "Container/Vector.h"
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
+
 #include "Game/Image.h"
+#include "Game/CameraSample.h"
+#include "Geometry/DifferentialGeometry.h"
+#include "Math/Ray.h"
+
 #include "Component/ObjectManager.h"
 #include "Component/ComponentManager.h"
 #include "Component/ComponentIncludes.h"
 #include "Component/ComponentTypes.h"
 #include "Component/Handle.h"
+
 #include <string>
 #include <list>
 #include <map>
@@ -788,20 +794,65 @@ int main() {
         int asdf = 0;
     }
 #endif
+    auto cameraObj = g_objectManager.Create();
+    Handle<PerspectiveCamera> camera = cameraObj->AddComponent( Component::kPerspectiveCamera );
+    camera->Translation() += Vec4( 0.0f, 0.0f, -2.0f, 0.0f );
 
-    size_t size = 512;
-    float *image = new float[size * size * 3];
+    auto sphereObj = g_objectManager.Create();
+    Handle<Sphere> sphere = sphereObj->AddComponent( Component::kSphere );
+
+    auto sphereObj2 = g_objectManager.Create();
+    Handle<Sphere> sphere2 = sphereObj2->AddComponent( Component::kSphere );
+    sphereObj2->Translation() += Vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+
+    Vec4 v0 = Vec4( 0.0f, 0.0f, 1.0f, 1.0f ) * camera->ProjTForm();
+    Vec4 v1 = Vec4( 0.0f, 2.0f, 100.0f, 1.0f ) * camera->ProjTForm();
+
+    v0 /= v0.W();
+    v1 /= v1.W();
+
+    float *image = new float[sizeX * sizeY * 3];
 
     float *i = image;
-    for( int r = 0; r < size; ++r ) {
-        for( int c = 0; c < size; ++c ) {
-            *i++ = (float)( r / (float)size );
-            *i++ = (float)( r / (float)size );
-            *i++ = (float)( r / (float)size );
+    for( int r = 0; r < sizeY; ++r ) {
+        for( int c = 0; c < sizeX; ++c ) {
+
+            Ray ray;
+            CameraSample sample;
+            sample.m_imageX = c + 0.5f;
+            sample.m_imageY = r + 0.5f;
+            sample.m_time = 0.0f;
+            camera->GenerateRay( sample, &ray );
+
+            int result = 0;
+
+            float tHit;
+            float epsilon;
+            DifferentialGeometry differentialGeom;
+            result += sphere->Intersect( ray, &tHit, &epsilon, &differentialGeom ) ? 1 : 0;
+
+            //if( sphere2->Intersect( ray, &tHit, &epsilon, &differentialGeom ) ) {
+            //    int asdf = 0;
+            //    result = 1;
+            //}
+            //result += sphere2->Intersect( ray, &tHit, &epsilon, &differentialGeom ) ? 1 : 0;
+
+            float color;
+            if( result == 2 )
+                color = 1.0f;
+            else if( result == 1 )
+                color = 0.5f;
+            else 
+                color = 0.1f;
+
+
+            *i++ = color;
+            *i++ = color;
+            *i++ = color;
         }
     }
 
-    WritePPM( "C:\\users\\tom\\desktop\\tempImage.ppm", size, size, image );
+    WritePPM( "C:\\users\\tom\\desktop\\tempImage.ppm", sizeX, sizeY, image );
 
 
     // deinitialize

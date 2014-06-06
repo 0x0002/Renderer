@@ -657,30 +657,20 @@ ForceInline Mat44 Mat44LookAtRH( Vec4 const &eye, Vec4 const &at, Vec4 const &up
     return Transpose( Mat44( xAxis, yAxis, zAxis, Vec4::WAxis() ) );
 }
  
-// projection matrices
-ForceInline Mat44 Mat44OrthographicRH( float width, float height, float zNear, float zFar ) {
-    /*  Mat44( 2 / width, 0,          0,                        0,
-               0,         2 / height, 0,                        0,
-               0,         0,          1 / ( zNear - zFar ),     0,
-               0,         0,          zNear / ( zNear - zFar ), 1 ); */
+// projection matrix
+ForceInline Mat44 Mat44PerspectiveFov( float fov, float aspectRatio, float zNear, float zFar ) {
+    // map [zNear, zFar] to [0, 1]
 
-    return Mat44( 2.0f / width, 0.0f,          0.0f,                     0.0f,
-                  0.0f,         2.0f / height, 0.0f,                     0.0f,
-                  0.0f,         0.0f,          1.0f / ( zNear - zFar ),  0.0f,
-                  0.0f,         0.0f,          zNear / ( zNear - zFar ), 1.0f );
-}
-
-ForceInline Mat44 Mat44PerspectiveFovRH( float fov, float aspectRatio, float zNear, float zFar ) {
     /* Mat44( xScale, 0,      0,                                0,
               0,      yScale, 0,                                0,
-              0,      0,      zFar / ( zNear - zFar ),         -1,
-              0,      0,      zNear * zFar / ( zNear - zFar ),  0); */
+              0,      0,      zFar / ( zFar - zNear ),          1,
+              0,      0,      -zNear * zFar / ( zFar - zNear ), 0); */
     
     float yScale = 1.0f / Tan( fov * 0.5f );
     float xScale = yScale / aspectRatio;
 
-    return Mat44( xScale, 0.0f,   0.0f,                             0.0f,
-                  0.0f,   yScale, 0.0f,                             0.0f,
-                  0.0f,   0.0f,   zFar / ( zNear - zFar ),         -1.0f,
-                  0.0f,   0.0f,   zNear * zFar / ( zNear - zFar ),  0.0f );
+    return Mat44( xScale, 0.0f,   0.0f,                              0.0f,
+                  0.0f,   yScale, 0.0f,                              0.0f,
+                  0.0f,   0.0f,   zFar / ( zFar - zNear ),           1.0f,
+                  0.0f,   0.0f,   -zNear * zFar / ( zFar - zNear ),  0.0f );
 }

@@ -7,7 +7,9 @@ class Sphere : public ShapeBase {
 public:
     static Component::Type const kType;
 
-    Sphere( GameObject *object, uint32_t id, Component::Type type ) : ShapeBase( object, id, type ) {}
+    Sphere( GameObject *object, uint32_t id, Component::Type type ) : ShapeBase( object, id, type ) {
+        m_radius = 1.0f; // &&& don't do this
+    }
     virtual ~Sphere() {}
 
     virtual void Initialize() override {}

@@ -11,8 +11,8 @@ void ComponentManager::Initialize() {
 
     // preallocate lookup tables
     for( int32_t i = 0; i < Component::kCount; ++i ) {
-        m_inheritanceLookup[i] = new Vector<Component::Type>( Component::kCount + 1, false, g_permAllocator );
-        m_inheritanceLookup[i]->PushBack( (Component::Type)i );
+        m_baseToDerived[i] = new Vector<Component::Type>( Component::kCount + 1, false, g_permAllocator );
+        m_baseToDerived[i]->PushBack( (Component::Type)i );
     }
 
     // add invalid type to make iterator simpler
@@ -23,8 +23,8 @@ void ComponentManager::Initialize() {
     m_count            [Component::kNone] = (uint32_t)-1; // important to be non-zero for multitype iterator to work properly
     m_max              [Component::kNone] = 0;
     m_size             [Component::kNone] = 0;
-    m_inheritanceLookup[Component::kNone] = new Vector<Component::Type>( Component::kCount + 1, false, g_permAllocator );
-    m_inheritanceLookup[Component::kNone]->PushBack( Component::kNone );
+    m_baseToDerived[Component::kNone] = new Vector<Component::Type>( Component::kCount + 1, false, g_permAllocator );
+    m_baseToDerived[Component::kNone]->PushBack( Component::kNone );
 
     // preallocate all component data
     for( int32_t i = 0; i < Component::kCount; ++i ) {
@@ -41,7 +41,7 @@ void ComponentManager::Initialize() {
             m_count[i] = 0;                                                    \
             m_max[i] = max;                                                    \
             m_size[i] = sizeof( typeName );                                    \
-            m_inheritanceLookup[Component::k##baseTypeName]->PushBack( Component::k##typeName ); \
+            m_baseToDerived[Component::k##baseTypeName]->PushBack( Component::k##typeName ); \
             break; \
         }
 
@@ -56,10 +56,10 @@ void ComponentManager::Initialize() {
     // finish inheritance lookup table
     for( int32_t i = 0; i < Component::kCount; ++i ) {
 
-        Vector<Component::Type> *base = m_inheritanceLookup[i];
+        Vector<Component::Type> *base = m_baseToDerived[i];
         for( size_t baseIdx = 1; baseIdx < base->Size(); ++baseIdx ) {
 
-            Vector<Component::Type> *derived = m_inheritanceLookup[(*base)[baseIdx]];
+            Vector<Component::Type> *derived = m_baseToDerived[(*base)[baseIdx]];
             for( size_t derivedIdx = 1; derivedIdx < derived->Size(); ++derivedIdx ) {
                 Component::Type derivedType = (*derived)[derivedIdx];
                 if( derivedType != Component::kNone )
@@ -70,11 +70,11 @@ void ComponentManager::Initialize() {
 
     // make sure all lookup tables end with invalid type
     for( int32_t i = 0; i < Component::kCount; ++i ) {
-        if( m_inheritanceLookup[i]->Back() != Component::kNone )
-            m_inheritanceLookup[i]->PushBack( Component::kNone );
+        if( m_baseToDerived[i]->Back() != Component::kNone )
+            m_baseToDerived[i]->PushBack( Component::kNone );
     }
 
-    Assert( m_inheritanceLookup[Component::kComponentBase]->Size() == Component::kCount + 1, "All component types must inherit from ComponentBase." );
+    Assert( m_baseToDerived[Component::kComponentBase]->Size() == Component::kCount + 1, "All component types must inherit from ComponentBase." );
 
     // preallocate all handles
     uint32_t total = std::accumulate( m_max, m_max + Component::kCount, 0 );
@@ -87,7 +87,7 @@ void ComponentManager::Deinitialize() {
         delete[] m_generation[i];
         delete[] m_idToData[i];
         delete[] m_availableId[i];
-        delete m_inheritanceLookup[i];
+        delete m_baseToDerived[i];
     }
 
     delete m_handles;

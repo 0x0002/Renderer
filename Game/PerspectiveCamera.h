@@ -17,12 +17,15 @@ public:
 
     PerspectiveCamera( GameObject *object, uint32_t id, Component::Type type ) : CameraBase( object, id, type ) {
         // &&& move out of constructor
-        m_projection = Mat44PerspectiveFovRH( 60.0f, (float)sizeX / sizeY, 1.0f, 100.0f );
+        m_projection = Mat44PerspectiveFov( ToRadian( 60.0f ), (float)sizeX / sizeY, 1.0f, 100.0f );
         m_invProjection = Inverse( m_projection );
     }
     virtual ~PerspectiveCamera() {}
 
     virtual float GenerateRay( CameraSample const &sample, Ray *ray ) const override;
+
+    Mat44 ProjTForm() const;
+    Mat44 InvProjTform() const;
 
 private:
     Mat44 m_projection;

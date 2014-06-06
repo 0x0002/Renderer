@@ -35,3 +35,11 @@ float CameraBase::GenerateRayDifferential( CameraSample const &sample, RayDiffer
     rayDifferential->m_hasDifferentials = true;
     return weight;
 }
+ 
+Transform CameraBase::ViewTform() const {
+    return Inverse( Tform() );
+}
+
+Transform CameraBase::InvViewTform() const {
+    return Tform();
+}

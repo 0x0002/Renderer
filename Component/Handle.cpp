@@ -17,8 +17,8 @@ Handle<T>::Handle( UntypedHandle const &handle ) :
     Assert( handle.m_type != Component::kNone, "Invalid handle." );
 
     bool validTypeConversion = false;
-    for( Component::Type t : *g_componentManager.m_inheritanceLookup[handle.m_type] ) {
-        if( t == T::kType ) {
+    for( Component::Type t : *g_componentManager.m_baseToDerived[T::kType] ) {
+        if( t == handle.m_type ) {
             validTypeConversion = true;
             break;
         }

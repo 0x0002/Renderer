@@ -85,7 +85,7 @@ bool Sphere::Intersect( Ray const &objSpaceRay, float *tHit ) const {
     Ray r = objSpaceRay;
     Scalar a = Dot3( r.m_direction, r.m_direction );
     Scalar b = 2.0f * Dot3( r.m_direction, r.m_origin );
-    Scalar c = Dot3( r.m_origin, r.m_origin ) + m_radius * m_radius;
+    Scalar c = Dot3( r.m_origin, r.m_origin ) - m_radius * m_radius;
 
     Scalar t0, t1;
     if( !Quadratic( a, b, c, &t0, &t1 ) ) {

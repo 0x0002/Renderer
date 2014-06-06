@@ -35,7 +35,7 @@ private:
     uint32_t                 m_count            [Component::kCount + 1];   // number in use
     uint32_t                 m_max              [Component::kCount + 1];   // number allocated
     size_t                   m_size             [Component::kCount + 1];   // size of each type (bytes)
-    Vector<Component::Type> *m_inheritanceLookup[Component::kCount + 1];   // used to iterate through components
+    Vector<Component::Type> *m_baseToDerived    [Component::kCount + 1];   // used to iterate through components
 
     List<UntypedHandle>     *m_handles; // preallocated pool of handles
 
@@ -48,7 +48,7 @@ private:
 
 template<typename T>
 inline ComponentMultiTypeIteratorHelper<T> ComponentManager::AllComponents() {
-    return ComponentMultiTypeIteratorHelper<T>( &m_data, &m_count, &m_size, m_inheritanceLookup[T::kType] );
+    return ComponentMultiTypeIteratorHelper<T>( &m_data, &m_count, &m_size, m_baseToDerived[T::kType] );
 }
 
 template<typename T>

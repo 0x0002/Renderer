@@ -12,11 +12,16 @@ class CameraBase : public ComponentBase {
 public:
     static Component::Type const kType;
 
-    CameraBase( GameObject *object, uint32_t id, Component::Type type ) : ComponentBase( object, id, type ) {}
+    CameraBase( GameObject *object, uint32_t id, Component::Type type ) : ComponentBase( object, id, type ) {
+        m_shutterOpen = m_shutterClose = 0.0f; // &&& don't do this
+    }
     virtual ~CameraBase() {}
 
     virtual float GenerateRay( CameraSample const &sample, Ray *ray ) const;
     float GenerateRayDifferential( CameraSample const &sample, RayDifferential *rayDifferential ) const;
+    
+    Transform ViewTform() const;
+    Transform InvViewTform() const;
 
 protected:
     float m_shutterOpen;

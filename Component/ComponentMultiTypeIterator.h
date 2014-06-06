@@ -17,7 +17,7 @@ public:
     ComponentMultiTypeConstIterator( uint8_t *(*m_componentData)[Component::kCount + 1],
                                      uint32_t const (*m_componentCount)[Component::kCount + 1],
                                      size_t const (*m_componentSize)[Component::kCount + 1],
-                                     Vector<Component::Type> const *m_inheritanceLookup,
+                                     Vector<Component::Type> const *m_baseToDerived,
                                      uint8_t *m_data, 
                                      size_t m_stride,
                                      uint32_t m_i,
@@ -52,7 +52,7 @@ private:
     uint8_t                        *(*m_componentData)[Component::kCount + 1];
     uint32_t                 const (*m_componentCount)[Component::kCount + 1];
     size_t                   const (*m_componentSize )[Component::kCount + 1];
-    Vector<Component::Type>  const  *m_inheritanceLookup;
+    Vector<Component::Type>  const  *m_baseToDerived;
 
     // current position
     uint8_t *m_data;
@@ -70,7 +70,7 @@ public:
     ComponentMultiTypeIterator( uint8_t *(*m_componentData)[Component::kCount + 1],
                                 uint32_t const (*m_componentCount)[Component::kCount + 1],
                                 size_t const (*m_componentSize)[Component::kCount + 1],
-                                Vector<Component::Type> const *m_inheritanceLookup,
+                                Vector<Component::Type> const *m_baseToDerived,
                                 uint8_t *m_data, 
                                 size_t m_stride,
                                 uint32_t m_i,
@@ -105,7 +105,7 @@ private:
     uint8_t                        *(*m_componentData)[Component::kCount + 1];
     uint32_t                 const (*m_componentCount)[Component::kCount + 1];
     size_t                   const (*m_componentSize )[Component::kCount + 1];
-    Vector<Component::Type>  const  *m_inheritanceLookup;
+    Vector<Component::Type>  const  *m_baseToDerived;
     
     // current position
     uint8_t *m_data;
@@ -141,7 +141,7 @@ private:
     uint8_t                       *(*m_componentData )[Component::kCount + 1];
     uint32_t                 const (*m_componentCount)[Component::kCount + 1];
     size_t                   const (*m_componentSize )[Component::kCount + 1];
-    Vector<Component::Type> const   *m_inheritanceLookup;
+    Vector<Component::Type> const   *m_baseToDerived;
 };
 
 #endif // COMPONENT_MULTI_TYPE_ITERATOR_H

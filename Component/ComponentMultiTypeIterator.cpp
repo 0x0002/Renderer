@@ -7,7 +7,7 @@ ComponentMultiTypeConstIterator<T>::ComponentMultiTypeConstIterator() :
     m_componentData( nullptr ),
     m_componentCount( nullptr ),
     m_componentSize( nullptr ),
-    m_inheritanceLookup( nullptr ),
+    m_baseToDerived( nullptr ),
     m_data( nullptr ),
     m_stride( 0 ),
     m_i( 0 ),
@@ -21,7 +21,7 @@ ComponentMultiTypeConstIterator<T>::ComponentMultiTypeConstIterator( ComponentMu
     m_componentData( it.m_componentData ),
     m_componentCount( it.m_componentCount ),
     m_componentSize( it.m_componentSize ),
-    m_inheritanceLookup( it.m_inheritanceLookup ),
+    m_baseToDerived( it.m_baseToDerived ),
     m_data( it.m_data ),
     m_stride( it.m_stride ),
     m_i( it.m_i ),
@@ -45,7 +45,7 @@ ComponentMultiTypeConstIterator<T>::ComponentMultiTypeConstIterator( uint8_t *(*
     m_componentData( componentData ),
     m_componentCount( componentCount ),
     m_componentSize( componentSize ),
-    m_inheritanceLookup( inheritanceLookup ),
+    m_baseToDerived( inheritanceLookup ),
     m_data( data ),
     m_stride( stride ),
     m_i( i ),
@@ -117,7 +117,7 @@ inline void ComponentMultiTypeConstIterator<T>::FindNextType() {
 
     do {
         ++m_inheritanceIdx;
-        type = (*m_inheritanceLookup)[m_inheritanceIdx];
+        type = (*m_baseToDerived)[m_inheritanceIdx];
         m_count  = (*m_componentCount)[type];
     } while( m_count == 0 );
 
@@ -132,7 +132,7 @@ inline void ComponentMultiTypeConstIterator<T>::FindPrevType() {
 
     do {
         --m_inheritanceIdx;
-        type = (*m_inheritanceLookup)[m_inheritanceIdx];
+        type = (*m_baseToDerived)[m_inheritanceIdx];
         m_count  = (*m_componentCount)[type];
     } while( m_count == 0 );
 
@@ -147,7 +147,7 @@ ComponentMultiTypeIterator<T>::ComponentMultiTypeIterator() :
     m_componentData( nullptr ),
     m_componentCount( nullptr ),
     m_componentSize( nullptr ),
-    m_inheritanceLookup( nullptr ),
+    m_baseToDerived( nullptr ),
     m_data( nullptr ),
     m_stride( 0 ),
     m_i( 0 ),
@@ -171,7 +171,7 @@ ComponentMultiTypeIterator<T>::ComponentMultiTypeIterator( uint8_t *(*componentD
     m_componentData( componentData ),
     m_componentCount( componentCount ),
     m_componentSize( componentSize ),
-    m_inheritanceLookup( inheritanceLookup ),
+    m_baseToDerived( inheritanceLookup ),
     m_data( data ),
     m_stride( stride ),
     m_i( i ),
@@ -243,7 +243,7 @@ inline void ComponentMultiTypeIterator<T>::FindNextType() {
 
     do {
         ++m_inheritanceIdx;
-        type = (*m_inheritanceLookup)[m_inheritanceIdx];
+        type = (*m_baseToDerived)[m_inheritanceIdx];
         m_count  = (*m_componentCount)[type];
     } while( m_count == 0 );
 
@@ -258,7 +258,7 @@ inline void ComponentMultiTypeIterator<T>::FindPrevType() {
 
     do {
         --m_inheritanceIdx;
-        type = (*m_inheritanceLookup)[m_inheritanceIdx];
+        type = (*m_baseToDerived)[m_inheritanceIdx];
         m_count  = (*m_componentCount)[type];
     } while( m_count == 0 );
 
@@ -276,59 +276,59 @@ ComponentMultiTypeIteratorHelper<T>::ComponentMultiTypeIteratorHelper( uint8_t *
     m_componentData( componentData ),
     m_componentCount( componentCount ),
     m_componentSize( componentSize ),
-    m_inheritanceLookup( inheritanceLookup ) {
+    m_baseToDerived( inheritanceLookup ) {
 }
 
 // iterators
 template<typename T>
 typename ComponentMultiTypeIteratorHelper<T>::iterator ComponentMultiTypeIteratorHelper<T>::begin() {
     Assert( T::kType < Component::kNone, "Invalid component type." );
-    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_inheritanceLookup,
+    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_baseToDerived,
                                           (*m_componentData)[T::kType],
                                           (*m_componentSize)[T::kType],
                                           0,
                                           (*m_componentCount)[T::kType],
                                           0,
-                                          (uint32_t)(*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_baseToDerived).Size(),
                                           false );
 }
 
 template<typename T>
 typename ComponentMultiTypeIteratorHelper<T>::const_iterator ComponentMultiTypeIteratorHelper<T>::begin() const {
     Assert( T::kType < Component::kNone, "Invalid component type." );
-    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_inheritanceLookup,
+    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_baseToDerived,
                                           (*m_componentData)[T::kType],
                                           (*m_componentSize)[T::kType],
                                           0,
                                           (*m_componentCount)[T::kType],
                                           0,
-                                          (uint32_t)(*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_baseToDerived).Size(),
                                           false );
 }
 
 template<typename T>
 typename ComponentMultiTypeIteratorHelper<T>::iterator ComponentMultiTypeIteratorHelper<T>::end() {
     Assert( T::kType < Component::kNone, "Invalid component type." );
-    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_inheritanceLookup,
+    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_baseToDerived,
                                           (*m_componentData)[Component::kNone],
                                           (*m_componentSize)[Component::kNone],
                                           0,
                                           (*m_componentCount)[Component::kNone],
                                           0,
-                                          (uint32_t)(*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_baseToDerived).Size(),
                                           true );
 }
 
 template<typename T>
 typename ComponentMultiTypeIteratorHelper<T>::const_iterator ComponentMultiTypeIteratorHelper<T>::end() const {
     Assert( T::kType < Component::kNone, "Invalid component type." );
-    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_inheritanceLookup,
+    return ComponentMultiTypeIterator<T>( m_componentData, m_componentCount, m_componentSize, m_baseToDerived,
                                           (*m_componentData)[Component::kNone],
                                           (*m_componentSize)[Component::kNone],
                                           0,
                                           (*m_componentCount)[Component::kNone],
                                           0,
-                                          (uint32_t)(*m_inheritanceLookup).Size(),
+                                          (uint32_t)(*m_baseToDerived).Size(),
                                           true );
 }
 
