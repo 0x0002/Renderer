@@ -15,6 +15,7 @@
     <ClInclude Include="HeapAllocator.h" />
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="File.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atomic.cpp" />

@@ -5,6 +5,7 @@
 #include "Container/Vector.h"
 #include "Core/Print.h"
 #include "Core/MemoryManager.h"
+#include "Game/Image.h"
 #include "Component/ObjectManager.h"
 #include "Component/ComponentManager.h"
 #include "Component/ComponentIncludes.h"
@@ -787,6 +788,22 @@ int main() {
         int asdf = 0;
     }
 #endif
+
+    size_t size = 512;
+    float *image = new float[size * size * 3];
+
+    float *i = image;
+    for( int r = 0; r < size; ++r ) {
+        for( int c = 0; c < size; ++c ) {
+            *i++ = (float)( r / (float)size );
+            *i++ = (float)( r / (float)size );
+            *i++ = (float)( r / (float)size );
+        }
+    }
+
+    WritePPM( "C:\\users\\tom\\desktop\\tempImage.ppm", size, size, image );
+
+
     // deinitialize
     g_memoryManager.UnsetHeapAllocator();
     g_objectManager.Deinitialize();

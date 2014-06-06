@@ -10,11 +10,11 @@ public:
     FilePath( char const *c );
 
     // accessors
-    String const& FullPath();
-    String const& Drive();
-    String const& Directory();
-    String const& FileName();
-    String const& Extension();
+    String const& FullPath() const;
+    String const& Drive() const;
+    String const& Directory() const;
+    String const& FileName() const;
+    String const& Extension() const;
     
     void SetDrive( String const &drive );
     void SetDirectory( String const &directory );

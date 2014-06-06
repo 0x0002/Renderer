@@ -72,7 +72,7 @@ ForceInline float Min( float a, float b ) {
 }
 
 ForceInline float Max( float a, float b ) {
-    return a > b : a : b;
+    return a > b ? a : b;
 }
 
 ForceInline float Sqrt( float f ) {

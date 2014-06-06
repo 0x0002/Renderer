@@ -7,29 +7,31 @@ FilePath::FilePath() {}
 
 FilePath::FilePath( char const *c ) {
     String s( c );
-    std::for_each( s.begin(), s.end(), tolower );
+    for( char &ch : s )
+        ch = tolower( ch );
     std::replace( s.begin(), s.end(), '\\', '/' );
-    _splitpath_s( m_fullPath, nullptr, 0, m_directory, m_directory.MaxLength(), m_fileName, m_fileName.MaxLength(), m_extension, m_extension.MaxLength() );
+    _splitpath_s( s, m_drive, m_drive.MaxLength(), m_directory, m_directory.MaxLength(), m_fileName, m_fileName.MaxLength(), m_extension, m_extension.MaxLength() );
+    m_fullPath = m_drive + m_directory + m_fileName + m_extension;
 }
 
 // accessors
-String const& FilePath::FullPath() {
+String const& FilePath::FullPath() const {
     return m_fullPath;
 }
 
-String const& FilePath::Drive() {
+String const& FilePath::Drive() const {
     return m_drive;
 }
 
-String const& FilePath::Directory() {
+String const& FilePath::Directory() const {
     return m_directory;
 }
 
-String const& FilePath::FileName() {
+String const& FilePath::FileName() const {
     return m_fileName;
 }
 
-String const& FilePath::Extension() {
+String const& FilePath::Extension() const {
     return m_extension;
 }
 

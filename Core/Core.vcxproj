@@ -135,6 +135,7 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="Hash.h" />
     <ClInclude Include="HeapAllocator.h" />
     <ClInclude Include="IEEE754.h" />

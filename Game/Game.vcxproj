@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +38,9 @@
     <ProjectReference Include="..\Math\Math.vcxproj">
       <Project>{83cb6d69-18e6-463a-bd66-44b6ecd8962b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Image.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AA75B1A-BF47-4DE3-8BCD-003CAE704CBA}</ProjectGuid>

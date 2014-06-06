@@ -24,7 +24,7 @@ ForceInline Bool::Bool( int32_t i ) :
 
 // unary operators
 ForceInline Bool Bool::operator!() {
-    m_value = _mm_xor_ps( m_value, m_value );
+    return _mm_xor_ps( m_value, m_value );
 }
 
 // comparison operators
